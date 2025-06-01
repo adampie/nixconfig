@@ -5,6 +5,8 @@
 }: {
   imports = [
     ../../modules/system/darwin.nix
+    ../../profiles/shared/homebrew.nix
+    ../../profiles/work/homebrew.nix
   ];
 
   host = {

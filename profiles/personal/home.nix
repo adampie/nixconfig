@@ -7,7 +7,6 @@
 }: {
   imports = [
     ../shared/packages.nix
-    ../shared/homebrew.nix
   ];
 
   home.stateVersion = "25.05";
@@ -16,17 +15,6 @@
     neofetch
     fh
   ];
-
-  homebrew.casks = [
-    "daisydisk"
-    "little-snitch"
-    "lm-studio"
-    "micro-snitch"
-  ];
-
-  homebrew.masApps = {
-    "Flighty" = 1358823008;
-  };
 
   programs.git = {
     extraConfig = {
