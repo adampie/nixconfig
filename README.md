@@ -17,7 +17,7 @@
     After installation, restart your terminal or source the Nix environment:
 
     ```bash
-    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
     ```
 
 3. Install nix-darwin and Apply Configuration
