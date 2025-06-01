@@ -1,6 +1,12 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    neofetch
-    fh
-  ];
+{
+  pkgs,
+  unstablepkgs,
+  ...
+}: {
+  home.packages =
+    (with pkgs; [
+      neofetch
+      fh
+    ])
+    ++ (with unstablepkgs; []);
 }

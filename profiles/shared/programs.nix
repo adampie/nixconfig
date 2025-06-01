@@ -1,9 +1,13 @@
-{...}: {
+{config, ...}: {
   programs = {
     git = {
       enable = true;
       extraConfig = {init = {defaultBranch = "main";};};
       userName = "Adam Pietrzycki";
+    };
+
+    gpg = {
+      enable = true;
     };
 
     mise = {

@@ -1,3 +1,4 @@
 {...}: {
-  # Personal-specific home-manager configuration
+  home.username = "adampie";
+  home.homeDirectory = "/Users/adampie";
 }

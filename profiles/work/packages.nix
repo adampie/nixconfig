@@ -1,5 +1,15 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    # Work-specific packages will go here
-  ];
+{
+  pkgs,
+  unstablepkgs,
+  ...
+}: {
+  home.packages =
+    (with pkgs; [
+      dive
+      glab
+      just
+      kubectl
+      kubernetes-helm
+    ])
+    ++ (with unstablepkgs; []);
 }
