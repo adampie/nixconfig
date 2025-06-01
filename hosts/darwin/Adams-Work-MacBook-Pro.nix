@@ -11,7 +11,7 @@
 
   host = {
     username = "adampie";
-    hostname = "Adams-Work-Macbook-Pro";
+    hostname = "Adams-Work-MacBook-Pro";
     homeProfile = ../../profiles/work/default.nix;
   };
 

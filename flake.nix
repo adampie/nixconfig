@@ -71,8 +71,8 @@
     schemas = flake-schemas.schemas;
 
     darwinConfigurations = {
-      "Adams-Macbook-Pro" = mkDarwinSystem "Adams-Macbook-Pro" "aarch64-darwin";
-      "Adams-Work-Macbook-Pro" = mkDarwinSystem "Adams-Work-Macbook-Pro" "aarch64-darwin";
+      "Adams-MacBook-Pro" = mkDarwinSystem "Adams-MacBook-Pro" "aarch64-darwin";
+      "Adams-Work-MacBook-Pro" = mkDarwinSystem "Adams-Work-MacBook-Pro" "aarch64-darwin";
     };
 
     formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);
