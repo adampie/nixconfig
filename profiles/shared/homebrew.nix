@@ -2,6 +2,10 @@
   homebrew = {
     enable = true;
 
+    brews = [
+      "mas"
+    ];
+
     casks = [
       "1password"
       "1password-cli"
@@ -27,6 +31,7 @@
     };
 
     onActivation = {
+      cleanup = "zap";
       autoUpdate = true;
       upgrade = true;
     };
