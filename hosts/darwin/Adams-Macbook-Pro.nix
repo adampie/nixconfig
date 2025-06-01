@@ -5,7 +5,6 @@
 }: {
   imports = [
     ../../modules/system/darwin.nix
-    ../../profiles/personal/default.nix
   ];
 
   host = {

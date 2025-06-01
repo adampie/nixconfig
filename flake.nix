@@ -41,62 +41,40 @@
           };
         });
 
-    commonArgs = system: {
-      specialArgs = {
-        inherit inputs;
-        unstablepkgs = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
+    mkDarwinSystem = hostname: system: let
+      unstablepkgs = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
       };
-    };
+    in
+      nix-darwin.lib.darwinSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs unstablepkgs;
+        };
+        modules = [
+          ./hosts/darwin/${hostname}.nix
+          home-manager.darwinModules.home-manager
+          {
+            nixpkgs.config.allowUnfree = true;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {
+                inherit unstablepkgs;
+              };
+            };
+          }
+        ];
+      };
   in {
     schemas = flake-schemas.schemas;
 
     darwinConfigurations = {
-      "Adams-Macbook-Pro" = nix-darwin.lib.darwinSystem ({
-          system = "aarch64-darwin";
-          modules = [
-            ./hosts/darwin/Adams-Macbook-Pro.nix
-            home-manager.darwinModules.home-manager
-            {
-              nixpkgs.config.allowUnfree = true;
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  unstablepkgs = import nixpkgs-unstable {
-                    system = "aarch64-darwin";
-                    config.allowUnfree = true;
-                  };
-                };
-              };
-            }
-          ];
-        }
-        // (commonArgs "aarch64-darwin"));
-
-      "Adams-Work-Macbook-Pro" = nix-darwin.lib.darwinSystem ({
-          system = "aarch64-darwin";
-          modules = [
-            ./hosts/darwin/Adams-Work-Macbook-Pro.nix
-            home-manager.darwinModules.home-manager
-            {
-              nixpkgs.config.allowUnfree = true;
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  unstablepkgs = import nixpkgs-unstable {
-                    system = "aarch64-darwin";
-                    config.allowUnfree = true;
-                  };
-                };
-              };
-            }
-          ];
-        }
-        // (commonArgs "aarch64-darwin"));
+      "Adams-Macbook-Pro" = mkDarwinSystem "Adams-Macbook-Pro" "aarch64-darwin";
+      "Adams-Work-Macbook-Pro" = mkDarwinSystem "Adams-Work-Macbook-Pro" "aarch64-darwin";
     };
+
+    formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);
   };
 }

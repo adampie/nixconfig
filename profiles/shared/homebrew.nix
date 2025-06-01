@@ -2,8 +2,6 @@
   homebrew = {
     enable = true;
 
-    brews = [];
-
     casks = [
       "1password"
       "1password-cli"
@@ -21,8 +19,6 @@
       "superwhisper"
       "tower"
     ];
-
-    taps = [];
 
     masApps = {
       "1Password for Safari" = 1569813296;
