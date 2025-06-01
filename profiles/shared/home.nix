@@ -35,6 +35,36 @@ in {
   home.file.".local/bin/goland" = mkJetBrainsScript "goland" "GoLand.app";
   home.file.".local/bin/datagrip" = mkJetBrainsScript "datagrip" "DataGrip.app";
 
+  home.file.".local/bin/nixus" = {
+    text = ''
+      #!/usr/bin/env zsh
+      set -e
+
+      cleanup() {
+        rm -rf ./result
+      }
+      trap cleanup EXIT
+
+      nix flake update
+      darwin-rebuild build --flake .#
+
+      diff_output=$(nix store diff-closures /run/current-system ./result)
+      if [[ -z "$diff_output" || "$diff_output" == *"no changes"* ]]; then
+        echo "No changes detected."
+        exit 0
+      fi
+
+      echo "$diff_output"
+      echo -n "Apply changes? (y/n): "
+      read -r ans
+
+      if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+        sudo darwin-rebuild switch --flake .#
+      fi
+    '';
+    executable = true;
+  };
+
   home.sessionPath = [
     "$HOME/.local/bin"
   ];
