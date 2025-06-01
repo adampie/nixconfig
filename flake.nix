@@ -5,7 +5,7 @@
     flake-schemas.url = "https://flakehub.com/f/DeterminateSystems/flake-schemas/*";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
     nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
-    nix-darwin.url = "github:lnl7/nix-darwin"; nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:lnl7/nix-darwin/nix-darwin-25.05"; nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, flake-schemas, nixpkgs, nixpkgs-unstable, nix-darwin, ... }@inputs: let
