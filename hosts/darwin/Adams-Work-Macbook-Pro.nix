@@ -12,7 +12,7 @@
   host = {
     username = "adampie";
     hostname = "Adams-Work-Macbook-Pro";
-    homeProfile = ../../profiles/work/home.nix;
+    homeProfile = ../../profiles/work/default.nix;
   };
 
   system.defaults = {};
