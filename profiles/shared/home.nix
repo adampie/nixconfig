@@ -65,6 +65,44 @@ in {
     executable = true;
   };
 
+  home.file.".local/bin/fetch_all_code" = {
+    text = ''
+      #!/usr/bin/env zsh
+      # This script clones all repositories from specified SCM accounts using ghorg
+      set -e
+
+      trap 'echo "Error occurred at line $LINENO. Command: $BASH_COMMAND"' ERR
+
+      CLONE_PATH="$HOME/Code"
+      COMMON_ARGS="--protocol=ssh --path=$CLONE_PATH --include-submodules --fetch-all --skip-archived"
+
+      scm_name="$1"
+      account_type="$2"
+      account_name="$3"
+      token_name="ghorg - $account_name"
+
+      echo "Cloning $account_name repositories..."
+
+      # Get token from 1Password
+      if ! token=$(op item get --vault 'Private' "$token_name" --fields=credential --reveal); then
+        echo "Error: Failed to retrieve token for $account_name from 1Password"
+        exit 1
+      fi
+
+      if ! ghorg clone "$account_name" \
+        --scm="$scm_name" \
+        --token="$token" \
+        --clone-type="$account_type" \
+        $COMMON_ARGS; then
+        echo "Error: Failed to clone $account_name repositories"
+        exit 1
+      fi
+
+      echo "Successfully cloned $account_name repositories"
+    '';
+    executable = true;
+  };
+
   home.sessionPath = [
     "$HOME/.local/bin"
   ];
