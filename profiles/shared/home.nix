@@ -73,9 +73,6 @@ in {
 
       trap 'echo "Error occurred at line $LINENO. Command: $BASH_COMMAND"' ERR
 
-      CLONE_PATH="$HOME/Code"
-      COMMON_ARGS="--protocol=ssh --path=$CLONE_PATH --include-submodules --fetch-all --skip-archived"
-
       scm_name="$1"
       account_type="$2"
       account_name="$3"
@@ -93,7 +90,11 @@ in {
         --scm="$scm_name" \
         --token="$token" \
         --clone-type="$account_type" \
-        $COMMON_ARGS; then
+        --protocol=ssh \
+        --path=$HOME/Code \
+        --include-submodules \
+        --fetch-all \
+        --skip-archived; then
         echo "Error: Failed to clone $account_name repositories"
         exit 1
       fi
