@@ -104,6 +104,10 @@
         askForPasswordDelay = 0;
       };
 
+      screencapture = {
+        location = "/Users/${username}/Screenshots";
+      };
+
       trackpad = {Clicking = true;};
 
       WindowManager = {
