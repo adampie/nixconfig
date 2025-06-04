@@ -22,6 +22,7 @@
       "slack"
       "superwhisper"
       "tower"
+      "zen"
     ];
 
     masApps = {
