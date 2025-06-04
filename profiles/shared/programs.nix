@@ -59,6 +59,7 @@
     window-save-state = always
     font-family = "JetBrainsMono Nerd Font"
     working-directory = home
+    keybind = shift+enter=text:\n
   '';
 
   home.file.".ssh/config".text = ''
