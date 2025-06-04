@@ -1,6 +1,7 @@
 {...}: {
   homebrew.casks = [
     "daisydisk"
+    "discord"
     "little-snitch"
     "lm-studio"
     "micro-snitch"
