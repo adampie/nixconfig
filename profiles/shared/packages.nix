@@ -5,6 +5,7 @@
 }: {
   home.packages =
     (with pkgs; [
+      aider-chat
       alejandra
       awscli
       cosign
@@ -23,7 +24,6 @@
       yq
     ])
     ++ (with unstablepkgs; [
-      aider-chat
       claude-code
       codex
       nerd-fonts.jetbrains-mono
