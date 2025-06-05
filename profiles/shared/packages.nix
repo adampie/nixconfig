@@ -23,6 +23,7 @@
       yq
     ])
     ++ (with unstablepkgs; [
+      aider-chat
       claude-code
       codex
       nerd-fonts.jetbrains-mono
