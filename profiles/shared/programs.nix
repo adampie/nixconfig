@@ -1,4 +1,9 @@
-{config, pkgs, unstablepkgs, ...}: {
+{
+  config,
+  pkgs,
+  unstablepkgs,
+  ...
+}: {
   programs = {
     git = {
       enable = true;

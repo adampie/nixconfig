@@ -9,5 +9,6 @@
 
   homebrew.masApps = {
     "Flighty" = 1358823008;
+    "Xcode" = 497799835;
   };
 }
