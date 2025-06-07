@@ -1,8 +1,8 @@
 {lib, ...}: let
   mkJetBrainsScript = appName: appBinary: {
     text = ''
-      #!/bin/sh
-      open -na "${appBinary}" --args "$@"
+      #!/bin/zsh
+      "/Applications/${appBinary}/Contents/MacOS/${appName}" "$@" > /dev/null 2>&1 &
     '';
     executable = true;
   };
@@ -18,6 +18,12 @@ in {
     NO_TELEMETRY = "1";
     DO_NOT_TRACK = "1";
   };
+
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
+  ];
 
   home.file.".homebrew/brew.env".text = ''
     export HOMEBREW_NO_ANALYTICS=1
@@ -103,8 +109,4 @@ in {
     '';
     executable = true;
   };
-
-  home.sessionPath = [
-    "$HOME/.local/bin"
-  ];
 }

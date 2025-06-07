@@ -46,9 +46,6 @@
       };
       historySubstringSearch.enable = true;
       syntaxHighlighting.enable = true;
-      sessionVariables = {
-        PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:$PATH";
-      };
     };
   };
 
