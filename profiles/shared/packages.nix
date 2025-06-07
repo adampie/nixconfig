@@ -15,7 +15,6 @@
       git
       gnupg
       jq
-      mise
       ripgrep
       starship
       tldr
@@ -26,6 +25,7 @@
     ++ (with unstablepkgs; [
       claude-code
       codex
+      mise
       nerd-fonts.jetbrains-mono
     ]);
 }

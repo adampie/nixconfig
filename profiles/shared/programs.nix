@@ -1,4 +1,4 @@
-{config, ...}: {
+{config, pkgs, unstablepkgs, ...}: {
   programs = {
     git = {
       enable = true;
@@ -13,6 +13,7 @@
     mise = {
       enable = true;
       enableZshIntegration = true;
+      package = unstablepkgs.mise;
     };
 
     starship = {
