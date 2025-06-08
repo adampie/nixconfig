@@ -13,6 +13,7 @@
       gh
       ghorg
       git
+      glab
       gnupg
       jq
       ripgrep
