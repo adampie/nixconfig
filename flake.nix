@@ -27,45 +27,19 @@
     ...
   } @ inputs: let
     supportedSystems = ["aarch64-darwin"];
+    lib = import ./lib/default.nix { inherit (nixpkgs) lib; };
 
-    forEachSupportedSystem = f:
-      nixpkgs.lib.genAttrs supportedSystems (system:
-        f {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          unstablepkgs = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-        });
+    forEachSupportedSystem = lib.forEachSupportedSystem {
+      inherit supportedSystems nixpkgs nixpkgs-unstable;
+    };
 
-    mkDarwinSystem = hostname: system: let
-      unstablepkgs = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-      nix-darwin.lib.darwinSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs unstablepkgs;
+    mkDarwinSystem = hostname: system:
+      lib.mkDarwinSystem {
+        inherit hostname system inputs home-manager;
+        unstablepkgs = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
         };
-        modules = [
-          ./hosts/darwin/${hostname}.nix
-          home-manager.darwinModules.home-manager
-          {
-            nixpkgs.config.allowUnfree = true;
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit unstablepkgs;
-              };
-            };
-          }
-        ];
       };
   in {
     schemas = flake-schemas.schemas;
