@@ -27,7 +27,7 @@
     ...
   } @ inputs: let
     supportedSystems = ["aarch64-darwin"];
-    lib = import ./lib/default.nix { inherit (nixpkgs) lib; };
+    lib = import ./lib/default.nix {inherit (nixpkgs) lib;};
 
     forEachSupportedSystem = lib.forEachSupportedSystem {
       inherit supportedSystems nixpkgs nixpkgs-unstable;

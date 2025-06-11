@@ -1,6 +1,4 @@
-{ lib }:
-
-{
+{lib}: {
   # Helper function to create a Darwin system configuration
   mkDarwinSystem = {
     hostname,
