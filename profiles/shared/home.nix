@@ -7,17 +7,26 @@
     executable = true;
   };
 
-  mkClaudeMemoryFiles = {
-    claudeDir,
-    memoryFiles,
-  }:
-    lib.listToAttrs (map (filename: {
-        name = ".claude/${filename}.md";
-        value = {
-          source = "${claudeDir}/${filename}.md";
-        };
-      })
-      memoryFiles);
+  mkClaudeFiles = { claudeDir, memoryFiles, commandFiles }:
+    lib.mkMerge [
+      {
+        ".claude/CLAUDE.md".source = "${claudeDir}/CLAUDE.md";
+      }
+      (lib.listToAttrs (map (filename: {
+          name = ".claude/memories/${filename}.md";
+          value = {
+            source = "${claudeDir}/${filename}.md";
+          };
+        })
+        memoryFiles))
+      (lib.listToAttrs (map (filename: {
+          name = ".claude/commands/${filename}.md";
+          value = {
+            source = "${claudeDir}/commands/${filename}.md";
+          };
+        })
+        commandFiles))
+    ];
 in {
   home.stateVersion = "25.05";
 
@@ -39,6 +48,8 @@ in {
 
   home.activation.createClaudeDirectory = lib.hm.dag.entryAfter ["writeBoundary"] ''
     $DRY_RUN_CMD mkdir -p $HOME/.claude
+    $DRY_RUN_CMD mkdir -p $HOME/.claude/memories
+    $DRY_RUN_CMD mkdir -p $HOME/.claude/commands
   '';
 
   # Shared home files
@@ -129,9 +140,14 @@ in {
         executable = true;
       };
     }
-    (mkClaudeMemoryFiles {
+    (mkClaudeFiles {
       claudeDir = ../../claude;
-      memoryFiles = [];
+      memoryFiles = [
+        "golang"
+      ];
+      commandFiles = [
+        "security-review"
+      ];
     })
   ];
 }
