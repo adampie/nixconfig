@@ -6,6 +6,18 @@
     '';
     executable = true;
   };
+
+  mkClaudeMemoryFiles = {
+    claudeDir,
+    memoryFiles,
+  }:
+    lib.listToAttrs (map (filename: {
+        name = ".claude/${filename}.md";
+        value = {
+          source = "${claudeDir}/${filename}.md";
+        };
+      })
+      memoryFiles);
 in {
   home.stateVersion = "25.05";
 
@@ -25,88 +37,101 @@ in {
     "/opt/homebrew/sbin"
   ];
 
-  home.file.".homebrew/brew.env".text = ''
-    export HOMEBREW_NO_ANALYTICS=1
-    export HOMEBREW_CASK_OPTS=--require-sha
-    export HOMEBREW_NO_AUTO_UPDATE=1
-    export HOMEBREW_NO_ENV_HINTS=1
-    export HOMEBREW_NO_INSECURE_REDIRECT=1
+  home.activation.createClaudeDirectory = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD mkdir -p $HOME/.claude
   '';
 
-  home.file.".hushlogin".text = "";
+  # Shared home files
+  home.file = lib.mkMerge [
+    {
+      ".homebrew/brew.env".text = ''
+        export HOMEBREW_NO_ANALYTICS=1
+        export HOMEBREW_CASK_OPTS=--require-sha
+        export HOMEBREW_NO_AUTO_UPDATE=1
+        export HOMEBREW_NO_ENV_HINTS=1
+        export HOMEBREW_NO_INSECURE_REDIRECT=1
+      '';
 
-  home.file.".local/bin/.keep".text = "";
-  home.file.".local/bin/idea" = mkJetBrainsScript "idea" "IntelliJ IDEA.app";
-  home.file.".local/bin/pycharm" = mkJetBrainsScript "pycharm" "PyCharm.app";
-  home.file.".local/bin/goland" = mkJetBrainsScript "goland" "GoLand.app";
-  home.file.".local/bin/datagrip" = mkJetBrainsScript "datagrip" "DataGrip.app";
+      ".hushlogin".text = "";
 
-  home.file.".local/bin/nixus" = {
-    text = ''
-      #!/usr/bin/env zsh
-      set -e
+      ".local/bin/.keep".text = "";
+      ".local/bin/idea" = mkJetBrainsScript "idea" "IntelliJ IDEA.app";
+      ".local/bin/pycharm" = mkJetBrainsScript "pycharm" "PyCharm.app";
+      ".local/bin/goland" = mkJetBrainsScript "goland" "GoLand.app";
+      ".local/bin/datagrip" = mkJetBrainsScript "datagrip" "DataGrip.app";
 
-      cleanup() {
-        rm -rf ./result
-      }
-      trap cleanup EXIT
+      ".local/bin/nixus" = {
+        text = ''
+          #!/usr/bin/env zsh
+          set -e
 
-      nix flake update
-      darwin-rebuild build --flake .#
+          cleanup() {
+            rm -rf ./result
+          }
+          trap cleanup EXIT
 
-      diff_output=$(nix store diff-closures /run/current-system ./result)
-      if [[ -z "$diff_output" || "$diff_output" == *"no changes"* ]]; then
-        echo "No changes detected."
-        exit 0
-      fi
+          nix flake update
+          darwin-rebuild build --flake .#
 
-      echo "$diff_output"
-      echo -n "Apply changes? (y/n): "
-      read -r ans
+          diff_output=$(nix store diff-closures /run/current-system ./result)
+          if [[ -z "$diff_output" || "$diff_output" == *"no changes"* ]]; then
+            echo "No changes detected."
+            exit 0
+          fi
 
-      if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
-        sudo darwin-rebuild switch --flake .#
-      fi
-    '';
-    executable = true;
-  };
+          echo "$diff_output"
+          echo -n "Apply changes? (y/n): "
+          read -r ans
 
-  home.file.".local/bin/fetch_all_code" = {
-    text = ''
-      #!/usr/bin/env zsh
-      # This script clones all repositories from specified SCM accounts using ghorg
-      set -e
+          if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+            sudo darwin-rebuild switch --flake .#
+          fi
+        '';
+        executable = true;
+      };
 
-      trap 'echo "Error occurred at line $LINENO. Command: $BASH_COMMAND"' ERR
+      ".local/bin/fetch_all_code" = {
+        text = ''
+          #!/usr/bin/env zsh
+          # This script clones all repositories from specified SCM accounts using ghorg
+          set -e
 
-      scm_name="$1"
-      account_type="$2"
-      account_name="$3"
-      token_name="ghorg - $account_name"
+          trap 'echo "Error occurred at line $LINENO. Command: $BASH_COMMAND"' ERR
 
-      echo "Cloning $account_name repositories..."
+          scm_name="$1"
+          account_type="$2"
+          account_name="$3"
+          token_name="ghorg - $account_name"
 
-      # Get token from 1Password
-      if ! token=$(op item get --vault 'Private' "$token_name" --fields=credential --reveal); then
-        echo "Error: Failed to retrieve token for $account_name from 1Password"
-        exit 1
-      fi
+          echo "Cloning $account_name repositories..."
 
-      if ! ghorg clone "$account_name" \
-        --scm="$scm_name" \
-        --token="$token" \
-        --clone-type="$account_type" \
-        --protocol=ssh \
-        --path=$HOME/Code \
-        --include-submodules \
-        --fetch-all \
-        --skip-archived; then
-        echo "Error: Failed to clone $account_name repositories"
-        exit 1
-      fi
+          # Get token from 1Password
+          if ! token=$(op item get --vault 'Private' "$token_name" --fields=credential --reveal); then
+            echo "Error: Failed to retrieve token for $account_name from 1Password"
+            exit 1
+          fi
 
-      echo "Successfully cloned $account_name repositories"
-    '';
-    executable = true;
-  };
+          if ! ghorg clone "$account_name" \
+            --scm="$scm_name" \
+            --token="$token" \
+            --clone-type="$account_type" \
+            --protocol=ssh \
+            --path=$HOME/Code \
+            --include-submodules \
+            --fetch-all \
+            --skip-archived; then
+            echo "Error: Failed to clone $account_name repositories"
+            exit 1
+          fi
+
+          echo "Successfully cloned $account_name repositories"
+        '';
+        executable = true;
+      };
+    }
+    (mkClaudeMemoryFiles {
+      claudeDir = ../../claude;
+      memoryFiles = [];
+    })
+  ];
 }
