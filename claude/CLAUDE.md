@@ -32,11 +32,12 @@ This file contains personal preferences and practices for Claude Code across all
 
 ## Technology-Specific Practices
 
-@memories/cdk.md
-@memories/cicd.md
-@memories/docker.md
-@memories/golang.md
-@memories/javascript.md
-@memories/python.md
-@memories/shell.md
-@memories/terraform.md
+- @~/.claude/memories/cdk.md
+- @~/.claude/memories/cicd.md
+- @~/.claude/memories/docker.md
+- @~/.claude/memories/golang.md
+- @~/.claude/memories/javascript.md
+- @~/.claude/memories/python.md
+- @~/.claude/memories/security.md
+- @~/.claude/memories/shell.md
+- @~/.claude/memories/terraform.md

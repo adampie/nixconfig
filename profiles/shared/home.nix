@@ -7,7 +7,11 @@
     executable = true;
   };
 
-  mkClaudeFiles = { claudeDir, memoryFiles, commandFiles }:
+  mkClaudeFiles = {
+    claudeDir,
+    memoryFiles,
+    commandFiles,
+  }:
     lib.mkMerge [
       {
         ".claude/CLAUDE.md".source = "${claudeDir}/CLAUDE.md";
@@ -143,11 +147,17 @@ in {
     (mkClaudeFiles {
       claudeDir = ../../claude;
       memoryFiles = [
+        "cdk"
+        "cicd"
+        "docker"
         "golang"
+        "javascript"
+        "python"
+        "security"
+        "shell"
+        "terraform"
       ];
-      commandFiles = [
-        "security-review"
-      ];
+      commandFiles = [];
     })
   ];
 }
