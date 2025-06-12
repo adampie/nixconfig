@@ -7,11 +7,13 @@
   },
   "permissions": {
     "allow": [
-      "WebFetch(domain:docs.anthropic.com)",
-
       "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(go mod:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
       "Bash(rg:*)",
-      "Bash(grep:*)"
+      "WebFetch(domain:docs.anthropic.com)"
     ]
   }
 }
