@@ -35,6 +35,7 @@
     };
 
     system.primaryUser = username;
+    home-manager.backupFileExtension = "backup";
     home-manager.users.${username} = import config.host.homeProfile;
     networking.hostName = config.host.hostname;
 
