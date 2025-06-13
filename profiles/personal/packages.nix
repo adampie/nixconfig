@@ -5,6 +5,7 @@
 }: {
   home.packages =
     (with pkgs; [
+      devenv
       goreleaser
       neofetch
       fh
