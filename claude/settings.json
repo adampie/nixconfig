@@ -12,6 +12,7 @@
       "Bash(go get:*)",
       "Bash(go mod:*)",
       "Bash(grep:*)",
+      "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(mv:*)",
       "Bash(rg:*)",
