@@ -74,6 +74,7 @@ in {
       ".local/bin/pycharm" = mkJetBrainsScript "pycharm" "PyCharm.app";
       ".local/bin/goland" = mkJetBrainsScript "goland" "GoLand.app";
       ".local/bin/datagrip" = mkJetBrainsScript "datagrip" "DataGrip.app";
+      ".local/bin/webstorm" = mkJetBrainsScript "webstorm" "WebStorm.app";
 
       ".local/bin/nixus" = {
         text = ''

@@ -35,6 +35,7 @@
       "slack"
       "superwhisper"
       "tower"
+      "webstorm"
       "zen"
     ];
 
