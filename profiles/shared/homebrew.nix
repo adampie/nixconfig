@@ -33,6 +33,7 @@
       "proxyman"
       "pycharm"
       "slack"
+      "spotify"
       "superwhisper"
       "tower"
       "webstorm"
