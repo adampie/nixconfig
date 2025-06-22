@@ -30,6 +30,7 @@
       "goland"
       "intellij-idea"
       "orbstack"
+      "pixelsnap"
       "proxyman"
       "pycharm"
       "slack"
