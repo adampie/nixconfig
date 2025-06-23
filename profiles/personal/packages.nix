@@ -5,10 +5,11 @@
 }: {
   home.packages =
     (with pkgs; [
-      devenv
+      ghidra
       goreleaser
       neofetch
       fh
+      wireshark
     ])
     ++ (with unstablepkgs; []);
 }
