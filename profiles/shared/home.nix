@@ -86,12 +86,16 @@ in {
           }
           trap cleanup EXIT
 
+          pushd "$HOME/Code/adampie/nixconfig" > /dev/null
+
           nix flake update
+          git add -A
           darwin-rebuild build --flake .#
 
           diff_output=$(nix store diff-closures /run/current-system ./result)
           if [[ -z "$diff_output" || "$diff_output" == *"no changes"* ]]; then
             echo "No changes detected."
+            popd > /dev/null
             exit 0
           fi
 
@@ -102,6 +106,8 @@ in {
           if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
             sudo darwin-rebuild switch --flake .#
           fi
+
+          popd > /dev/null
         '';
         executable = true;
       };
