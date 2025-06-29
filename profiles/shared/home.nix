@@ -107,6 +107,12 @@ in {
             sudo darwin-rebuild switch --flake .#
           fi
 
+          if git status --porcelain | grep -q .; then
+            git add -A
+            git commit -m "Flake update"
+            git push
+          fi
+
           popd > /dev/null
         '';
         executable = true;
