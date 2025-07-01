@@ -88,28 +88,137 @@ in {
 
           pushd "$HOME/Code/adampie/nixconfig" > /dev/null
 
+          echo "📦 Updating flake inputs..."
           nix flake update
           git add -A
+
+          echo "🔨 Building configuration..."
           darwin-rebuild build --flake .#
 
-          diff_output=$(nix store diff-closures /run/current-system ./result)
-          if [[ -z "$diff_output" || "$diff_output" == *"no changes"* ]]; then
-            echo "No changes detected."
+          echo ""
+          echo "🔍 Analyzing system changes..."
+          echo "=================================="
+
+          # Get Nix store changes
+          echo "Checking Nix store changes..."
+          nix_changes=$(nix store diff-closures /run/current-system ./result)
+          has_nix_changes=false
+          if [[ -n "$nix_changes" && "$nix_changes" != *"no changes"* ]]; then
+            has_nix_changes=true
+          fi
+
+          # Check for Homebrew changes
+          echo "Checking Homebrew packages..."
+          brew_formula_changes=""
+          brew_cask_changes=""
+          mas_changes=""
+
+          # Check brew formulae
+          if command -v brew >/dev/null 2>&1; then
+            brew_list=$(brew list --formula 2>/dev/null || echo "")
+            if [[ -n "$brew_list" ]]; then
+              while IFS= read -r package; do
+                [[ -z "$package" ]] && continue
+                current=$(brew info --json=v2 "$package" 2>/dev/null | jq -r '.[0].installed[0].version // "unknown"' 2>/dev/null || echo "unknown")
+                latest=$(brew info --json=v2 "$package" 2>/dev/null | jq -r '.[0].versions.stable // "unknown"' 2>/dev/null || echo "unknown")
+                if [[ "$current" != "$latest" && "$latest" != "unknown" && "$current" != "unknown" ]]; then
+                  brew_formula_changes="$brew_formula_changes  $package: $current → $latest"$'\n'
+                fi
+              done <<< "$brew_list"
+            fi
+
+            # Check casks
+            cask_list=$(brew list --cask 2>/dev/null || echo "")
+            if [[ -n "$cask_list" ]]; then
+              while IFS= read -r cask; do
+                [[ -z "$cask" ]] && continue
+                current=$(brew info --cask --json=v2 "$cask" 2>/dev/null | jq -r '.[0].installed // "unknown"' 2>/dev/null || echo "unknown")
+                latest=$(brew info --cask --json=v2 "$cask" 2>/dev/null | jq -r '.[0].version // "unknown"' 2>/dev/null || echo "unknown")
+                if [[ "$current" != "$latest" && "$latest" != "unknown" && "$current" != "unknown" ]]; then
+                  brew_cask_changes="$brew_cask_changes  $cask: $current → $latest"$'\n'
+                fi
+              done <<< "$cask_list"
+            fi
+          fi
+
+          # Check MAS apps for outdated versions
+          if command -v mas >/dev/null 2>&1; then
+            mas_outdated=$(mas outdated 2>/dev/null || echo "")
+            if [[ -n "$mas_outdated" ]]; then
+              while IFS= read -r line; do
+                [[ -z "$line" ]] && continue
+                # Parse mas outdated output: "123456 App Name (1.0.0) < 1.0.1"
+                app_id=$(echo "$line" | sed -E 's/^([0-9]+) .*/\1/')
+                app_name=$(echo "$line" | sed -E 's/^[0-9]+ ([^(]+) \(.*/\1/' | sed 's/ *$//')
+                current=$(echo "$line" | sed -E 's/.*\(([^)]+)\).*/\1/')
+                latest=$(echo "$line" | sed -E 's/.* < (.*)$/\1/')
+                if [[ -n "$app_id" && -n "$app_name" && -n "$current" && -n "$latest" ]]; then
+                  mas_changes="$mas_changes  $app_name: $current → $latest"$'\n'
+                fi
+              done <<< "$mas_outdated"
+            fi
+          fi
+
+          # Display all changes
+          changes_found=false
+
+          if [[ "$has_nix_changes" == true ]]; then
+            echo ""
+            echo "📦 Nix package changes:"
+            echo "$nix_changes"
+            changes_found=true
+          fi
+
+          if [[ -n "$brew_formula_changes" ]]; then
+            echo ""
+            echo "🍺 Homebrew formula updates available:"
+            echo -n "$brew_formula_changes"
+            changes_found=true
+          fi
+
+          if [[ -n "$brew_cask_changes" ]]; then
+            echo ""
+            echo "📱 Homebrew cask updates available:"
+            echo -n "$brew_cask_changes"
+            changes_found=true
+          fi
+
+          if [[ -n "$mas_changes" ]]; then
+            echo ""
+            echo "🏪 Mac App Store updates available:"
+            echo -n "$mas_changes"
+            changes_found=true
+          fi
+
+          if [[ "$changes_found" == false ]]; then
+            echo ""
+            echo "✅ No changes detected."
             popd > /dev/null
             exit 0
           fi
 
-          echo "$diff_output"
+          echo ""
+          echo "=================================="
           echo -n "Apply changes? (y/n): "
           read -r ans
 
           if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
+            echo ""
+            echo "🚀 Applying changes..."
             sudo darwin-rebuild switch --flake .#
+
+            echo ""
+            echo "📝 Committing changes..."
             git add -A
-            git commit -m "Flake update"
+            git commit -m "Flake update $(date '+%Y-%m-%d')"
             git push
+
+            echo ""
+            echo "✅ Update complete!"
+          else
+            echo "❌ Changes not applied."
           fi
-          
+
           popd > /dev/null
         '';
         executable = true;
