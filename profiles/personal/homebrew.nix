@@ -7,6 +7,7 @@
       "little-snitch"
       "lm-studio"
       "micro-snitch"
+      "rustrover"
     ];
 
     masApps = {

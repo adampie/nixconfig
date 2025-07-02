@@ -1,4 +1,13 @@
-{lib}: {
+{lib}: let
+  # Creates a script to launch JetBrains IDEs on macOS (Darwin) only
+  mkJetBrainsDarwinScript = appName: appBinary: {
+    text = ''
+      #!/bin/zsh
+      "/Applications/${appBinary}/Contents/MacOS/${appName}" "$@" > /dev/null 2>&1 &
+    '';
+    executable = true;
+  };
+in {
   # Helper function to create a Darwin system configuration
   mkDarwinSystem = {
     hostname,
@@ -21,7 +30,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = {
-              inherit unstablepkgs;
+              inherit unstablepkgs mkJetBrainsDarwinScript;
             };
           };
         }
@@ -45,4 +54,7 @@
           config.allowUnfree = true;
         };
       });
+
+  # Export the helper function for direct use
+  inherit mkJetBrainsDarwinScript;
 }
