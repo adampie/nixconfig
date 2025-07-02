@@ -19,6 +19,16 @@
       enable = true;
       enableZshIntegration = true;
       package = unstablepkgs.mise;
+      globalConfig = {
+        tools = {
+          golang = "latest";
+          python = "latest";
+          node = "latest";
+        };
+        settings = {
+          experimental = true;
+        };
+      };
     };
 
     starship = {
