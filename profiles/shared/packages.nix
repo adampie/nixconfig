@@ -15,7 +15,10 @@
       git
       glab
       gnupg
+      go
       jq
+      nodejs_24
+      python313
       ripgrep
       starship
       tldr
