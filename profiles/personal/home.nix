@@ -3,8 +3,6 @@
   home.homeDirectory = "/Users/adampie";
 
   home.file = {
-    ".local/bin/rustrover" = mkJetBrainsDarwinScript "rustrover" "RustRover.app";
-
     ".local/bin/fac" = {
       text = ''
         #!/usr/bin/env zsh
