@@ -9,7 +9,6 @@
       ghidra
       goreleaser
       neofetch
-      rustup
       wireshark
     ])
     ++ (with unstablepkgs; []);
