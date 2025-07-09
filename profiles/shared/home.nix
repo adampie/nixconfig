@@ -144,11 +144,10 @@ in {
               while IFS= read -r line; do
                 [[ -z "$line" ]] && continue
                 # Parse mas outdated output: "123456 App Name (1.0.0) < 1.0.1"
-                app_id=$(echo "$line" | sed -E 's/^([0-9]+) .*/\1/')
                 app_name=$(echo "$line" | sed -E 's/^[0-9]+ ([^(]+) \(.*/\1/' | sed 's/ *$//')
                 current=$(echo "$line" | sed -E 's/.*\(([^)]+)\).*/\1/')
                 latest=$(echo "$line" | sed -E 's/.* < (.*)$/\1/')
-                if [[ -n "$app_id" && -n "$app_name" && -n "$current" && -n "$latest" ]]; then
+                if [[ -n "$app_name" && -n "$current" && -n "$latest" ]]; then
                   mas_changes="$mas_changes  $app_name: $current → $latest"$'\n'
                 fi
               done <<< "$mas_outdated"
