@@ -6,9 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Configuration Management
 - `nixus` - Update flake inputs, build configuration, show diff, and apply changes (recommended workflow)
+  - Fetches git changes, updates flake inputs, builds config, analyzes changes, and applies with confirmation
+  - Shows Nix package changes, Homebrew updates, and Mac App Store updates
+  - Automatically commits and pushes changes after successful application
 - `sudo darwin-rebuild switch --flake .#` - Apply configuration changes directly
 - `darwin-rebuild build --flake .#` - Build configuration without switching (for testing)
 - `nix flake update` - Update all flake inputs manually
+- `nix flake check` - Validate flake configuration syntax and outputs
 
 ### Development
 - `nix fmt` - Format all Nix files using alejandra formatter
@@ -75,3 +79,18 @@ The configuration uses a three-tier profile approach:
 - 1Password SSH agent and GPG signing integration
 - Custom screencapture location and system appearance settings
 - Automatic `.claude/` directory and memory file synchronization
+
+## Installation and Setup
+
+Initial setup requires:
+1. Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+2. Install Determinate Nix: `curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate`
+3. Apply configuration: `sudo nix run nix-darwin -- switch --flake "https://flakehub.com/f/adampie/nixconfig/0#"`
+
+## Important Notes
+
+- The `nixus` script is the preferred way to update the system as it provides comprehensive change analysis
+- Configuration changes should be tested with `darwin-rebuild build --flake .#` before applying
+- The system uses external Nix installation (Determinate Nix) with built-in daemon disabled
+- All custom scripts are installed to `~/.local/bin/` and automatically added to PATH
+- Profile selection is done via `host.homeProfile` in each host configuration
