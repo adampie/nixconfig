@@ -84,6 +84,10 @@ in {
 
           pushd "$HOME/Code/adampie/nixconfig" > /dev/null
 
+          echo "🔄 Fetching latest changes..."
+          git fetch --all
+          git pull --rebase
+
           echo "📦 Updating flake inputs..."
           nix flake update
           git add -A
