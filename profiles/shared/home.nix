@@ -192,6 +192,14 @@ in {
           if [[ "$changes_found" == false ]]; then
             echo ""
             echo "✅ No changes detected."
+            # Check if flake.lock is staged or modified
+            if git status --porcelain | grep -q '^. flake.lock'; then
+              echo "📝 Committing flake.lock update..."
+              git add flake.lock
+              git commit -m "Flake.lock update $(date '+%Y-%m-%d')"
+              git push
+              echo "✅ flake.lock changes committed and pushed."
+            fi
             popd > /dev/null
             exit 0
           fi
