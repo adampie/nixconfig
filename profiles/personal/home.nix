@@ -1,4 +1,8 @@
-{lib, mkJetBrainsDarwinScript, ...}: {
+{
+  lib,
+  mkJetBrainsDarwinScript,
+  ...
+}: {
   home.username = "adampie";
   home.homeDirectory = "/Users/adampie";
 

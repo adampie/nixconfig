@@ -19,27 +19,31 @@
       "mas"
     ];
 
-    casks = [
-      "1password"
-      "1password-cli"
-      "beyond-compare"
-      "cleanshot"
-      "cursor"
-      "datagrip"
-      "ghostty"
-      "goland"
-      "intellij-idea"
-      "orbstack"
-      "pixelsnap"
-      "proxyman"
-      "pycharm"
-      "slack"
-      "spotify"
-      "superwhisper"
-      "tower"
-      "webstorm"
-      "zen"
-    ];
+    casks =
+      map (name: {
+        inherit name;
+        greedy = true;
+      }) [
+        "1password"
+        "1password-cli"
+        "beyond-compare"
+        "cleanshot"
+        "cursor"
+        "datagrip"
+        "ghostty"
+        "goland"
+        "intellij-idea"
+        "orbstack"
+        "pixelsnap"
+        "proxyman"
+        "pycharm"
+        "slack"
+        "spotify"
+        "superwhisper"
+        "tower"
+        "webstorm"
+        "zen"
+      ];
 
     masApps = {
       "1Password for Safari" = 1569813296;
