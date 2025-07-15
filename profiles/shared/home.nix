@@ -127,17 +127,24 @@ in {
               done <<< "$brew_list"
             fi
 
-            # Check casks
-            cask_list=$(brew list --cask 2>/dev/null || echo "")
-            if [[ -n "$cask_list" ]]; then
-              while IFS= read -r cask; do
-                [[ -z "$cask" ]] && continue
-                current=$(brew info --cask --json=v2 "$cask" 2>/dev/null | jq -r '.[0].installed // "unknown"' 2>/dev/null || echo "unknown")
-                latest=$(brew info --cask --json=v2 "$cask" 2>/dev/null | jq -r '.[0].version // "unknown"' 2>/dev/null || echo "unknown")
-                if [[ "$current" != "$latest" && "$latest" != "unknown" && "$current" != "unknown" ]]; then
-                  brew_cask_changes="$brew_cask_changes  $cask: $current → $latest"$'\n'
+            # Check casks (including greedy updates)
+            cask_outdated=$(brew outdated --cask --greedy 2>/dev/null || echo "")
+            if [[ -n "$cask_outdated" ]]; then
+              while IFS= read -r line; do
+                [[ -z "$line" ]] && continue
+                # Parse brew outdated output: "cask-name (1.0.0) < 1.0.1"
+                cask_name=$(echo "$line" | awk '{print $1}')
+                if [[ -n "$cask_name" ]]; then
+                  current=$(echo "$line" | sed -E 's/.*\(([^)]+)\).*/\1/')
+                  latest=$(echo "$line" | sed -E 's/.* < (.*)$/\1/')
+                  if [[ -n "$current" && -n "$latest" ]]; then
+                    brew_cask_changes="$brew_cask_changes  $cask_name: $current → $latest"$'\n'
+                  else
+                    # For greedy casks that may not show version differences
+                    brew_cask_changes="$brew_cask_changes  $cask_name: update available"$'\n'
+                  fi
                 fi
-              done <<< "$cask_list"
+              done <<< "$cask_outdated"
             fi
           fi
 
@@ -195,6 +202,15 @@ in {
             # Check if flake.lock is staged or modified
             if git status --porcelain | grep -q 'flake.lock'; then
               echo "📝 Committing flake.lock update..."
+              
+              # Check if 1Password is running and start it if needed
+              if ! pgrep -x "1Password" > /dev/null; then
+                echo "⚠️  1Password not running, starting it..."
+                open -a "1Password"
+                echo "⏳ Waiting for 1Password to start..."
+                sleep 5
+              fi
+              
               git add flake.lock
               git commit -m "Flake.lock update $(date '+%Y-%m-%d')"
               git push
@@ -216,6 +232,15 @@ in {
 
             echo ""
             echo "📝 Committing changes..."
+            
+            # Check if 1Password is running and start it if needed
+            if ! pgrep -x "1Password" > /dev/null; then
+              echo "⚠️  1Password not running, starting it..."
+              open -a "1Password"
+              echo "⏳ Waiting for 1Password to start..."
+              sleep 5
+            fi
+            
             git add -A
             git commit -m "Flake update $(date '+%Y-%m-%d')"
             git push
