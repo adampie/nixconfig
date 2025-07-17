@@ -122,7 +122,7 @@ in {
                 current=$(brew info --json=v2 "$package" 2>/dev/null | jq -r '.[0].installed[0].version // "unknown"' 2>/dev/null || echo "unknown")
                 latest=$(brew info --json=v2 "$package" 2>/dev/null | jq -r '.[0].versions.stable // "unknown"' 2>/dev/null || echo "unknown")
                 if [[ "$current" != "$latest" && "$latest" != "unknown" && "$current" != "unknown" ]]; then
-                  brew_formula_changes="$brew_formula_changes  $package: $current → $latest"$'\n'
+                  brew_formula_changes="$brew_formula_changes$package: $current → $latest"$'\n'
                 fi
               done <<< "$brew_list"
             fi
@@ -137,11 +137,8 @@ in {
                 if [[ -n "$cask_name" ]]; then
                   current=$(echo "$line" | sed -E 's/.*\(([^)]+)\).*/\1/')
                   latest=$(echo "$line" | sed -E 's/.* < (.*)$/\1/')
-                  if [[ -n "$current" && -n "$latest" ]]; then
-                    brew_cask_changes="$brew_cask_changes  $cask_name: $current → $latest"$'\n'
-                  else
-                    # For greedy casks that may not show version differences
-                    brew_cask_changes="$brew_cask_changes  $cask_name: update available"$'\n'
+                  if [[ -n "$current" && -n "$latest" && "$current" != "$latest" ]]; then
+                    brew_cask_changes="$brew_cask_changes$cask_name: $current → $latest"$'\n'
                   fi
                 fi
               done <<< "$cask_outdated"
@@ -159,7 +156,7 @@ in {
                 current=$(echo "$line" | sed -E 's/.*\(([^)]+)\).*/\1/')
                 latest=$(echo "$line" | sed -E 's/.* < (.*)$/\1/')
                 if [[ -n "$app_name" && -n "$current" && -n "$latest" ]]; then
-                  mas_changes="$mas_changes  $app_name: $current → $latest"$'\n'
+                  mas_changes="$mas_changes$app_name: $current -> $latest"$'\n'
                 fi
               done <<< "$mas_outdated"
             fi
@@ -202,7 +199,7 @@ in {
             # Check if flake.lock is staged or modified
             if git status --porcelain | grep -q 'flake.lock'; then
               echo "📝 Committing flake.lock update..."
-              
+
               # Check if 1Password is running and start it if needed
               if ! pgrep -x "1Password" > /dev/null; then
                 echo "⚠️  1Password not running, starting it..."
@@ -210,7 +207,7 @@ in {
                 echo "⏳ Waiting for 1Password to start..."
                 sleep 5
               fi
-              
+
               git add flake.lock
               git commit -m "Flake.lock update $(date '+%Y-%m-%d')"
               git push
@@ -232,7 +229,7 @@ in {
 
             echo ""
             echo "📝 Committing changes..."
-            
+
             # Check if 1Password is running and start it if needed
             if ! pgrep -x "1Password" > /dev/null; then
               echo "⚠️  1Password not running, starting it..."
@@ -240,7 +237,7 @@ in {
               echo "⏳ Waiting for 1Password to start..."
               sleep 5
             fi
-            
+
             git add -A
             git commit -m "Flake update $(date '+%Y-%m-%d')"
             git push
