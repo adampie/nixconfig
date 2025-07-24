@@ -26,7 +26,7 @@
     home-manager,
     ...
   } @ inputs: let
-    supportedSystems = ["aarch64-darwin"];
+    supportedSystems = ["aarch64-darwin" "x86_64-linux"];
     lib = import ./lib/default.nix {inherit (nixpkgs) lib;};
 
     forEachSupportedSystem = lib.forEachSupportedSystem {
@@ -41,12 +41,25 @@
           config.allowUnfree = true;
         };
       };
+
+    mkNixosSystem = hostname: system:
+      lib.mkNixosSystem {
+        inherit hostname system inputs home-manager;
+        unstablepkgs = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
   in {
     schemas = flake-schemas.schemas;
 
     darwinConfigurations = {
       "Adams-MacBook-Pro" = mkDarwinSystem "Adams-MacBook-Pro" "aarch64-darwin";
       "Adams-Work-MacBook-Pro" = mkDarwinSystem "Adams-Work-MacBook-Pro" "aarch64-darwin";
+    };
+
+    nixosConfigurations = {
+      AdamPC = mkNixosSystem "AdamPC" "x86_64-linux";
     };
 
     formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);

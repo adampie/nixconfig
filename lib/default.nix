@@ -7,6 +7,15 @@
     '';
     executable = true;
   };
+
+  # Creates a script to launch JetBrains IDEs on Linux
+  mkJetBrainsLinuxScript = appName: {
+    text = ''
+      #!/bin/bash
+      ${appName} "$@" > /dev/null 2>&1 &
+    '';
+    executable = true;
+  };
 in {
   # Helper function to create a Darwin system configuration
   mkDarwinSystem = {
@@ -37,6 +46,35 @@ in {
       ];
     };
 
+  # Helper function to create a NixOS system configuration
+  mkNixosSystem = {
+    hostname,
+    system,
+    inputs,
+    unstablepkgs,
+    home-manager,
+  }:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs unstablepkgs;
+      };
+      modules = [
+        ../hosts/wsl/${hostname}.nix
+        home-manager.nixosModules.home-manager
+        {
+          nixpkgs.config.allowUnfree = true;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = {
+              inherit unstablepkgs mkJetBrainsLinuxScript;
+            };
+          };
+        }
+      ];
+    };
+
   # Helper function to iterate over supported systems
   forEachSupportedSystem = {
     supportedSystems,
@@ -55,6 +93,6 @@ in {
         };
       });
 
-  # Export the helper function for direct use
-  inherit mkJetBrainsDarwinScript;
+  # Export the helper functions for direct use
+  inherit mkJetBrainsDarwinScript mkJetBrainsLinuxScript;
 }
