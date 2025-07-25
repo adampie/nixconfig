@@ -26,28 +26,55 @@
     home-manager,
     ...
   } @ inputs: let
-    supportedSystems = ["aarch64-darwin"];
+    supportedSystems = ["aarch64-darwin" "aarch64-linux" "x86_64-linux"];
     lib = import ./lib/default.nix {inherit (nixpkgs) lib;};
 
     forEachSupportedSystem = lib.forEachSupportedSystem {
       inherit supportedSystems nixpkgs nixpkgs-unstable;
     };
 
-    mkDarwinSystem = hostname: system:
-      lib.mkDarwinSystem {
-        inherit hostname system inputs home-manager;
-        unstablepkgs = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
+    systems = {
+      "Adams-MacBook-Pro" = {
+        system = "aarch64-darwin";
+        type = "darwin";
+        profile = "personal";
       };
+      "Adams-Work-MacBook-Pro" = {
+        system = "aarch64-darwin";
+        type = "darwin";
+        profile = "work";
+      };
+    };
+
+    mkSystem = hostname: config: let
+      unstablepkgs = import nixpkgs-unstable {
+        system = config.system;
+        config.allowUnfree = true;
+      };
+    in
+      if config.type == "darwin"
+      then
+        lib.mkDarwinSystem {
+          inherit hostname inputs home-manager unstablepkgs;
+          system = config.system;
+        }
+      else if config.type == "nixos"
+      then
+        lib.mkNixOSSystem {
+          inherit hostname inputs home-manager unstablepkgs;
+          system = config.system;
+          profile = config.profile;
+          hardware = config.hardware or null;
+        }
+      else throw "Unknown system type: ${config.type}";
+
+    darwinSystems = nixpkgs.lib.filterAttrs (n: v: v.type == "darwin") systems;
+    nixosSystems = nixpkgs.lib.filterAttrs (n: v: v.type == "nixos") systems;
   in {
     schemas = flake-schemas.schemas;
 
-    darwinConfigurations = {
-      "Adams-MacBook-Pro" = mkDarwinSystem "Adams-MacBook-Pro" "aarch64-darwin";
-      "Adams-Work-MacBook-Pro" = mkDarwinSystem "Adams-Work-MacBook-Pro" "aarch64-darwin";
-    };
+    darwinConfigurations = nixpkgs.lib.mapAttrs mkSystem darwinSystems;
+    nixosConfigurations = nixpkgs.lib.mapAttrs mkSystem nixosSystems;
 
     formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);
   };

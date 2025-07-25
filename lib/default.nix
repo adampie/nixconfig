@@ -1,5 +1,4 @@
 {lib}: let
-  # Creates a script to launch JetBrains IDEs on macOS (Darwin) only
   mkJetBrainsDarwinScript = appName: appBinary: {
     text = ''
       #!/bin/zsh
@@ -8,7 +7,6 @@
     executable = true;
   };
 in {
-  # Helper function to create a Darwin system configuration
   mkDarwinSystem = {
     hostname,
     system,
@@ -37,7 +35,6 @@ in {
       ];
     };
 
-  # Helper function to iterate over supported systems
   forEachSupportedSystem = {
     supportedSystems,
     nixpkgs,
@@ -55,6 +52,39 @@ in {
         };
       });
 
-  # Export the helper function for direct use
+  mkNixOSSystem = {
+    hostname,
+    system,
+    profile,
+    hardware ? null,
+    inputs,
+    unstablepkgs,
+    home-manager,
+  }:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {
+        inherit inputs unstablepkgs;
+      };
+      modules =
+        [
+          ../hosts/nixos/${hostname}.nix
+          home-manager.nixosModules.home-manager
+          {
+            nixpkgs.config.allowUnfree = true;
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = {
+                inherit unstablepkgs;
+              };
+            };
+          }
+        ]
+        ++ lib.optionals (hardware != null) [
+          ../modules/hardware/${hardware}.nix
+        ];
+    };
+
   inherit mkJetBrainsDarwinScript;
 }
