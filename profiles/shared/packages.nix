@@ -9,7 +9,9 @@
       alejandra
       awscli
       cosign
+      colordiff
       curl
+      diffutils
       gh
       ghorg
       git
