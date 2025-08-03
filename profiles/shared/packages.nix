@@ -11,6 +11,7 @@
       cosign
       colordiff
       curl
+      devenv
       diffutils
       gh
       ghorg
