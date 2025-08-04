@@ -1,10 +1,4 @@
-{
-  config,
-  pkgs,
-  unstablepkgs,
-  lib,
-  ...
-}: {
+_: {
   imports = [
     ../shared/home.nix
     ../shared/packages.nix

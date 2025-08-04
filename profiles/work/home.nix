@@ -1,12 +1,14 @@
-{...}: {
-  home.username = "adampie";
-  home.homeDirectory = "/Users/adampie";
+_: {
+  home = {
+    username = "adampie";
+    homeDirectory = "/Users/adampie";
 
-  home.file.".local/bin/fac" = {
-    text = ''
-      #!/usr/bin/env zsh
-      fetch_all_code "gitlab" "org" "zapier"
-    '';
-    executable = true;
+    file.".local/bin/fac" = {
+      text = ''
+        #!/usr/bin/env zsh
+        fetch_all_code "gitlab" "org" "zapier"
+      '';
+      executable = true;
+    };
   };
 }

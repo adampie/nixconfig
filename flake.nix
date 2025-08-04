@@ -18,12 +18,10 @@
   };
 
   outputs = {
-    self,
-    flake-schemas,
     nixpkgs,
     nixpkgs-unstable,
-    nix-darwin,
     home-manager,
+    flake-schemas,
     ...
   } @ inputs: let
     supportedSystems = ["aarch64-darwin" "aarch64-linux" "x86_64-linux"];
@@ -48,7 +46,7 @@
 
     mkSystem = hostname: config: let
       unstablepkgs = import nixpkgs-unstable {
-        system = config.system;
+        inherit (config) system;
         config.allowUnfree = true;
       };
     in
@@ -56,26 +54,72 @@
       then
         lib.mkDarwinSystem {
           inherit hostname inputs home-manager unstablepkgs;
-          system = config.system;
+          inherit (config) system;
         }
       else if config.type == "nixos"
       then
         lib.mkNixOSSystem {
           inherit hostname inputs home-manager unstablepkgs;
-          system = config.system;
-          profile = config.profile;
+          inherit (config) system profile;
           hardware = config.hardware or null;
         }
       else throw "Unknown system type: ${config.type}";
 
-    darwinSystems = nixpkgs.lib.filterAttrs (n: v: v.type == "darwin") systems;
-    nixosSystems = nixpkgs.lib.filterAttrs (n: v: v.type == "nixos") systems;
+    darwinSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "darwin") systems;
+    nixosSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "nixos") systems;
   in {
-    schemas = flake-schemas.schemas;
+    inherit (flake-schemas) schemas;
 
     darwinConfigurations = nixpkgs.lib.mapAttrs mkSystem darwinSystems;
     nixosConfigurations = nixpkgs.lib.mapAttrs mkSystem nixosSystems;
 
     formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);
+
+    devShells = forEachSupportedSystem ({pkgs, ...}: {
+      default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          # Nix tooling
+          alejandra
+          deadnix
+          nil
+          nixd
+          statix
+
+          # Development utilities
+          git
+          gh
+        ];
+
+        shellHook = ''
+          echo "🛠️  Nix development environment"
+          echo ""
+          echo "Available tools:"
+          echo "  alejandra - Nix code formatter"
+          echo "  statix    - Nix code linter"
+          echo "  deadnix   - Find unused Nix code"
+          echo "  nil/nixd  - Nix language servers"
+          echo ""
+          echo "Run 'nix fmt' to format code"
+          echo "Run 'nix flake check' to validate"
+        '';
+      };
+    });
+
+    checks = forEachSupportedSystem ({pkgs, ...}: {
+      statix = pkgs.runCommand "statix-check" {} ''
+        ${pkgs.statix}/bin/statix check ${./.} --ignore=flake.lock
+        touch $out
+      '';
+
+      deadnix = pkgs.runCommand "deadnix-check" {} ''
+        ${pkgs.deadnix}/bin/deadnix --fail ${./.}
+        touch $out
+      '';
+
+      format = pkgs.runCommand "format-check" {} ''
+        ${pkgs.alejandra}/bin/alejandra --check ${./.}
+        touch $out
+      '';
+    });
   };
 }
