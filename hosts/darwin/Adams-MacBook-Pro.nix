@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+_: {
   imports = [
     ../../modules/system/darwin.nix
     ../../profiles/shared/homebrew.nix
@@ -13,6 +9,9 @@
     username = "adampie";
     hostname = "Adams-MacBook-Pro";
     homeProfile = ../../profiles/personal/default.nix;
+    platform = "darwin";
+    systemType = "personal";
+    architecture = "aarch64";
   };
 
   system.defaults = {

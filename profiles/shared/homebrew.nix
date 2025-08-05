@@ -1,4 +1,4 @@
-{...}: {
+_: {
   homebrew = {
     enable = true;
 
@@ -6,11 +6,6 @@
       {
         name = "adampie/homebrew-tap";
         clone_target = "git@github.com:adampie/homebrew-tap.git";
-        force_auto_update = true;
-      }
-      {
-        name = "adampie/homebrew-tap-private";
-        clone_target = "git@github.com:adampie/homebrew-tap-private.git";
         force_auto_update = true;
       }
     ];
@@ -24,7 +19,6 @@
         inherit name;
         greedy = true;
       }) [
-        "1password"
         "1password-cli"
         "beyond-compare"
         "cleanshot"
@@ -37,8 +31,6 @@
         "pixelsnap"
         "proxyman"
         "pycharm"
-        "slack"
-        "spotify"
         "superwhisper"
         "tower"
         "webstorm"

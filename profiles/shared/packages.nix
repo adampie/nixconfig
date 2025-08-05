@@ -1,16 +1,19 @@
 {
   pkgs,
   unstablepkgs,
+  lib,
   ...
 }: {
   home.packages =
     (with pkgs; [
+      # Core CLI tools
       aider-chat
       alejandra
       awscli
       cosign
       colordiff
       curl
+      devenv
       diffutils
       gh
       ghorg
@@ -33,5 +36,14 @@
       codex
       mise
       nerd-fonts.jetbrains-mono
-    ]);
+    ])
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      # Darwin-specific packages
+      pkgs.mas
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      # Linux-specific packages would go here
+      # pkgs.xclip
+      # pkgs.wl-clipboard
+    ];
 }

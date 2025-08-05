@@ -1,4 +1,4 @@
-{...}: {
+_: {
   programs.git = {
     extraConfig = {
       commit = {gpgsign = true;};

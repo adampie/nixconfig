@@ -1,10 +1,25 @@
-{lib}: let
+{lib, ...}: let
   mkJetBrainsDarwinScript = appName: appBinary: {
     text = ''
       #!/bin/zsh
       "/Applications/${appBinary}/Contents/MacOS/${appName}" "$@" > /dev/null 2>&1 &
     '';
     executable = true;
+  };
+
+  # CallPackage pattern for better composability
+  callPackageWith = autoArgs: fn: args: let
+    f =
+      if lib.isFunction fn
+      then fn
+      else import fn;
+    fargs = lib.functionArgs f;
+  in
+    f ((lib.intersectAttrs fargs autoArgs) // args);
+
+  # Make a package set with callPackage
+  makePackageSet = pkgs: {
+    callPackage = callPackageWith pkgs;
   };
 in {
   mkDarwinSystem = {
@@ -55,7 +70,6 @@ in {
   mkNixOSSystem = {
     hostname,
     system,
-    profile,
     hardware ? null,
     inputs,
     unstablepkgs,
@@ -86,5 +100,16 @@ in {
         ];
     };
 
-  inherit mkJetBrainsDarwinScript;
+  inherit mkJetBrainsDarwinScript callPackageWith makePackageSet;
+
+  # Platform helpers
+  mkConditionalPackages = {
+    pkgs,
+    darwin ? [],
+    linux ? [],
+    common ? [],
+  }:
+    common
+    ++ lib.optionals pkgs.stdenv.isDarwin darwin
+    ++ lib.optionals pkgs.stdenv.isLinux linux;
 }
