@@ -24,7 +24,6 @@ _: {
         inherit name;
         greedy = true;
       }) [
-        "1password"
         "1password-cli"
         "beyond-compare"
         "cleanshot"
@@ -37,8 +36,6 @@ _: {
         "pixelsnap"
         "proxyman"
         "pycharm"
-        "slack"
-        "spotify"
         "superwhisper"
         "tower"
         "webstorm"

@@ -5,12 +5,15 @@ _: {
         inherit name;
         greedy = true;
       }) [
+        "1password"
         "claude"
         "daisydisk"
         "discord"
         "little-snitch"
         "lm-studio"
         "micro-snitch"
+        "slack"
+        "spotify"
       ];
 
     masApps = {
