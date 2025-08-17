@@ -267,7 +267,7 @@ in {
             scm_name="$1"
             account_type="$2"
             account_name="$3"
-            token_name="ghorg - $account_name"
+            token_name="ghorg - $account_name - $scm_name"
 
             echo "Cloning $account_name repositories..."
 
