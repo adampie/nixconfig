@@ -22,8 +22,8 @@
       gnupg
       go
       jq
-      nodejs_24
-      python313
+      # nodejs_24
+      # python313
       ripgrep
       starship
       tldr
