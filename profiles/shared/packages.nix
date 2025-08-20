@@ -9,7 +9,7 @@
       # Core CLI tools
       aider-chat
       alejandra
-      awscli
+      awscli2
       cosign
       colordiff
       curl
