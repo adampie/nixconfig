@@ -285,6 +285,7 @@ in {
               --path=$HOME/Code \
               --include-submodules \
               --fetch-all \
+              --preserve-dir \
               --skip-archived; then
               echo "Error: Failed to clone $account_name repositories"
               exit 1
