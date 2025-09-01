@@ -17,11 +17,14 @@ _: {
         "claude"
         "daisydisk"
         "discord"
+        "ghidra"
         "little-snitch"
         "lm-studio"
         "micro-snitch"
         "slack"
         "spotify"
+        "temurin"
+        "wireshark-app"
       ];
 
     masApps = {
