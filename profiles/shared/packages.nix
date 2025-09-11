@@ -6,8 +6,6 @@
 }: {
   home.packages =
     (with pkgs; [
-      # Core CLI tools
-      aider-chat
       alejandra
       awscli2
       cosign
@@ -20,10 +18,7 @@
       git
       glab
       gnupg
-      go
       jq
-      # nodejs_24
-      # python313
       ripgrep
       starship
       tldr
@@ -32,8 +27,6 @@
       yq
     ])
     ++ (with unstablepkgs; [
-      claude-code
-      codex
       mise
       nerd-fonts.jetbrains-mono
     ])

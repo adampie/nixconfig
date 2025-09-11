@@ -11,6 +11,8 @@ _: {
     ];
 
     brews = [
+      "aider"
+      "codex"
       "mas"
     ];
 
@@ -22,6 +24,7 @@ _: {
         "1password-cli"
         "beyond-compare"
         "cleanshot"
+        "claude-code"
         "cursor"
         "datagrip"
         "ghostty"
