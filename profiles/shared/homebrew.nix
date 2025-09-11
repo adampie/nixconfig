@@ -11,7 +11,6 @@ _: {
     ];
 
     brews = [
-      "aider"
       "codex"
       "mas"
     ];
