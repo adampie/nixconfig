@@ -55,11 +55,7 @@
           wvous-tl-corner = 1;
           wvous-tr-corner = 1;
 
-          persistent-apps = [
-            {
-              app = "/System/Applications/Launchpad.app";
-            }
-          ];
+          persistent-apps = [];
           persistent-others = [];
         };
 
