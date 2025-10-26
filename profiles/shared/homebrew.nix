@@ -13,6 +13,8 @@ _: {
     brews = [
       "codex"
       "mas"
+      "opa"
+      "yara-x"
     ];
 
     casks =
