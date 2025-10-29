@@ -18,4 +18,14 @@ _: {
     };
     userEmail = "adam.pietrzycki@zapier.com";
   };
+
+  programs.mise = {
+    globalConfig = {
+      tools = {
+        nodejs = "lts";
+        python = "latest";
+        go = "latest";
+      };
+    };
+  };
 }
