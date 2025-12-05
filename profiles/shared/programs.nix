@@ -2,8 +2,10 @@
   programs = {
     git = {
       enable = true;
-      extraConfig = {init = {defaultBranch = "main";};};
-      userName = "Adam Pietrzycki";
+      settings = {
+        init.defaultBranch = "main";
+        user.name = "Adam Pietrzycki";
+      };
     };
 
     gpg = {

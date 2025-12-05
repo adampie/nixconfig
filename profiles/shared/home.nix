@@ -29,7 +29,7 @@
     ];
 in {
   home = {
-    stateVersion = "25.05";
+    stateVersion = "25.11";
 
     activation = {
       createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
