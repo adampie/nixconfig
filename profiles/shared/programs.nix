@@ -20,7 +20,7 @@
         settings = {
           experimental = true;
         };
-        
+
         tools = {
           nodejs = "lts";
           python = "latest";
