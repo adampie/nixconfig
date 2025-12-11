@@ -35,14 +35,7 @@ sudo darwin-rebuild switch --flake .#
 ## Update
 
 ```bash
-$ nixus
-
-adampie@Mac:~/Code/adampie/nixconfig/ > nixus                                                 
-warning: updating lock file "/Users/adampie/Desktop/nixconfig/flake.lock":
-• Updated input 'nixpkgs-unstable':
-    '...' (2025-05-28)
-  → '...' (2025-05-31)
-building the system configuration...
-Apply changes? (y/n): y
-...
+nix flake update
+darwin-rebuild build --flake .#
+sudo darwin-rebuild switch --flake .#
 ```

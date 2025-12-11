@@ -1,17 +1,70 @@
 _: {
   imports = [
-    ../../modules/system/darwin.nix
-    ../../profiles/shared/homebrew.nix
-    ../../profiles/work/homebrew.nix
+    ../../modules/darwin/default.nix
   ];
 
   host = {
     username = "adampie";
     hostname = "Adams-Work-MacBook-Pro";
-    homeProfile = ../../profiles/work/default.nix;
+    homeProfile = ../../users/adampie/work.nix;
     platform = "darwin";
     systemType = "work";
     architecture = "aarch64";
+  };
+
+  homebrew = {
+    enable = true;
+
+    taps = [
+      {
+        name = "adampie/homebrew-tap";
+        clone_target = "git@github.com:adampie/homebrew-tap.git";
+        force_auto_update = true;
+      }
+    ];
+
+    brews = [
+      "codex"
+      "gemini-cli"
+      "mas"
+      "opa"
+      "yara-x"
+    ];
+
+    casks =
+      map (name: {
+        inherit name;
+        greedy = true;
+      }) [
+        "1password-cli"
+        "beyond-compare"
+        "cleanshot"
+        "cursor"
+        "datagrip"
+        "ghostty"
+        "goland"
+        "intellij-idea"
+        "orbstack"
+        "proxyman"
+        "pycharm"
+        "superwhisper"
+        "tower"
+        "webstorm"
+        "zed"
+        "zen"
+      ];
+
+    masApps = {
+      "1Password for Safari" = 1569813296;
+      "Kagi for Safari" = 1622835804;
+      "Wipr 2" = 1662217862;
+    };
+
+    onActivation = {
+      cleanup = "zap";
+      autoUpdate = true;
+      upgrade = true;
+    };
   };
 
   system.defaults = {};
