@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   unstablepkgs,
   ...
 }: {
@@ -86,35 +85,6 @@
       };
     };
   };
-
-  home.packages =
-    (with pkgs; [
-      alejandra
-      awscli2
-      cosign
-      colordiff
-      curl
-      devenv
-      diffutils
-      gh
-      ghorg
-      git
-      gnupg
-      jq
-      ripgrep
-      starship
-      tldr
-      watch
-      wget
-      yq
-    ])
-    ++ (with unstablepkgs; [
-      mise
-      nerd-fonts.jetbrains-mono
-    ])
-    ++ lib.optionals pkgs.stdenv.isDarwin [
-      pkgs.mas
-    ];
 
   programs = {
     git = {

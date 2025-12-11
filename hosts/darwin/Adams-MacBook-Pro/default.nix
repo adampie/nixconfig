@@ -1,8 +1,4 @@
-{
-  pkgs,
-  unstablepkgs,
-  ...
-}: {
+{...}: {
   imports = [
     ../../modules/darwin/default.nix
   ];
@@ -15,8 +11,49 @@
     architecture = "aarch64";
   };
 
-  home-manager.users.adampie = import ../../users/adampie/personal.nix {
-    inherit pkgs unstablepkgs;
+  home-manager.users.adampie = {
+    pkgs,
+    unstablepkgs,
+    lib,
+    ...
+  }: {
+    imports = [
+      (import ../../users/adampie/personal.nix {
+        inherit pkgs unstablepkgs;
+      })
+    ];
+
+    home.packages =
+      (with pkgs; [
+        alejandra
+        awscli2
+        cosign
+        colordiff
+        curl
+        devenv
+        diffutils
+        fh
+        gh
+        ghorg
+        git
+        gnupg
+        goreleaser
+        jq
+        neofetch
+        ripgrep
+        starship
+        tldr
+        watch
+        wget
+        yq
+      ])
+      ++ (with unstablepkgs; [
+        mise
+        nerd-fonts.jetbrains-mono
+      ])
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        pkgs.mas
+      ];
   };
 
   homebrew = {

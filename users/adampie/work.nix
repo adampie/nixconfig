@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   imports = [./default.nix];
 
   home.file.".local/bin/fac" = {
@@ -8,17 +8,6 @@
     '';
     executable = true;
   };
-
-  home.packages = with pkgs; [
-    aws-vault
-    dive
-    gettext
-    glab
-    just
-    kubectl
-    kubernetes-helm
-  ];
-
   programs.git = {
     settings = {
       commit.gpgsign = true;

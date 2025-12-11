@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   imports = [./default.nix];
 
   home = {
@@ -11,13 +11,6 @@
       executable = true;
     };
   };
-
-  home.packages = with pkgs; [
-    fh
-    goreleaser
-    neofetch
-  ];
-
   programs.git = {
     settings = {
       commit.gpgsign = true;
