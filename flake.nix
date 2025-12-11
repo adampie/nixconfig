@@ -2,7 +2,6 @@
   description = "Nix config by adampie";
 
   inputs = {
-    flake-schemas.url = "https://flakehub.com/f/DeterminateSystems/flake-schemas/*";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
     nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
@@ -21,7 +20,6 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
-    flake-schemas,
     ...
   } @ inputs: let
     supportedSystems = ["aarch64-darwin" "aarch64-linux" "x86_64-linux"];
@@ -77,8 +75,6 @@
     darwinSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "darwin") hostFiles;
     nixosSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "nixos") hostFiles;
   in {
-    inherit (flake-schemas) schemas;
-
     darwinConfigurations = nixpkgs.lib.mapAttrs mkSystem darwinSystems;
     nixosConfigurations = nixpkgs.lib.mapAttrs mkSystem nixosSystems;
 
