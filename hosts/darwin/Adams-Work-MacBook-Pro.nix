@@ -1,4 +1,8 @@
-_: {
+{
+  mkJetBrainsDarwinScript,
+  unstablepkgs,
+  ...
+}: {
   imports = [
     ../../modules/darwin/default.nix
   ];
@@ -11,7 +15,9 @@ _: {
     architecture = "aarch64";
   };
 
-  home-manager.users.adampie = import ../../users/adampie/work.nix;
+  home-manager.users.adampie = import ../../users/adampie/work.nix {
+    inherit mkJetBrainsDarwinScript unstablepkgs;
+  };
 
   homebrew = {
     enable = true;

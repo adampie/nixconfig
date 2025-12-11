@@ -31,17 +31,28 @@
       inherit supportedSystems nixpkgs nixpkgs-unstable;
     };
 
-    hostFiles =
+    hostFiles = let
+      darwinDir = ./hosts/darwin;
+      darwinDirStr = builtins.toString darwinDir;
+      entries = builtins.readDir darwinDir;
+      hostFiles = builtins.filter (name:
+        entries.${name}
+        == "regular"
+        && nixpkgs.lib.hasSuffix ".nix" name) (builtins.attrNames entries);
+      dropSuffix = name: nixpkgs.lib.removeSuffix ".nix" name;
+    in
       builtins.listToAttrs
       (map (name: {
-          inherit name;
+          name = dropSuffix name;
           value = {
             system = "aarch64-darwin";
             type = "darwin";
-            modules = [./hosts/darwin/${name}];
+            modules = [
+              (builtins.toPath "${darwinDirStr}/${name}")
+            ];
           };
         })
-        (builtins.attrNames (builtins.readDir ./hosts/darwin)));
+        hostFiles);
 
     mkSystem = _: config: let
       unstablepkgs = import nixpkgs-unstable {
