@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ../../modules/darwin/default.nix
+    ../../../modules/darwin/default.nix
   ];
 
   host = {
