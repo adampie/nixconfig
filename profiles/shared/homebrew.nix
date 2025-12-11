@@ -25,8 +25,8 @@ _: {
       }) [
         "1password-cli"
         "beyond-compare"
-        "cleanshot"
         "claude-code"
+        "cleanshot"
         "cursor"
         "datagrip"
         "ghostty"

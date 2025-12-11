@@ -43,7 +43,6 @@ warning: updating lock file "/Users/adampie/Desktop/nixconfig/flake.lock":
     '...' (2025-05-28)
   → '...' (2025-05-31)
 building the system configuration...
-claude-code: 1.0.3 → 1.0.6, -13.0 KiB
 Apply changes? (y/n): y
 ...
 ```
