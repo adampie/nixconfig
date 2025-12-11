@@ -8,6 +8,7 @@
       aws-vault
       dive
       gettext
+      glab
       just
       kubectl
       kubernetes-helm

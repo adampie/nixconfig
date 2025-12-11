@@ -32,12 +32,12 @@ _: {
         "goland"
         "intellij-idea"
         "orbstack"
-        "pixelsnap"
         "proxyman"
         "pycharm"
         "superwhisper"
         "tower"
         "webstorm"
+        "zed"
         "zen"
       ];
 
