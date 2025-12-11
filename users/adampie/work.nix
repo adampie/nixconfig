@@ -1,4 +1,24 @@
-_: {
+{pkgs, ...}: {
+  imports = [./default.nix];
+
+  home.file.".local/bin/fac" = {
+    text = ''
+      #!/usr/bin/env zsh
+      fetch_all_code "gitlab" "org" "zapier"
+    '';
+    executable = true;
+  };
+
+  home.packages = with pkgs; [
+    aws-vault
+    dive
+    gettext
+    glab
+    just
+    kubectl
+    kubernetes-helm
+  ];
+
   programs.git = {
     settings = {
       commit.gpgsign = true;
@@ -19,13 +39,9 @@ _: {
     };
   };
 
-  programs.mise = {
-    globalConfig = {
-      tools = {
-        nodejs = "lts";
-        python = "latest";
-        go = "latest";
-      };
-    };
+  programs.mise.globalConfig.tools = {
+    nodejs = "lts";
+    python = "latest";
+    go = "latest";
   };
 }

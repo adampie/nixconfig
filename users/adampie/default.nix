@@ -1,9 +1,12 @@
 {
   lib,
-  mkJetBrainsDarwinScript,
+  pkgs,
+  unstablepkgs,
   ...
 }: {
   home = {
+    username = "adampie";
+    homeDirectory = "/Users/adampie";
     stateVersion = "25.11";
 
     activation = {
@@ -24,7 +27,6 @@
       "/opt/homebrew/sbin"
     ];
 
-    # Shared home files
     file = {
       ".homebrew/brew.env".text = ''
         export HOMEBREW_NO_ANALYTICS=1
@@ -84,4 +86,103 @@
       };
     };
   };
+
+  home.packages =
+    (with pkgs; [
+      alejandra
+      awscli2
+      cosign
+      colordiff
+      curl
+      devenv
+      diffutils
+      gh
+      ghorg
+      git
+      gnupg
+      jq
+      ripgrep
+      starship
+      tldr
+      watch
+      wget
+      yq
+    ])
+    ++ (with unstablepkgs; [
+      mise
+      nerd-fonts.jetbrains-mono
+    ])
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      pkgs.mas
+    ];
+
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        init.defaultBranch = "main";
+        user.name = "Adam Pietrzycki";
+      };
+    };
+
+    gpg.enable = true;
+
+    mise = {
+      enable = true;
+      enableZshIntegration = true;
+      package = unstablepkgs.mise;
+      globalConfig = {
+        settings.experimental = true;
+        tools = {
+          nodejs = "lts";
+          python = "latest";
+          go = "latest";
+        };
+      };
+    };
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        "$schema" = "https://starship.rs/config-schema.json";
+        add_newline = true;
+
+        character.success_symbol = "[➜](bold green)";
+
+        cmd_duration.format = "[ $duration]($style)";
+
+        package.disabled = true;
+      };
+    };
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      history = {
+        save = 1000000;
+        size = 1000000;
+      };
+      historySubstringSearch.enable = true;
+      syntaxHighlighting.enable = true;
+    };
+  };
+
+  home.file.".config/ghostty/config".text = ''
+    theme = Dracula+
+    shell-integration = zsh
+    copy-on-select = clipboard
+    window-save-state = always
+    font-family = "JetBrainsMono Nerd Font"
+    working-directory = home
+    keybind = shift+enter=text:\n
+  '';
+
+  home.file.".ssh/config".text = ''
+    Include ~/.orbstack/ssh/config
+
+    Host *
+      IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+  '';
 }

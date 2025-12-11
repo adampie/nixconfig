@@ -1,4 +1,20 @@
-_: {
+{unstablepkgs, ...}: {
+  imports = [
+    ../../modules/darwin/default.nix
+  ];
+
+  host = {
+    username = "adampie";
+    hostname = "Adams-Work-MacBook-Pro";
+    platform = "darwin";
+    systemType = "work";
+    architecture = "aarch64";
+  };
+
+  home-manager.users.adampie = import ../../users/adampie/work.nix {
+    inherit unstablepkgs;
+  };
+
   homebrew = {
     enable = true;
 
@@ -25,7 +41,6 @@ _: {
       }) [
         "1password-cli"
         "beyond-compare"
-        "claude-code"
         "cleanshot"
         "cursor"
         "datagrip"
@@ -54,4 +69,6 @@ _: {
       upgrade = true;
     };
   };
+
+  system.defaults = {};
 }

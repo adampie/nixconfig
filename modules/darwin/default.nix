@@ -1,10 +1,6 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   imports = [
-    ./common.nix
+    ../host/options.nix
   ];
 
   config = let
@@ -15,7 +11,7 @@
     system = {
       stateVersion = 6;
       primaryUser = username;
-      defaults = lib.mkDefault {
+      defaults = {
         NSGlobalDomain = {
           "com.apple.mouse.tapBehavior" = 1;
           "com.apple.swipescrolldirection" = false;
@@ -31,9 +27,7 @@
           NSNavPanelExpandedStateForSaveMode2 = true;
         };
 
-        SoftwareUpdate = {
-          AutomaticallyInstallMacOSUpdates = true;
-        };
+        SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
         CustomUserPreferences = {
           "com.apple.AdLib" = {allowApplePersonalizedAdvertising = false;};
@@ -54,7 +48,6 @@
           wvous-br-corner = 1;
           wvous-tl-corner = 1;
           wvous-tr-corner = 1;
-
           persistent-apps = [];
           persistent-others = [];
         };
@@ -76,18 +69,16 @@
           SHOWFULLNAME = true;
         };
 
-        menuExtraClock = {ShowSeconds = true;};
+        menuExtraClock.ShowSeconds = true;
 
         screensaver = {
           askForPassword = true;
           askForPasswordDelay = 0;
         };
 
-        screencapture = {
-          location = "/Users/${username}/Screenshots";
-        };
+        screencapture.location = "/Users/${username}/Screenshots";
 
-        trackpad = {Clicking = true;};
+        trackpad.Clicking = true;
 
         WindowManager = {
           EnableStandardClickToShowDesktop = false;
@@ -99,11 +90,6 @@
     users.users.${username} = {
       name = username;
       home = "/Users/${username}";
-    };
-
-    home-manager = {
-      backupFileExtension = "backup";
-      users.${username} = import config.host.homeProfile;
     };
 
     networking.hostName = config.host.hostname;

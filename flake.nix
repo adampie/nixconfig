@@ -2,7 +2,6 @@
   description = "Nix config by adampie";
 
   inputs = {
-    flake-schemas.url = "https://flakehub.com/f/DeterminateSystems/flake-schemas/*";
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
     nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
 
@@ -21,7 +20,6 @@
     nixpkgs,
     nixpkgs-unstable,
     home-manager,
-    flake-schemas,
     ...
   } @ inputs: let
     supportedSystems = ["aarch64-darwin" "aarch64-linux" "x86_64-linux"];
@@ -31,20 +29,25 @@
       inherit supportedSystems nixpkgs nixpkgs-unstable;
     };
 
-    systems = {
-      "Adams-MacBook-Pro" = {
-        system = "aarch64-darwin";
-        type = "darwin";
-        profile = "personal";
-      };
-      "Adams-Work-MacBook-Pro" = {
-        system = "aarch64-darwin";
-        type = "darwin";
-        profile = "work";
-      };
-    };
+    hostFiles = let
+      darwinDir = ./hosts/darwin;
+      entries = builtins.readDir darwinDir;
+      hostNames = builtins.filter (name: entries.${name} == "directory") (builtins.attrNames entries);
+    in
+      builtins.listToAttrs
+      (map (name: {
+          inherit name;
+          value = {
+            system = "aarch64-darwin";
+            type = "darwin";
+            modules = [
+              (darwinDir + "/${name}/default.nix")
+            ];
+          };
+        })
+        hostNames);
 
-    mkSystem = hostname: config: let
+    mkSystem = _: config: let
       unstablepkgs = import nixpkgs-unstable {
         inherit (config) system;
         config.allowUnfree = true;
@@ -53,23 +56,21 @@
       if config.type == "darwin"
       then
         lib.mkDarwinSystem {
-          inherit hostname inputs home-manager unstablepkgs;
-          inherit (config) system;
+          inherit inputs home-manager unstablepkgs;
+          inherit (config) system modules;
         }
       else if config.type == "nixos"
       then
         lib.mkNixOSSystem {
-          inherit hostname inputs home-manager unstablepkgs;
-          inherit (config) system profile;
+          inherit inputs home-manager unstablepkgs;
+          inherit (config) system modules;
           hardware = config.hardware or null;
         }
       else throw "Unknown system type: ${config.type}";
 
-    darwinSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "darwin") systems;
-    nixosSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "nixos") systems;
+    darwinSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "darwin") hostFiles;
+    nixosSystems = nixpkgs.lib.filterAttrs (_: v: v.type == "nixos") hostFiles;
   in {
-    inherit (flake-schemas) schemas;
-
     darwinConfigurations = nixpkgs.lib.mapAttrs mkSystem darwinSystems;
     nixosConfigurations = nixpkgs.lib.mapAttrs mkSystem nixosSystems;
 
