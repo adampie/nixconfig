@@ -27,7 +27,6 @@
     home.packages =
       (with pkgs; [
         alejandra
-        awscli2
         cosign
         colordiff
         curl
@@ -38,7 +37,6 @@
         ghorg
         git
         gnupg
-        goreleaser
         jq
         neofetch
         ripgrep
@@ -77,8 +75,6 @@
       "codex"
       "gemini-cli"
       "mas"
-      "opa"
-      "yara-x"
     ];
 
     casks =
@@ -89,8 +85,9 @@
         "1password-cli"
         "1password"
         "beyond-compare"
+        "claude"
+        "claude-code"
         "cleanshot"
-        "cursor"
         "daisydisk"
         "datagrip"
         "discord"
@@ -125,12 +122,5 @@
       autoUpdate = true;
       upgrade = true;
     };
-  };
-
-  networking.applicationFirewall = {
-    enable = true;
-    allowSigned = true;
-    allowSignedApp = true;
-    enableStealthMode = true;
   };
 }

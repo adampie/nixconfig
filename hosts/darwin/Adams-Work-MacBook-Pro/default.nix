@@ -35,6 +35,7 @@
         devenv
         diffutils
         dive
+        fh
         gettext
         gh
         ghorg
@@ -45,6 +46,7 @@
         just
         kubectl
         kubernetes-helm
+        neofetch
         ripgrep
         starship
         tldr
@@ -76,8 +78,6 @@
       "codex"
       "gemini-cli"
       "mas"
-      "opa"
-      "yara-x"
     ];
 
     casks =
@@ -86,7 +86,9 @@
         greedy = true;
       }) [
         "1password-cli"
+        "1password"
         "beyond-compare"
+        "claude-code"
         "cleanshot"
         "cursor"
         "datagrip"
@@ -100,7 +102,6 @@
         "tower"
         "webstorm"
         "zed"
-        "zen"
       ];
 
     masApps = {
@@ -115,6 +116,4 @@
       upgrade = true;
     };
   };
-
-  system.defaults = {};
 }

@@ -92,7 +92,15 @@
       home = "/Users/${username}";
     };
 
-    networking.hostName = config.host.hostname;
+    networking = {
+      hostName = config.host.hostname;
+      applicationFirewall = {
+        enable = true;
+        allowSigned = true;
+        allowSignedApp = true;
+        enableStealthMode = true;
+      };
+    };
     security.pam.services.sudo_local.touchIdAuth = true;
   };
 }
