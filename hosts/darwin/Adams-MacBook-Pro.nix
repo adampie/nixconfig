@@ -6,11 +6,12 @@ _: {
   host = {
     username = "adampie";
     hostname = "Adams-MacBook-Pro";
-    homeProfile = ../../users/adampie/personal.nix;
     platform = "darwin";
     systemType = "personal";
     architecture = "aarch64";
   };
+
+  home-manager.users.adampie = import ../../users/adampie/personal.nix;
 
   homebrew = {
     enable = true;

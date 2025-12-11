@@ -15,11 +15,6 @@
         description = "System hostname";
       };
 
-      homeProfile = lib.mkOption {
-        type = lib.types.path;
-        description = "Path to the Home Manager profile module";
-      };
-
       platform = lib.mkOption {
         type = lib.types.enum ["darwin" "nixos"];
         description = "Platform type for this system";

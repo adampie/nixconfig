@@ -13,8 +13,8 @@
   };
 in {
   mkDarwinSystem = {
-    hostname,
     system,
+    modules,
     inputs,
     unstablepkgs,
     home-manager,
@@ -24,18 +24,19 @@ in {
       specialArgs = {
         inherit inputs unstablepkgs;
       };
-      modules = [
-        ../hosts/darwin/${hostname}.nix
-        home-manager.darwinModules.home-manager
-        (mkHomeManagerModule {
-          inherit unstablepkgs mkJetBrainsDarwinScript;
-        })
-      ];
+      modules =
+        modules
+        ++ [
+          home-manager.darwinModules.home-manager
+          (mkHomeManagerModule {
+            inherit unstablepkgs mkJetBrainsDarwinScript;
+          })
+        ];
     };
 
   mkNixOSSystem = {
-    hostname,
     system,
+    modules,
     hardware ? null,
     inputs,
     unstablepkgs,
@@ -47,8 +48,8 @@ in {
         inherit inputs unstablepkgs;
       };
       modules =
-        [
-          ../hosts/nixos/${hostname}.nix
+        modules
+        ++ [
           home-manager.nixosModules.home-manager
           (mkHomeManagerModule {inherit unstablepkgs;})
         ]

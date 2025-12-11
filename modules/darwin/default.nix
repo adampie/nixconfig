@@ -96,11 +96,6 @@
       home = "/Users/${username}";
     };
 
-    home-manager = {
-      backupFileExtension = "backup";
-      users.${username} = import config.host.homeProfile;
-    };
-
     networking.hostName = config.host.hostname;
     security.pam.services.sudo_local.touchIdAuth = true;
   };
