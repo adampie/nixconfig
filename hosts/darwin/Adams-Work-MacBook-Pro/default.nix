@@ -1,8 +1,4 @@
-{
-  mkJetBrainsDarwinScript,
-  unstablepkgs,
-  ...
-}: {
+{unstablepkgs, ...}: {
   imports = [
     ../../modules/darwin/default.nix
   ];
@@ -16,7 +12,7 @@
   };
 
   home-manager.users.adampie = import ../../users/adampie/work.nix {
-    inherit mkJetBrainsDarwinScript unstablepkgs;
+    inherit unstablepkgs;
   };
 
   homebrew = {

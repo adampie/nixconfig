@@ -1,6 +1,5 @@
 {
   lib,
-  mkJetBrainsDarwinScript,
   pkgs,
   unstablepkgs,
   ...

@@ -22,7 +22,7 @@ in {
     inputs.nix-darwin.lib.darwinSystem {
       inherit system;
       specialArgs = {
-        inherit inputs unstablepkgs;
+        inherit inputs unstablepkgs mkJetBrainsDarwinScript;
       };
       modules =
         modules

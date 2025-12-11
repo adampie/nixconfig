@@ -32,24 +32,20 @@
     hostFiles = let
       darwinDir = ./hosts/darwin;
       entries = builtins.readDir darwinDir;
-      hostFiles = builtins.filter (name:
-        entries.${name}
-        == "regular"
-        && nixpkgs.lib.hasSuffix ".nix" name) (builtins.attrNames entries);
-      dropSuffix = name: nixpkgs.lib.removeSuffix ".nix" name;
+      hostNames = builtins.filter (name: entries.${name} == "directory") (builtins.attrNames entries);
     in
       builtins.listToAttrs
       (map (name: {
-          name = dropSuffix name;
+          inherit name;
           value = {
             system = "aarch64-darwin";
             type = "darwin";
             modules = [
-              (darwinDir + "/${name}")
+              (darwinDir + "/${name}/default.nix")
             ];
           };
         })
-        hostFiles);
+        hostNames);
 
     mkSystem = _: config: let
       unstablepkgs = import nixpkgs-unstable {
