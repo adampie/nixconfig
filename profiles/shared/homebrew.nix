@@ -12,6 +12,7 @@ _: {
 
     brews = [
       "codex"
+      "gemini-cli"
       "mas"
       "opa"
       "yara-x"
