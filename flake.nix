@@ -33,7 +33,6 @@
 
     hostFiles = let
       darwinDir = ./hosts/darwin;
-      darwinDirStr = builtins.toString darwinDir;
       entries = builtins.readDir darwinDir;
       hostFiles = builtins.filter (name:
         entries.${name}
@@ -48,7 +47,7 @@
             system = "aarch64-darwin";
             type = "darwin";
             modules = [
-              (builtins.toPath "${darwinDirStr}/${name}")
+              (darwinDir + "/${name}")
             ];
           };
         })

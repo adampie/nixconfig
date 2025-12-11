@@ -1,4 +1,4 @@
-{...}: {
+_: {
   mkJetBrainsDarwinScript = appName: appBinary: {
     text = ''
       #!/bin/zsh

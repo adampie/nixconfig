@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   imports = [
     ../host/options.nix
   ];
