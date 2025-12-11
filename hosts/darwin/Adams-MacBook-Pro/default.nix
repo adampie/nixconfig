@@ -15,11 +15,12 @@
     pkgs,
     unstablepkgs,
     lib,
+    mkJetBrainsDarwinScript,
     ...
   }: {
     imports = [
-      (import ../../users/adampie/personal.nix {
-        inherit pkgs unstablepkgs;
+      (import ../../../users/adampie/personal.nix {
+        inherit pkgs unstablepkgs lib mkJetBrainsDarwinScript;
       })
     ];
 

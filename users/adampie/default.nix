@@ -1,6 +1,7 @@
 {
   lib,
   unstablepkgs,
+  mkJetBrainsDarwinScript,
   ...
 }: {
   home = {
