@@ -47,6 +47,8 @@
         kubectl
         kubernetes-helm
         neofetch
+        nil
+        nixd
         ripgrep
         starship
         tldr
@@ -56,7 +58,7 @@
       ])
       ++ (with unstablepkgs; [
         mise
-        nerd-fonts.jetbrains-mono
+        nerd-fonts.hack
       ])
       ++ lib.optionals pkgs.stdenv.isDarwin [
         pkgs.mas
