@@ -46,6 +46,8 @@
       ".local/bin/datagrip" = mkJetBrainsDarwinScript "datagrip" "DataGrip.app";
       ".local/bin/webstorm" = mkJetBrainsDarwinScript "webstorm" "WebStorm.app";
 
+      ".config/ghostty/themes/dracula-pro".text = builtins.readFile (inputs.dracula-pro + "/ghostty/pro");
+
       ".local/bin/fetch_all_code" = {
         text = ''
           #!/usr/bin/env zsh
@@ -133,7 +135,7 @@
       package = null; # homebrew
       enableZshIntegration = true;
       settings = {
-        theme = "Dracula+";
+        theme = "dracula-pro";
         font-family = "Hack Nerd Font Mono";
         copy-on-select = "clipboard";
         working-directory = "home";

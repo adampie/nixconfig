@@ -20,7 +20,9 @@
       includes = [
         {
           condition = "gitdir:~/Code/zapier/";
-          contents = {user.email = "adam.pietrzycki@zapier.com";};
+          contents = {
+            user.email = "adam.pietrzycki@zapier.com";
+          };
         }
       ];
       signing = {
@@ -31,8 +33,8 @@
     };
 
     mise.globalConfig.tools = {
+      terraform = "latest";
       nodejs = "lts";
-      python = "latest";
       go = "latest";
     };
 

@@ -23,7 +23,9 @@
       includes = [
         {
           condition = "gitdir:~/Code/fricory/";
-          contents = {user.email = "adam@fricory.com";};
+          contents = {
+            user.email = "adam@fricory.com";
+          };
         }
       ];
       signing = {
