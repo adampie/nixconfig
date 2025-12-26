@@ -74,7 +74,6 @@
     ];
 
     brews = [
-      "codex"
       "gemini-cli"
       "mas"
     ];
@@ -90,6 +89,7 @@
         "claude"
         "claude-code"
         "cleanshot"
+        "codex"
         "daisydisk"
         "datagrip"
         "discord"

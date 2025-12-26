@@ -77,7 +77,6 @@
     ];
 
     brews = [
-      "codex"
       "gemini-cli"
       "mas"
     ];
@@ -92,6 +91,7 @@
         "beyond-compare"
         "claude-code"
         "cleanshot"
+        "codex"
         "cursor"
         "datagrip"
         "ghostty"
