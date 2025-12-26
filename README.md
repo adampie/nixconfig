@@ -44,11 +44,11 @@
 
   1. Safari
   
-    * AutoFill -> Disable all
-    * Extensions -> Allow in Private Browsing
-    * Advanced -> Show full website address
-    * Advanced -> Show features for web developers
-    * Active Wipr
+      * AutoFill -> Disable all
+      * Extensions -> Allow in Private Browsing
+      * Advanced -> Show full website address
+      * Advanced -> Show features for web developers
+      * Active Wipr
 
 ## Commands
 
