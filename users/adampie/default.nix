@@ -8,7 +8,6 @@
     username = "adampie";
     homeDirectory = "/Users/adampie";
     stateVersion = "25.11";
-    backupFileExtension = "home-manager-backup";
 
     activation = {
       createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
@@ -249,6 +248,6 @@
     Include ~/.orbstack/ssh/config
 
     Host *
-      IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
   '';
 }

@@ -8,6 +8,11 @@
   in {
     nix.enable = false;
 
+    home-manager = {
+        overwriteBackup = true;
+        backupFileExtension = "backup";
+    };
+
     system = {
       stateVersion = 6;
       primaryUser = username;
