@@ -1,5 +1,28 @@
 # nixconfig
 
+## Commands
+
+### Switch 
+
+```sh
+sudo darwin-rebuild switch --flake .#
+```
+
+### Update
+
+```sh
+nix flake update
+darwin-rebuild build --flake .#
+sudo darwin-rebuild switch --flake .#
+```
+
+### Formatting
+
+```sh
+nix fmt .
+nix flake check --all-systems
+```
+
 ## Install
 
 1. Check Hostname
@@ -40,35 +63,48 @@
   
 1. Mac Settings
 
+    * General
+    
+        * AutoFill from Passwords -> False
+
+    * Desktop & Dock
+        
+        * Show Widgets On Desktop -> False
+
+    * Displays
+    
+        * More Space
+
+    * Spotlight
+        
+        * Show related content -> False
+        * Help Apple Improve Search -> False
+
+    * Privacy & Security
+        
+        * Location Services
+            
+            * Significant locations and routes -> False
+            * Mac Analytics -> False
+    
+        * Advanced
+            
+            * Require an administrator password to access systemwide settings -> True
+
 1. Application Settings
 
-  1. Safari
+    * 1Password - Deverloper
+    
+        * Show 1Password Developer experience -> True
+        * Use the SSH Agent -> True
+        * Open SSH URLs with -> Ghostty
+        * Integrate with 1Password CLI -> True
+        * Check for developer credentials on disk -> True
+
+    * Safari
   
-      * AutoFill -> Disable all
-      * Extensions -> Allow in Private Browsing
-      * Advanced -> Show full website address
-      * Advanced -> Show features for web developers
-      * Active Wipr
-
-## Commands
-
-### Switch 
-
-```sh
-sudo darwin-rebuild switch --flake .#
-```
-
-### Update
-
-```sh
-nix flake update
-darwin-rebuild build --flake .#
-sudo darwin-rebuild switch --flake .#
-```
-
-### Formatting
-
-```sh
-nix fmt .
-nix flake check --all-systems
-```
+        * AutoFill -> Disable all
+        * Extensions -> Allow in Private Browsing
+        * Advanced -> Show full website address
+        * Advanced -> Show features for web developers
+        * Active Wipr
