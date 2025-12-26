@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   unstablepkgs,
   mkJetBrainsDarwinScript,
   ...
@@ -156,6 +157,10 @@
         "nix"
       ];
 
+      themes = {
+        dracula-pro = builtins.readFile (inputs.dracula-pro + "/zed/dracula_pro.json");
+      };
+
       userSettings = {
         auto_update = false;
         telemetry = {
@@ -170,12 +175,12 @@
 
         theme = {
           mode = "system";
-          light = "One Light";
-          dark = "One Dark";
+          light = "Dracula Pro (Alucard)";
+          dark = "Dracula Pro";
         };
         base_keymap = "VSCode";
         buffer_font_family = "Hack Nerd Font Mono";
-        buffer_font_size = 15;
+        buffer_font_size = 13;
         ui_font_size = 16;
         colorize_brackets = true;
         indent_guides = {

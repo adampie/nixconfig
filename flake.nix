@@ -14,6 +14,11 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dracula-pro = {
+      url = "git+ssh://git@github.com/adampie/dracula-pro.git";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -22,7 +27,11 @@
     home-manager,
     ...
   } @ inputs: let
-    supportedSystems = ["aarch64-darwin" "aarch64-linux" "x86_64-linux"];
+    supportedSystems = [
+      "aarch64-darwin"
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
     lib = import ./lib/default.nix {inherit (nixpkgs) lib;};
 
     forEachSupportedSystem = lib.forEachSupportedSystem {
@@ -34,8 +43,8 @@
       entries = builtins.readDir darwinDir;
       hostNames = builtins.filter (name: entries.${name} == "directory") (builtins.attrNames entries);
     in
-      builtins.listToAttrs
-      (map (name: {
+      builtins.listToAttrs (
+        map (name: {
           inherit name;
           value = {
             system = "aarch64-darwin";
@@ -45,7 +54,8 @@
             ];
           };
         })
-        hostNames);
+        hostNames
+      );
 
     mkSystem = _: config: let
       unstablepkgs = import nixpkgs-unstable {
@@ -76,51 +86,55 @@
 
     formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);
 
-    devShells = forEachSupportedSystem ({pkgs, ...}: {
-      default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          # Nix tooling
-          alejandra
-          deadnix
-          nil
-          nixd
-          statix
+    devShells = forEachSupportedSystem (
+      {pkgs, ...}: {
+        default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            # Nix tooling
+            alejandra
+            deadnix
+            nil
+            nixd
+            statix
 
-          # Development utilities
-          git
-          gh
-        ];
+            # Development utilities
+            git
+            gh
+          ];
 
-        shellHook = ''
-          echo "🛠️  Nix development environment"
-          echo ""
-          echo "Available tools:"
-          echo "  alejandra - Nix code formatter"
-          echo "  statix    - Nix code linter"
-          echo "  deadnix   - Find unused Nix code"
-          echo "  nil/nixd  - Nix language servers"
-          echo ""
-          echo "Run 'nix fmt' to format code"
-          echo "Run 'nix flake check' to validate"
+          shellHook = ''
+            echo "🛠️  Nix development environment"
+            echo ""
+            echo "Available tools:"
+            echo "  alejandra - Nix code formatter"
+            echo "  statix    - Nix code linter"
+            echo "  deadnix   - Find unused Nix code"
+            echo "  nil/nixd  - Nix language servers"
+            echo ""
+            echo "Run 'nix fmt' to format code"
+            echo "Run 'nix flake check' to validate"
+          '';
+        };
+      }
+    );
+
+    checks = forEachSupportedSystem (
+      {pkgs, ...}: {
+        statix = pkgs.runCommand "statix-check" {} ''
+          ${pkgs.statix}/bin/statix check ${./.} --ignore=flake.lock
+          touch $out
         '';
-      };
-    });
 
-    checks = forEachSupportedSystem ({pkgs, ...}: {
-      statix = pkgs.runCommand "statix-check" {} ''
-        ${pkgs.statix}/bin/statix check ${./.} --ignore=flake.lock
-        touch $out
-      '';
+        deadnix = pkgs.runCommand "deadnix-check" {} ''
+          ${pkgs.deadnix}/bin/deadnix --fail ${./.}
+          touch $out
+        '';
 
-      deadnix = pkgs.runCommand "deadnix-check" {} ''
-        ${pkgs.deadnix}/bin/deadnix --fail ${./.}
-        touch $out
-      '';
-
-      format = pkgs.runCommand "format-check" {} ''
-        ${pkgs.alejandra}/bin/alejandra --check ${./.}
-        touch $out
-      '';
-    });
+        format = pkgs.runCommand "format-check" {} ''
+          ${pkgs.alejandra}/bin/alejandra --check ${./.}
+          touch $out
+        '';
+      }
+    );
   };
 }

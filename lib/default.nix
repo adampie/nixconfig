@@ -35,7 +35,7 @@ in {
         ++ [
           home-manager.darwinModules.home-manager
           (mkHomeManagerModule {
-            inherit unstablepkgs mkJetBrainsDarwinScript;
+            inherit inputs unstablepkgs mkJetBrainsDarwinScript;
           })
         ];
     };
@@ -57,7 +57,7 @@ in {
         modules
         ++ [
           home-manager.nixosModules.home-manager
-          (mkHomeManagerModule {inherit unstablepkgs;})
+          (mkHomeManagerModule {inherit inputs unstablepkgs;})
         ]
         ++ lib.optionals (hardware != null) [
           ../modules/hardware/${hardware}.nix
