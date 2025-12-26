@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "dracula-pro": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1766717971,
-        "narHash": "sha256-RqNCnW1VJMUIh61ZeCHPPeDeST6zAugQLQQlw4HTyyk=",
-        "ref": "refs/heads/main",
-        "rev": "ea608bacb731d0b4033dfdf5dffa8bbf89959cee",
-        "revCount": 1,
-        "type": "git",
-        "url": "ssh://git@github.com/adampie/dracula-pro.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/adampie/dracula-pro.git"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -88,7 +72,6 @@
     },
     "root": {
       "inputs": {
-        "dracula-pro": "dracula-pro",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",

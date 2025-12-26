@@ -14,11 +14,6 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    dracula-pro = {
-      url = "git+ssh://git@github.com/adampie/dracula-pro.git";
-      flake = false;
-    };
   };
 
   outputs = {

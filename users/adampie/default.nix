@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   unstablepkgs,
   mkJetBrainsDarwinScript,
   ...
@@ -45,8 +44,6 @@
       ".local/bin/goland" = mkJetBrainsDarwinScript "goland" "GoLand.app";
       ".local/bin/datagrip" = mkJetBrainsDarwinScript "datagrip" "DataGrip.app";
       ".local/bin/webstorm" = mkJetBrainsDarwinScript "webstorm" "WebStorm.app";
-
-      ".config/ghostty/themes/dracula-pro".text = builtins.readFile (inputs.dracula-pro + "/ghostty/pro");
 
       ".local/bin/fetch_all_code" = {
         text = ''
@@ -135,7 +132,7 @@
       package = null; # homebrew
       enableZshIntegration = true;
       settings = {
-        theme = "dracula-pro";
+        theme = "Dracula+";
         font-family = "Hack Nerd Font Mono";
         copy-on-select = "clipboard";
         working-directory = "home";
@@ -157,11 +154,10 @@
 
       extensions = [
         "nix"
+        "dracula"
+        "toml"
+        "git-firefly"
       ];
-
-      themes = {
-        dracula-pro = builtins.readFile (inputs.dracula-pro + "/zed/dracula_pro.json");
-      };
 
       userSettings = {
         auto_update = false;
@@ -177,8 +173,8 @@
 
         theme = {
           mode = "system";
-          light = "Dracula Pro (Alucard)";
-          dark = "Dracula Pro";
+          light = "Dracula Light (Alucard)";
+          dark = "Dracula";
         };
         base_keymap = "VSCode";
         buffer_font_family = "Hack Nerd Font Mono";
@@ -217,6 +213,20 @@
 
         terminal = {
           copy_on_select = true;
+        };
+
+        lsp = {
+          nil = {
+            initialization_options = {
+              formatting = {
+                command = [
+                  "alejandra"
+                  "--quiet"
+                  "--"
+                ];
+              };
+            };
+          };
         };
       };
     };
