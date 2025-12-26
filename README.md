@@ -2,40 +2,73 @@
 
 ## Install
 
+1. Check Hostname
+
 1. Install Homebrew
 
-    ```bash
+    ```sh
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
+  
+1. Install 1Password and configure
 
-2. Install Determinate Nix
+    1. Install
+    
+        ```sh
+        brew install 1password --cask
+        ```
+  
+    1. Configure SSH Agent
 
-    ```bash
-    curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
+1. Install [Determinate Nix](https://install.determinate.systems/determinate-pkg/stable/Universal)
+
+1. Install nix-darwin and Apply Configuration
+  
+    1. Set up GitHub Keys
+  
+    ```sh
+    ssh -T git@github.com
     ```
+    
+    1. Run nix-darwin (fail)
 
-    After installation, restart your terminal or source the Nix environment:
-
-    ```bash
-    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-    ```
-
-3. Install nix-darwin and Apply Configuration
-
-    ```bash
+    ```sh
     sudo nix run nix-darwin -- switch --flake "https://flakehub.com/f/adampie/nixconfig/0#"
     ```
 
-## Switch
+    > If writing to `/etc/zshenv` fails, run `sudo mv /etc/zshenv /etc/zshenv.before-nix-darwin`
+  
+1. Mac Settings
 
-```bash
+1. Application Settings
+
+  1. Safari
+  
+    * AutoFill -> Disable all
+    * Extensions -> Allow in Private Browsing
+    * Advanced -> Show full website address
+    * Advanced -> Show features for web developers
+    * Active Wipr
+
+## Commands
+
+### Switch 
+
+```sh
 sudo darwin-rebuild switch --flake .#
 ```
 
-## Update
+### Update
 
-```bash
+```sh
 nix flake update
 darwin-rebuild build --flake .#
 sudo darwin-rebuild switch --flake .#
+```
+
+### Formatting
+
+```sh
+nix fmt .
+nix flake check --all-systems
 ```

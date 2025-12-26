@@ -9,8 +9,8 @@
     nix.enable = false;
 
     home-manager = {
-        overwriteBackup = true;
-        backupFileExtension = "backup";
+      overwriteBackup = true;
+      backupFileExtension = "backup";
     };
 
     system = {
