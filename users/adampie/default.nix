@@ -8,6 +8,7 @@
     username = "adampie";
     homeDirectory = "/Users/adampie";
     stateVersion = "25.11";
+    backupFileExtension = "home-manager-backup";
 
     activation = {
       createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
