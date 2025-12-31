@@ -227,6 +227,7 @@
               };
             };
           };
+          autoArchive = true;
         };
       };
     };

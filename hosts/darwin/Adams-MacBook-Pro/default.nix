@@ -98,6 +98,7 @@
         "intellij-idea"
         "little-snitch"
         "micro-snitch"
+        "mullvad-vpn"
         "orbstack"
         "pixelsnap"
         "proxyman"
