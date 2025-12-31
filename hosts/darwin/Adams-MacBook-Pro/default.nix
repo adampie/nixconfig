@@ -20,41 +20,24 @@
   }: {
     imports = [
       (import ../../../users/adampie/personal.nix {
-        inherit pkgs unstablepkgs lib mkJetBrainsDarwinScript;
+        inherit
+          pkgs
+          unstablepkgs
+          lib
+          mkJetBrainsDarwinScript
+          ;
       })
     ];
 
-    home.packages =
-      (with pkgs; [
-        alejandra
-        cosign
-        colordiff
-        curl
-        devenv
-        diffutils
-        fh
+    home.packages = (
+      with pkgs; [
         gh
         ghorg
-        git
-        gnupg
-        jq
-        neofetch
-        nil
-        nixd
-        ripgrep
-        starship
-        tldr
-        watch
-        wget
-        yq
-      ])
-      ++ (with unstablepkgs; [
-        mise
-        nerd-fonts.hack
-      ])
-      ++ lib.optionals pkgs.stdenv.isDarwin [
-        pkgs.mas
-      ];
+      ]
+    );
+    # ++ (with unstablepkgs; [
+    #
+    # ]);
   };
 
   homebrew = {
@@ -79,19 +62,21 @@
     ];
 
     casks =
-      map (name: {
+      map
+      (name: {
         inherit name;
         greedy = true;
-      }) [
-        "1password-cli"
+      })
+      [
         "1password"
+        "1password-cli"
         "beyond-compare"
         "claude"
         "claude-code"
         "cleanshot"
         "codex"
-        "daisydisk"
         "datagrip"
+        "daisydisk"
         "discord"
         "ghostty"
         "goland"
@@ -109,7 +94,6 @@
         "tower"
         "webstorm"
         "zed"
-        "zen"
       ];
 
     masApps = {
@@ -117,7 +101,6 @@
       "Flighty" = 1358823008;
       "Kagi for Safari" = 1622835804;
       "Wipr 2" = 1662217862;
-      # "Xcode" = 497799835;
     };
 
     onActivation = {

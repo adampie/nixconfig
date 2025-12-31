@@ -4,7 +4,7 @@
   home.file.".local/bin/fac" = {
     text = ''
       #!/usr/bin/env zsh
-      fetch_all_code "gitlab" "org" "zapier"
+      fetch_all_code "github" "org" "👍🏻"
     '';
     executable = true;
   };
@@ -15,19 +15,19 @@
         commit.gpgsign = true;
         gpg.format = "ssh";
         "gpg.ssh".program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
-        user.email = "adam.pietrzycki@zapier.com";
+        user.email = "👍🏻";
       };
       includes = [
         {
-          condition = "gitdir:~/Code/zapier/";
+          condition = "gitdir:~/Code/👍🏻/";
           contents = {
-            user.email = "adam.pietrzycki@zapier.com";
+            user.email = "👍🏻";
           };
         }
       ];
       signing = {
         signer = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
-        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEryumdeAtrZMZwW8DUPC6l4fhhS2B6ovLeX5QNynTTY";
+        key = "👍🏻";
         signByDefault = true;
       };
     };

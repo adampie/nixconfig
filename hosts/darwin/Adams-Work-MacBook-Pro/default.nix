@@ -20,49 +20,25 @@
   }: {
     imports = [
       (import ../../../users/adampie/work.nix {
-        inherit pkgs unstablepkgs lib mkJetBrainsDarwinScript;
+        inherit
+          pkgs
+          unstablepkgs
+          lib
+          mkJetBrainsDarwinScript
+          ;
       })
     ];
 
-    home.packages =
-      (with pkgs; [
-        alejandra
-        aws-vault
+    home.packages = (
+      with pkgs; [
         awscli2
-        cosign
-        colordiff
-        curl
-        devenv
-        diffutils
-        dive
-        fh
-        gettext
         gh
         ghorg
-        git
-        glab
-        gnupg
-        jq
-        just
-        kubectl
-        kubernetes-helm
-        neofetch
-        nil
-        nixd
-        ripgrep
-        starship
-        tldr
-        watch
-        wget
-        yq
-      ])
-      ++ (with unstablepkgs; [
-        mise
-        nerd-fonts.hack
-      ])
-      ++ lib.optionals pkgs.stdenv.isDarwin [
-        pkgs.mas
-      ];
+      ]
+    );
+    # ++ (with unstablepkgs; [
+    #
+    # ]);
   };
 
   homebrew = {
@@ -77,32 +53,33 @@
     ];
 
     brews = [
-      "gemini-cli"
+      # "gemini-cli"
       "mas"
     ];
 
     casks =
-      map (name: {
+      map
+      (name: {
         inherit name;
         greedy = true;
-      }) [
-        "1password-cli"
+      })
+      [
         "1password"
+        "1password-cli"
+        # "claude-code"
+        # "codex"
+        # "cursor"
         "beyond-compare"
-        "claude-code"
         "cleanshot"
-        "codex"
-        "cursor"
         "datagrip"
         "ghostty"
         "goland"
         "intellij-idea"
         "orbstack"
         "proxyman"
-        "pycharm"
-        "superwhisper"
+        "slack"
+        # "superwhisper"
         "tower"
-        "webstorm"
         "zed"
       ];
 

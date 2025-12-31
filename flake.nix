@@ -85,27 +85,14 @@
       {pkgs, ...}: {
         default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            # Nix tooling
             alejandra
             deadnix
             nil
             nixd
             statix
-
-            # Development utilities
-            git
-            gh
           ];
 
           shellHook = ''
-            echo "🛠️  Nix development environment"
-            echo ""
-            echo "Available tools:"
-            echo "  alejandra - Nix code formatter"
-            echo "  statix    - Nix code linter"
-            echo "  deadnix   - Find unused Nix code"
-            echo "  nil/nixd  - Nix language servers"
-            echo ""
             echo "Run 'nix fmt' to format code"
             echo "Run 'nix flake check' to validate"
           '';

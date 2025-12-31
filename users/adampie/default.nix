@@ -1,17 +1,17 @@
 {
+  pkgs,
   lib,
   unstablepkgs,
   mkJetBrainsDarwinScript,
   ...
-}:
-{
+}: {
   home = {
     username = "adampie";
     homeDirectory = "/Users/adampie";
     stateVersion = "25.11";
 
     activation = {
-      createDirectories = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD mkdir -p $HOME/Code
         $DRY_RUN_CMD mkdir -p $HOME/Screenshots
       '';
@@ -26,6 +26,18 @@
       "$HOME/.local/bin"
       "/opt/homebrew/bin"
       "/opt/homebrew/sbin"
+    ];
+
+    packages = with pkgs; [
+      cosign
+      curl
+      devenv
+      fh
+      jq
+      nerd-fonts.hack
+      ripgrep
+      wget
+      yq
     ];
 
     file = {
