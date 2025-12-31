@@ -104,6 +104,7 @@ nix flake check --all-systems
     * Safari
   
         * AutoFill -> Disable all
+        * Security -> Warn before connecting to a website over HTTP
         * Extensions -> Allow in Private Browsing
         * Advanced -> Show full website address
         * Advanced -> Show features for web developers
