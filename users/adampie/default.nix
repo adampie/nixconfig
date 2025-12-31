@@ -3,14 +3,15 @@
   unstablepkgs,
   mkJetBrainsDarwinScript,
   ...
-}: {
+}:
+{
   home = {
     username = "adampie";
     homeDirectory = "/Users/adampie";
     stateVersion = "25.11";
 
     activation = {
-      createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      createDirectories = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD mkdir -p $HOME/Code
         $DRY_RUN_CMD mkdir -p $HOME/Screenshots
       '';
@@ -227,7 +228,6 @@
               };
             };
           };
-          autoArchive = true;
         };
       };
     };
