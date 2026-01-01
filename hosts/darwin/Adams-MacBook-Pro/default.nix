@@ -71,7 +71,7 @@
         "1password"
         "1password-cli"
         "beyond-compare"
-        "claude"
+        # "claude"
         "claude-code"
         "cleanshot"
         "codex"
