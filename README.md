@@ -81,6 +81,10 @@ nix flake check --all-systems
         * Help Apple Improve Search -> False
 
     * Privacy & Security
+    
+        * Full Disk Access
+        
+            * Ghostty -> True
         
         * Location Services
             
