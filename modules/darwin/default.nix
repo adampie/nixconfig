@@ -41,6 +41,16 @@
             DSDontWriteNetworkStores = true;
             DSDontWriteUSBStores = true;
           };
+          "com.apple.Safari" = {
+            AutoFillCreditCardData = false;
+            AutoFillFromAddressBook = false;
+            AutoFillFromiCloudKeychain = false;
+            AutoFillMiscellaneousForms = false;
+            AutoFillPasswords = false;
+            UseHTTPSOnly = true;
+            DeveloperMenuVisibility = true;
+            ShowFullURLInSmartSearchField = true;
+          };
           AppleSymbolicHotKeys = {
             "28" = {
               # Save picture of screen as a file
