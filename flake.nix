@@ -79,7 +79,17 @@
     darwinConfigurations = nixpkgs.lib.mapAttrs mkSystem darwinSystems;
     nixosConfigurations = nixpkgs.lib.mapAttrs mkSystem nixosSystems;
 
-    formatter = forEachSupportedSystem ({pkgs, ...}: pkgs.alejandra);
+    formatter = forEachSupportedSystem ({pkgs, ...}:
+      pkgs.writeShellApplication {
+        name = "fmt";
+        runtimeInputs = [pkgs.alejandra];
+        text = ''
+          if [ "$#" -eq 0 ]; then
+            exec alejandra .
+          fi
+          exec alejandra "$@"
+        '';
+      });
 
     devShells = forEachSupportedSystem (
       {pkgs, ...}: {
