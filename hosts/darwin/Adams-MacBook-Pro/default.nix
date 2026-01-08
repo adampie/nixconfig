@@ -29,15 +29,16 @@
       })
     ];
 
-    home.packages = (
-      with pkgs; [
-        gh
-        ghorg
-      ]
-    );
-    # ++ (with unstablepkgs; [
-    #
-    # ]);
+    home.packages =
+      (
+        with pkgs; [
+          gh
+          ghorg
+        ]
+      )
+      ++ (with unstablepkgs; [
+        #
+      ]);
   };
 
   homebrew = {

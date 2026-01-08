@@ -29,16 +29,17 @@
       })
     ];
 
-    home.packages = (
-      with pkgs; [
-        awscli2
-        gh
-        ghorg
-      ]
-    );
-    # ++ (with unstablepkgs; [
-    #
-    # ]);
+    home.packages =
+      (
+        with pkgs; [
+          awscli2
+          gh
+          ghorg
+        ]
+      )
+      ++ (with unstablepkgs; [
+        #
+      ]);
   };
 
   homebrew = {
