@@ -151,9 +151,11 @@
         working-directory = "home";
         window-inherit-working-directory = false;
         shell-integration = "zsh";
-        keybind = "shift+enter=text:\n";
         window-save-state = "always";
         auto-update = "off";
+        keybind = [
+          "shift+enter=text:\\n"
+        ];
       };
     };
 
