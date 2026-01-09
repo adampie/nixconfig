@@ -38,7 +38,7 @@
         ]
       )
       ++ (with unstablepkgs; [
-        #
+        osv-scanner
       ]);
   };
 
