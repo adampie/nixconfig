@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  unstablepkgs,
+  # stablepkgs,
   mkJetBrainsDarwinScript,
   ...
 }: {
@@ -122,7 +122,6 @@
     mise = {
       enable = true;
       enableZshIntegration = true;
-      package = unstablepkgs.mise;
       globalConfig = {
         settings.experimental = true;
         tools = {

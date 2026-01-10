@@ -13,7 +13,7 @@
 
   home-manager.users.adampie = {
     pkgs,
-    unstablepkgs,
+    stablepkgs,
     lib,
     mkJetBrainsDarwinScript,
     ...
@@ -22,7 +22,7 @@
       (import ../../../users/adampie/personal.nix {
         inherit
           pkgs
-          unstablepkgs
+          stablepkgs
           lib
           mkJetBrainsDarwinScript
           ;
@@ -34,10 +34,11 @@
         with pkgs; [
           gh
           ghorg
+          osv-scanner
         ]
       )
-      ++ (with unstablepkgs; [
-        osv-scanner
+      ++ (with stablepkgs; [
+        neofetch
       ]);
   };
 

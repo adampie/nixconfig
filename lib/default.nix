@@ -22,20 +22,20 @@ in {
     system,
     modules,
     inputs,
-    unstablepkgs,
+    stablepkgs,
     home-manager,
   }:
     inputs.nix-darwin.lib.darwinSystem {
       inherit system;
       specialArgs = {
-        inherit inputs unstablepkgs mkJetBrainsDarwinScript;
+        inherit inputs stablepkgs mkJetBrainsDarwinScript;
       };
       modules =
         modules
         ++ [
           home-manager.darwinModules.home-manager
           (mkHomeManagerModule {
-            inherit inputs unstablepkgs mkJetBrainsDarwinScript;
+            inherit inputs stablepkgs mkJetBrainsDarwinScript;
           })
         ];
     };
@@ -45,19 +45,19 @@ in {
     modules,
     hardware ? null,
     inputs,
-    unstablepkgs,
+    stablepkgs,
     home-manager,
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = {
-        inherit inputs unstablepkgs;
+        inherit inputs stablepkgs;
       };
       modules =
         modules
         ++ [
           home-manager.nixosModules.home-manager
-          (mkHomeManagerModule {inherit inputs unstablepkgs;})
+          (mkHomeManagerModule {inherit inputs stablepkgs;})
         ]
         ++ lib.optionals (hardware != null) [
           ../modules/hardware/${hardware}.nix
@@ -67,7 +67,7 @@ in {
   forEachSupportedSystem = {
     supportedSystems,
     nixpkgs,
-    nixpkgs-unstable,
+    nixpkgs-stable,
   }: f:
     lib.genAttrs supportedSystems (system:
       f {
@@ -75,7 +75,7 @@ in {
           inherit system;
           config.allowUnfree = true;
         };
-        unstablepkgs = import nixpkgs-unstable {
+        stablepkgs = import nixpkgs-stable {
           inherit system;
           config.allowUnfree = true;
         };

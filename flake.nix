@@ -2,23 +2,28 @@
   description = "Nix config by adampie";
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
-    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    # nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
+    # nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
 
     nix-darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-25.11";
+      # url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      # url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     nixpkgs,
-    nixpkgs-unstable,
+    nixpkgs-stable,
     home-manager,
     ...
   } @ inputs: let
@@ -30,7 +35,7 @@
     lib = import ./lib/default.nix {inherit (nixpkgs) lib;};
 
     forEachSupportedSystem = lib.forEachSupportedSystem {
-      inherit supportedSystems nixpkgs nixpkgs-unstable;
+      inherit supportedSystems nixpkgs nixpkgs-stable;
     };
 
     hostFiles = let
@@ -53,7 +58,7 @@
       );
 
     mkSystem = _: config: let
-      unstablepkgs = import nixpkgs-unstable {
+      stablepkgs = import nixpkgs-stable {
         inherit (config) system;
         config.allowUnfree = true;
       };
@@ -61,13 +66,13 @@
       if config.type == "darwin"
       then
         lib.mkDarwinSystem {
-          inherit inputs home-manager unstablepkgs;
+          inherit inputs home-manager stablepkgs;
           inherit (config) system modules;
         }
       else if config.type == "nixos"
       then
         lib.mkNixOSSystem {
-          inherit inputs home-manager unstablepkgs;
+          inherit inputs home-manager stablepkgs;
           inherit (config) system modules;
           hardware = config.hardware or null;
         }
