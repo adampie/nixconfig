@@ -102,6 +102,7 @@
           buildInputs = with pkgs; [
             alejandra
             deadnix
+            mise
             nil
             nixd
             statix

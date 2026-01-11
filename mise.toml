@@ -1,0 +1,14 @@
+[tasks.update]
+run = "nix flake update"
+
+[tasks.fmt]
+run = "nix fmt ."
+
+[tasks.check]
+run = "nix flake check --all-systems"
+
+[tasks.plan]
+run = "darwin-rebuild build --flake .# && nix store diff-closures /run/current-system ./result"
+
+[tasks.apply]
+run = "sudo darwin-rebuild switch --flake .#"

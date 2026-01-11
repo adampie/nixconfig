@@ -43,6 +43,8 @@
       fh
       jq
       nerd-fonts.hack
+      nil
+      nixd
       ripgrep
       wget
       yq
