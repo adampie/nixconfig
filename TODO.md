@@ -16,9 +16,9 @@ Migration from host-centric to feature-centric (aspect-oriented) Nix configurati
 ## Phase 1: Foundation Setup
 
 ### 1.1 Backup & Preparation
-- [ ] Create git branch `pre-dendritic` for backup
-- [ ] Commit any uncommitted changes
-- [ ] Document current system state (run `darwin-rebuild build` successfully)
+- [x] Create git branch `pre-dendritic` for backup
+- [x] Commit any uncommitted changes
+- [x] Document current system state (run `darwin-rebuild build` successfully)
 
 ### 1.2 Update flake.nix Structure
 - [ ] Add `flake-parts` input
