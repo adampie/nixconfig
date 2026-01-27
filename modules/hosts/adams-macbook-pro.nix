@@ -4,16 +4,18 @@ let
   hostname = "Adams-MacBook-Pro";
   username = "adampie";
   system = "aarch64-darwin";
+  
+  # Stable packages for pinned dependencies
+  stablepkgs = import inputs.nixpkgs-stable {
+    inherit system;
+    config.allowUnfree = true;
+  };
 in {
   flake.darwinConfigurations.${hostname} = inputs.nix-darwin.lib.darwinSystem {
     inherit system;
 
     specialArgs = {
-      inherit inputs;
-      stablepkgs = import inputs.nixpkgs-stable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      inherit inputs stablepkgs;
     };
 
     modules = [
@@ -24,7 +26,9 @@ in {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          extraSpecialArgs = {inherit inputs;};
+          extraSpecialArgs = {
+            inherit inputs stablepkgs;
+          };
         };
       }
 

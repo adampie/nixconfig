@@ -25,14 +25,16 @@
 
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} ({...}: {
-      # Define systems first at top level
+      # Import flake-parts modules support FIRST
+      imports = [
+        inputs.flake-parts.flakeModules.modules
+      ] ++ (inputs.import-tree ./modules).imports;
+      
+      # Define systems at top level
       systems = [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-linux"
       ];
-      
-      # Then import all modules
-      imports = (inputs.import-tree ./modules).imports;
     });
 }
