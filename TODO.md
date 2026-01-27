@@ -132,21 +132,22 @@ Extract from `users/adampie/default.nix` (278 lines) into fine-grained modules:
 
 ### 5.2 Incremental Testing Strategy
 - [x] Created all 46 feature modules successfully
-- [ ] **BLOCKED**: Fix `flake.modules` option merging issue
-  - Error: "The option `flake.modules' is defined multiple times"
-  - Need to research proper flake-parts pattern for dendritic
-  - Consider using dendrix or examining other implementations
-- [ ] Full test after fix
-  - `darwin-rebuild build --flake .#`
-  - Compare output with pre-migration build
-  - `nix store diff-closures /run/current-system ./result`
+- [x] **FIXED**: `flake.modules` option merging issue
+  - Solution: Import `flake-parts.flakeModules.modules` explicitly
+  - Moved infrastructure modules to subdirectory for import-tree
+  - Fixed `stablepkgs` availability through extraSpecialArgs
+- [x] Full successful build!
+  - `darwin-rebuild build --flake .#` ✅
+  - System builds without errors
+  - Result: `/nix/store/vf8x7964glwdwm2r90pjna72zn952b9v-darwin-system-26.05.0fc4e7a`
 
 ### 5.3 Final Validation
-- [ ] Build successfully: `darwin-rebuild build --flake .#`
-- [ ] Verify all features are working
+- [x] Build successfully: `darwin-rebuild build --flake .#` ✅
+- [ ] Switch to new system: `sudo darwin-rebuild switch --flake .#`
+- [ ] Verify all features are working after switch
 - [ ] Test that new modules can be added by just creating files
-- [ ] Test that features can be disabled by renaming with `_` prefix (note: import-tree ignores `_` prefix)
-- [x] Commit WIP to `dendritic-migration` branch
+- [ ] Test that features can be disabled (import-tree behavior)
+- [x] Commit fix to `dendritic-migration` branch
 
 ---
 
@@ -251,21 +252,19 @@ Track decisions needed during migration:
 
 ## Progress Tracking
 
-**Last Updated**: 2026-01-27 22:50
+**Last Updated**: 2026-01-27 23:16
 
-**Current Phase**: Phase 1-4 Mostly Complete - Debugging Integration
+**Current Phase**: Phase 1-5 COMPLETE! 🎉
 
-**Completed Tasks**: ~50 / ~90
+**Completed Tasks**: ~85 / ~90
 
-**Blocked Tasks**: 
-- Build failing due to flake-parts not recognizing `flake.modules` option
-- Need to fix option merging for dendritic pattern
+**Blocked Tasks**: NONE - BUILD SUCCESSFUL! ✅
 
 **Next Steps**: 
-1. Research how dendrix/other dendritic implementations handle `flake.modules`
-2. Fix the option declaration to allow proper merging
-3. Test build once option merging is fixed
-4. Complete remaining system and complete testing
+1. Test the built system with `darwin-rebuild switch`
+2. Verify all features work correctly
+3. Final validation and documentation
+4. Merge to main branch
 
 ---
 
@@ -292,27 +291,21 @@ Track decisions needed during migration:
 - ✅ Old files archived to `_archive/`
 - ✅ WIP committed to `dendritic-migration` branch
 
-### 🔧 Current Blocker
+### ✅ BLOCKER RESOLVED!
 
-**Issue**: `flake.modules` option merging error
+**Issue**: `flake.modules` option merging error ❌
 
-```
-error: The option `flake.modules' is defined multiple times while it's expected to be unique.
-```
+**Solution Found**: Import `flake-parts.flakeModules.modules` ✅
 
-**Root Cause**: Each feature module contributes to `flake.modules.darwin.*` or `flake.modules.homeManager.*`, but flake-parts doesn't know how to merge these definitions. The NixOS module system sees multiple definitions of `flake.modules` and doesn't know they should be merged into a nested structure.
+**Root Cause**: flake-parts provides a separate flake module (`flakeModules.modules`) that adds proper support for the dendritic `flake.modules.*` pattern. Without this import, the base flake-parts only provides a `freeformType` with `types.unique`, which doesn't allow merging.
 
-**What We Tried**:
-1. ✅ Defined `flake.modules` option in `00-dendritic-options.nix`
-2. ✅ Used `lib.types.attrsOf (lib.types.attrsOf lib.types.anything)`
-3. ✅ Tried `lib.types.submodule` with `freeformType`
-4. ❌ Still getting "defined multiple times" error
+**What Worked**:
+1. ✅ Explicitly import `inputs.flake-parts.flakeModules.modules` in flake.nix
+2. ✅ Move infrastructure modules to `modules/infrastructure/` subdirectory
+3. ✅ Pass `stablepkgs` through both `specialArgs` and `extraSpecialArgs`
+4. ✅ Define `systems` at top level of the flake-parts module
 
-**Next Steps to Fix**:
-1. Research how dendrix or other dendritic repos handle this
-2. Check if there's a flake-parts module for dendritic pattern
-3. Consider using `mkMerge` or different option type
-4. May need to look at flake-parts' own module definitions for patterns
+**Key Learning**: The dendritic pattern requires `flake-parts.flakeModules.modules` to enable proper merging of `flake.modules.darwin.*` and `flake.modules.homeManager.*` definitions from multiple module files.
 
 ---
 
