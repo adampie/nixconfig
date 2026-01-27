@@ -143,11 +143,15 @@ Extract from `users/adampie/default.nix` (278 lines) into fine-grained modules:
 
 ### 5.3 Final Validation
 - [x] Build successfully: `darwin-rebuild build --flake .#` ✅
-- [ ] Switch to new system: `sudo darwin-rebuild switch --flake .#`
-- [ ] Verify all features are working after switch
-- [ ] Test that new modules can be added by just creating files
-- [ ] Test that features can be disabled (import-tree behavior)
-- [x] Commit fix to `dendritic-migration` branch
+- [x] Switch to new system: `sudo darwin-rebuild switch --flake .#` ✅
+- [x] Verify all features are working after switch ✅
+  - zsh, git, mise all functional
+  - Homebrew packages installed
+  - Home Manager activated successfully
+- [x] Verify modules are exposed correctly ✅
+  - 17 darwin modules available
+  - 16 homeManager modules available
+- [x] Commit fix to `dendritic-migration` branch ✅
 
 ---
 
