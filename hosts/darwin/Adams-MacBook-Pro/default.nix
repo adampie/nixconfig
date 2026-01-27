@@ -59,6 +59,7 @@
     ];
 
     brews = [
+      "anomalyco/tap/opencode"
       "gemini-cli"
       "mas"
     ];
@@ -73,7 +74,7 @@
         "1password"
         "1password-cli"
         "beyond-compare"
-        # "claude"
+        "claude"
         "claude-code"
         "cleanshot"
         "codex"
