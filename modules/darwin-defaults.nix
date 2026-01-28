@@ -1,9 +1,5 @@
-{config, ...}: {
-  imports = [
-    ../host/options.nix
-  ];
-
-  config = let
+{...}: {
+  flake.modules.darwin.system-defaults = {config, ...}: let
     inherit (config.host) username;
   in {
     nix.enable = false;
@@ -53,23 +49,18 @@
           };
           AppleSymbolicHotKeys = {
             "28" = {
-              # Save picture of screen as a file
               enabled = false;
             };
             "29" = {
-              # Copy picture of screen to the clipboard
               enabled = false;
             };
             "30" = {
-              # Save picture of selected area as a file
               enabled = false;
             };
             "31" = {
-              # Copy picture of selected area to the clipboard
               enabled = false;
             };
             "184" = {
-              # Screenshot and recording settings
               enabled = false;
             };
           };
@@ -138,6 +129,7 @@
         enableStealthMode = true;
       };
     };
+
     security.pam.services.sudo_local.touchIdAuth = true;
   };
 }
