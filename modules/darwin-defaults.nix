@@ -1,9 +1,5 @@
-{config, ...}: {
-  imports = [
-    ../host/options.nix
-  ];
-
-  config = let
+{...}: {
+  flake.modules.darwin.system-defaults = {config, ...}: let
     inherit (config.host) username;
   in {
     nix.enable = false;
@@ -138,6 +134,7 @@
         enableStealthMode = true;
       };
     };
+
     security.pam.services.sudo_local.touchIdAuth = true;
   };
 }
