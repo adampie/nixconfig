@@ -20,7 +20,7 @@
         NO_TELEMETRY = "1";
         DO_NOT_TRACK = "1";
         HOMEBREW_NO_ANALYTICS = "1";
-        CHECKPOINT_DISABLE = "1";
+        CHECKPOINT_DISABLE = "1"; # HashiCorp
         GOTELEMETRY = "off";
         NUXT_TELEMETRY_DISABLED = "1";
         NEXT_TELEMETRY_DISABLED = "1";

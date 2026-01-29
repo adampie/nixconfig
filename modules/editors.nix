@@ -3,7 +3,7 @@
     programs = {
       ghostty = {
         enable = true;
-        package = null;
+        package = null; # homebrew
         enableZshIntegration = true;
         settings = {
           theme = "Dracula+";
@@ -22,7 +22,7 @@
 
       zed-editor = {
         enable = true;
-        package = null;
+        package = null; # homebrew
         mutableUserDebug = true;
         mutableUserKeymaps = true;
         mutableUserSettings = false;
