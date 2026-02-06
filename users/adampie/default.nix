@@ -184,6 +184,9 @@
       ];
 
       userSettings = {
+        features = {
+          edit_prediction_provider = "none";
+        };
         auto_update = false;
         telemetry = {
           diagnostics = false;
@@ -209,7 +212,7 @@
           coloring = "fixed";
         };
 
-        restore_on_startup = "none";
+        restore_on_startup = "empty_tab";
         restore_on_file_reopen = false;
         close_on_file_delete = true;
         when_closing_with_no_tabs = "close_window";

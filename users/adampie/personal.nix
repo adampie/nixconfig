@@ -34,11 +34,5 @@
         signByDefault = true;
       };
     };
-
-    zed-editor.userSettings = {
-      features = {
-        edit_prediction_provider = "none";
-      };
-    };
   };
 }
