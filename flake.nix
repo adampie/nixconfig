@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
-    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";

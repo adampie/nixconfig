@@ -4,7 +4,8 @@
       inputs.nix-darwin.lib.darwinSystem {
         inherit system;
         modules =
-          modules
+          [{networking.hostName = hostname;}]
+          ++ modules
           ++ [
             inputs.home-manager.darwinModules.home-manager
           ];
@@ -14,7 +15,8 @@
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         modules =
-          modules
+          [{networking.hostName = hostname;}]
+          ++ modules
           ++ [
             inputs.home-manager.nixosModules.home-manager
           ];

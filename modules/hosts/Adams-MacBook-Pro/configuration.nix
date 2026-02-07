@@ -1,6 +1,4 @@
 {pkgs, ...}: {
-  networking.hostName = "Adams-MacBook-Pro";
-
   system.defaults.screencapture.location = "/Users/adampie/Screenshots";
 
   environment.systemPackages = with pkgs; [

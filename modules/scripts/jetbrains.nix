@@ -9,7 +9,6 @@
 in {
   flake.modules.homeManager.jetbrains = {
     home.file = {
-      ".local/bin/.keep".text = "";
       ".local/bin/idea" = mkJetBrainsDarwinScript "idea" "IntelliJ IDEA.app";
       ".local/bin/pycharm" = mkJetBrainsDarwinScript "pycharm" "PyCharm.app";
       ".local/bin/goland" = mkJetBrainsDarwinScript "goland" "GoLand.app";

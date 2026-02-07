@@ -5,7 +5,7 @@
         #!/usr/bin/env zsh
         set -e
 
-        trap 'echo "Error occurred at line $LINENO. Command: $BASH_COMMAND"' ERR
+        trap 'echo "Error occurred at line $LINENO"' ERR
 
         scm_name="$1"
         account_type="$2"
