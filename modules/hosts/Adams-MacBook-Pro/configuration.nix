@@ -1,50 +1,16 @@
-{...}: {
-  imports = [
-    ../../../modules/darwin/default.nix
+{pkgs, ...}: {
+  networking.hostName = "Adams-MacBook-Pro";
+
+  system.defaults.screencapture.location = "/Users/adampie/Screenshots";
+
+  environment.systemPackages = with pkgs; [
+    gh
+    ghorg
+    neofetch
+    osv-scanner
   ];
 
-  host = {
-    username = "adampie";
-    hostname = "Adams-MacBook-Pro";
-    platform = "darwin";
-    systemType = "personal";
-    architecture = "aarch64";
-  };
-
-  home-manager.users.adampie = {
-    pkgs,
-    stablepkgs,
-    lib,
-    mkJetBrainsDarwinScript,
-    ...
-  }: {
-    imports = [
-      (import ../../../users/adampie/personal.nix {
-        inherit
-          pkgs
-          stablepkgs
-          lib
-          mkJetBrainsDarwinScript
-          ;
-      })
-    ];
-
-    home.packages =
-      (
-        with pkgs; [
-          gh
-          ghorg
-          osv-scanner
-        ]
-      )
-      ++ (with stablepkgs; [
-        neofetch
-      ]);
-  };
-
   homebrew = {
-    enable = true;
-
     taps = [
       {
         name = "adampie/homebrew-tap";
@@ -104,12 +70,6 @@
       "Flighty" = 1358823008;
       "Kagi for Safari" = 1622835804;
       "Wipr 2" = 1662217862;
-    };
-
-    onActivation = {
-      cleanup = "zap";
-      autoUpdate = true;
-      upgrade = true;
     };
   };
 }
