@@ -1,8 +1,8 @@
 {
-  pkgs,
   lib,
-  # stablepkgs,
   mkJetBrainsDarwinScript,
+  pkgs,
+  # stablepkgs,
   ...
 }: {
   home = {
@@ -17,39 +17,6 @@
       '';
     };
 
-    sessionVariables = {
-      NO_TELEMETRY = "1";
-      DO_NOT_TRACK = "1";
-      HOMEBREW_NO_ANALYTICS = "1";
-      CHECKPOINT_DISABLE = "1"; # HashiCorp
-      GOTELEMETRY = "off";
-      NUXT_TELEMETRY_DISABLED = "1";
-      NEXT_TELEMETRY_DISABLED = "1";
-      CDK_DISABLE_CLI_TELEMETRY = "true";
-      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
-      GEMINI_TELEMETRY_ENABLED = "false";
-    };
-
-    sessionPath = [
-      "$HOME/.local/bin"
-      "/opt/homebrew/bin"
-      "/opt/homebrew/sbin"
-    ];
-
-    packages = with pkgs; [
-      cosign
-      curl
-      devenv
-      fh
-      jq
-      nerd-fonts.hack
-      nil
-      nixd
-      ripgrep
-      wget
-      yq
-    ];
-
     file = {
       ".homebrew/brew.env".text = ''
         export HOMEBREW_NO_ANALYTICS=1
@@ -62,10 +29,10 @@
       ".hushlogin".text = "";
 
       ".local/bin/.keep".text = "";
+      ".local/bin/datagrip" = mkJetBrainsDarwinScript "datagrip" "DataGrip.app";
+      ".local/bin/goland" = mkJetBrainsDarwinScript "goland" "GoLand.app";
       ".local/bin/idea" = mkJetBrainsDarwinScript "idea" "IntelliJ IDEA.app";
       ".local/bin/pycharm" = mkJetBrainsDarwinScript "pycharm" "PyCharm.app";
-      ".local/bin/goland" = mkJetBrainsDarwinScript "goland" "GoLand.app";
-      ".local/bin/datagrip" = mkJetBrainsDarwinScript "datagrip" "DataGrip.app";
       ".local/bin/webstorm" = mkJetBrainsDarwinScript "webstorm" "WebStorm.app";
 
       ".local/bin/fetch_all_code" = {
@@ -107,10 +74,69 @@
         '';
         executable = true;
       };
+
+      ".ssh/config".text = ''
+        Include ~/.orbstack/ssh/config
+
+        Host *
+            IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+      '';
+    };
+
+    packages = with pkgs; [
+      cosign
+      curl
+      devenv
+      fh
+      jq
+      nerd-fonts.hack
+      nil
+      nixd
+      ripgrep
+      wget
+      yq
+    ];
+
+    sessionPath = [
+      "$HOME/.local/bin"
+      "/opt/homebrew/bin"
+      "/opt/homebrew/sbin"
+    ];
+
+    sessionVariables = {
+      CDK_DISABLE_CLI_TELEMETRY = "true";
+      CHECKPOINT_DISABLE = "1"; # HashiCorp
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
+      DO_NOT_TRACK = "1";
+      GEMINI_TELEMETRY_ENABLED = "false";
+      GOTELEMETRY = "off";
+      HOMEBREW_NO_ANALYTICS = "1";
+      NEXT_TELEMETRY_DISABLED = "1";
+      NO_TELEMETRY = "1";
+      NUXT_TELEMETRY_DISABLED = "1";
     };
   };
 
   programs = {
+    ghostty = {
+      enable = true;
+      package = null; # homebrew
+      enableZshIntegration = true;
+      settings = {
+        auto-update = "off";
+        copy-on-select = "clipboard";
+        font-family = "Hack Nerd Font Mono";
+        keybind = [
+          "shift+enter=text:\\n"
+        ];
+        shell-integration = "zsh";
+        theme = "Dracula+";
+        window-inherit-working-directory = false;
+        window-save-state = "always";
+        working-directory = "home";
+      };
+    };
+
     git = {
       enable = true;
       settings = {
@@ -127,9 +153,9 @@
       globalConfig = {
         settings.experimental = true;
         tools = {
+          go = "latest";
           nodejs = "lts";
           python = "latest";
-          go = "latest";
         };
       };
     };
@@ -149,119 +175,102 @@
       };
     };
 
-    ghostty = {
-      enable = true;
-      package = null; # homebrew
-      enableZshIntegration = true;
-      settings = {
-        theme = "Dracula+";
-        font-family = "Hack Nerd Font Mono";
-        copy-on-select = "clipboard";
-        working-directory = "home";
-        window-inherit-working-directory = false;
-        shell-integration = "zsh";
-        window-save-state = "always";
-        auto-update = "off";
-        keybind = [
-          "shift+enter=text:\\n"
-        ];
-      };
-    };
-
     zed-editor = {
       enable = true;
       package = null; # homebrew
       mutableUserDebug = true;
       mutableUserKeymaps = true;
-      mutableUserSettings = false;
+      mutableUserSettings = true;
       mutableUserTasks = true;
 
       extensions = [
-        "nix"
         "dracula"
-        "toml"
         "git-firefly"
+        "nix"
+        "toml"
       ];
 
       userSettings = {
-        features = {
-          edit_prediction_provider = "none";
+        agent = {
+          show_turn_stats = true;
+          enable_feedback = false;
+          default_model = {
+            provider = "zed.dev";
+            model = "claude-sonnet-4-5";
+          };
+          play_sound_when_agent_done = true;
         };
         auto_update = false;
-        telemetry = {
-          diagnostics = false;
-          metrics = false;
-        };
-
+        autosave = "on_focus_change";
+        base_keymap = "VSCode";
+        buffer_font_family = "Hack Nerd Font Mono";
+        buffer_font_size = 13;
         calls = {
           mute_on_join = true;
           share_on_join = false;
         };
-
-        theme = {
-          mode = "system";
-          light = "Dracula Light (Alucard)";
-          dark = "Dracula Solid";
+        close_on_file_delete = true;
+        collaboration_panel = {
+          button = false;
         };
-        base_keymap = "VSCode";
-        buffer_font_family = "Hack Nerd Font Mono";
-        buffer_font_size = 13;
-        ui_font_size = 16;
         colorize_brackets = true;
+        edit_predictions = {
+          sweep = {
+            privacy_mode = true;
+          };
+          provider = "zed";
+        };
         indent_guides = {
           coloring = "fixed";
         };
-
-        restore_on_startup = "empty_tab";
-        restore_on_file_reopen = false;
-        close_on_file_delete = true;
-        when_closing_with_no_tabs = "close_window";
         on_last_window_closed = "quit_app";
-        autosave = "on_focus_change";
-        redact_private_values = true;
+        outline_panel = {
+          button = false;
+        };
         private_files = [
           "**/.env*"
-          "**/*.pem"
-          "**/*.key"
           "**/*.cert"
           "**/*.crt"
+          "**/*.key"
+          "**/*.pem"
           "**/secrets.yml"
         ];
-
-        agent = {
-          play_sound_when_agent_done = true;
+        project_panel = {
+          git_status = true;
+          folder_icons = true;
+          file_icons = true;
+          entry_spacing = "standard";
+          hide_gitignore = false;
         };
-
+        redact_private_values = true;
+        restore_on_file_reopen = false;
+        restore_on_startup = "empty_tab";
         tabs = {
-          git_status = false;
           file_icons = false;
+          git_status = false;
           show_close_button = "always";
         };
-
+        telemetry = {
+          diagnostics = false;
+          metrics = false;
+        };
         terminal = {
           copy_on_select = true;
         };
-
-        lsp = {
-          nil = {
-            initialization_options = {
-              formatting = {
-                command = [
-                  "alejandra"
-                  "--quiet"
-                  "--"
-                ];
-              };
-            };
-          };
+        theme = {
+          dark = "Dracula Solid";
+          light = "Dracula Light (Alucard)";
+          mode = "system";
         };
+        ui_font_size = 16;
+        when_closing_with_no_tabs = "close_window";
       };
     };
 
     zsh = {
       enable = true;
-      enableCompletion = true;
       autosuggestion.enable = true;
+      enableCompletion = true;
       history = {
         save = 1000000;
         size = 1000000;
@@ -270,11 +279,4 @@
       syntaxHighlighting.enable = true;
     };
   };
-
-  home.file.".ssh/config".text = ''
-    Include ~/.orbstack/ssh/config
-
-    Host *
-        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-  '';
 }
