@@ -1,5 +1,5 @@
 [tasks.update]
-run = "nix flake update"
+run = "ulimit -n unlimited && nix flake update"
 
 [tasks.fmt]
 run = "nix fmt ."
@@ -8,7 +8,19 @@ run = "nix fmt ."
 run = "nix flake check --all-systems"
 
 [tasks.plan]
-run = "darwin-rebuild build --flake .# && nix store diff-closures /run/current-system ./result"
+run = """
+ulimit -n unlimited
+darwin-rebuild build --flake .#
+nix store diff-closures /run/current-system ./result
+read -p "Apply these changes? [y/N] " confirm
+[ "$confirm" = "y" ] || [ "$confirm" = "Y" ] || exit 1
+"""
 
 [tasks.apply]
-run = "sudo darwin-rebuild switch --flake .#"
+run = """
+ulimit -n unlimited
+sudo darwin-rebuild switch --flake .#
+if [ "$(git diff --name-only)" = "flake.lock" ]; then
+  git add flake.lock && git commit -m "Nix flake update" && git push
+fi
+"""
