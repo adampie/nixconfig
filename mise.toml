@@ -1,26 +1,43 @@
 [tasks.update]
-run = "ulimit -n unlimited && nix flake update"
-
-[tasks.fmt]
-run = "nix fmt ."
-
-[tasks.check]
-run = "nix flake check --all-systems"
+description = "Update flake inputs"
+run = "ulimit -n unlimited && nix flake update && git add flake.lock"
 
 [tasks.plan]
+description = "Build and preview changes"
 run = """
 ulimit -n unlimited
 darwin-rebuild build --flake .#
 nix store diff-closures /run/current-system ./result
 read -p "Apply these changes? [y/N] " confirm
 [ "$confirm" = "y" ] || [ "$confirm" = "Y" ] || exit 1
+mise run apply
 """
 
 [tasks.apply]
+description = "Switch to new configuration"
+hide = true
 run = """
 ulimit -n unlimited
 sudo darwin-rebuild switch --flake .#
-if [ "$(git diff --name-only)" = "flake.lock" ]; then
-  git add flake.lock && git commit -m "Nix flake update" && git push
+rm -f result
+if [ "$(git diff --cached --name-only)" = "flake.lock" ]; then
+  git commit -m "Nix flake update" && git push
 fi
 """
+
+[tasks.upgrade]
+description = "Update, plan, and apply"
+depends = ["update"]
+run = "mise run plan"
+
+[tasks.fmt]
+description = "Format nix files"
+run = "nix fmt ."
+
+[tasks.check]
+description = "Run flake checks"
+run = "nix flake check --all-systems"
+
+[tasks.gc]
+description = "Garbage collect nix store"
+run = "nix-collect-garbage -d"
