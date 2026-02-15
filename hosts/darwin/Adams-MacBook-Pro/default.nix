@@ -42,6 +42,11 @@
       ]);
   };
 
+  services.aerospace = {
+    enable = true;
+    settings = {};
+  };
+
   homebrew = {
     enable = true;
 

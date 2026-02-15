@@ -50,7 +50,7 @@
             system = "aarch64-darwin";
             type = "darwin";
             modules = [
-              (darwinDir + "/${name}/default.nix")
+              (darwinDir + ("/" + name + "/default.nix"))
             ];
           };
         })
