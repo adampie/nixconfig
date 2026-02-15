@@ -89,6 +89,7 @@
       devenv
       fh
       jq
+      neovim
       nerd-fonts.hack
       nil
       nixd

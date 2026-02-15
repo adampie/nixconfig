@@ -6,6 +6,7 @@
   config = let
     inherit (config.host) username;
   in {
+    documentation.enable = false;
     nix.enable = false;
 
     home-manager = {
@@ -28,6 +29,7 @@
           NSAutomaticQuoteSubstitutionEnabled = false;
           NSAutomaticSpellingCorrectionEnabled = false;
           NSDocumentSaveNewDocumentsToCloud = false;
+          NSWindowShouldDragOnGesture = true;
           NSNavPanelExpandedStateForSaveMode = true;
           NSNavPanelExpandedStateForSaveMode2 = true;
         };
