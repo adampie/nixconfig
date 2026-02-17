@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ../../../modules/darwin/default.nix
   ];
@@ -11,40 +12,40 @@
     architecture = "aarch64";
   };
 
-  home-manager.users.adampie = {
-    pkgs,
-    stablepkgs,
-    lib,
-    mkJetBrainsDarwinScript,
-    ...
-  }: {
-    imports = [
-      (import ../../../users/adampie/personal.nix {
-        inherit
-          pkgs
-          stablepkgs
-          lib
-          mkJetBrainsDarwinScript
-          ;
-      })
-    ];
+  home-manager.users.adampie =
+    {
+      pkgs,
+      stablepkgs,
+      lib,
+      mkJetBrainsDarwinScript,
+      ...
+    }:
+    {
+      imports = [
+        (import ../../../users/adampie/personal.nix {
+          inherit
+            pkgs
+            stablepkgs
+            lib
+            mkJetBrainsDarwinScript
+            ;
+        })
+      ];
 
-    home.packages =
-      (
-        with pkgs; [
+      home.packages =
+        (with pkgs; [
           gh
           ghorg
           osv-scanner
-        ]
-      )
-      ++ (with stablepkgs; [
-        neofetch
-      ]);
-  };
+        ])
+        ++ (with stablepkgs; [
+          neofetch
+        ]);
+    };
 
   services.aerospace = {
-    enable = true;
-    settings = {};
+    enable = false;
+    settings = { };
   };
 
   homebrew = {
@@ -71,38 +72,38 @@
 
     casks =
       map
-      (name: {
-        inherit name;
-        greedy = true;
-      })
-      [
-        "1password"
-        "1password-cli"
-        "beyond-compare"
-        "claude"
-        "claude-code"
-        "cleanshot"
-        "codex"
-        "datagrip"
-        "daisydisk"
-        "discord"
-        "ghostty"
-        "goland"
-        "intellij-idea"
-        "little-snitch"
-        "micro-snitch"
-        "mullvad-vpn"
-        "orbstack"
-        "pixelsnap"
-        "proxyman"
-        "pycharm"
-        "slack"
-        "spotify"
-        "superwhisper"
-        "tower"
-        "webstorm"
-        "zed"
-      ];
+        (name: {
+          inherit name;
+          greedy = true;
+        })
+        [
+          "1password"
+          "1password-cli"
+          "beyond-compare"
+          "claude"
+          "claude-code"
+          "cleanshot"
+          "codex"
+          "datagrip"
+          "daisydisk"
+          "discord"
+          "ghostty"
+          "goland"
+          "intellij-idea"
+          "little-snitch"
+          "micro-snitch"
+          "mullvad-vpn"
+          "orbstack"
+          "pixelsnap"
+          "proxyman"
+          "pycharm"
+          "slack"
+          "spotify"
+          "superwhisper"
+          "tower"
+          "webstorm"
+          "zed"
+        ];
 
     masApps = {
       "1Password for Safari" = 1569813296;
