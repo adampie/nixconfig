@@ -77,6 +77,7 @@
           greedy = true;
         })
         [
+          "adampie/tap-private/qq"
           "1password"
           "1password-cli"
           "beyond-compare"
