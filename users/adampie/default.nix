@@ -197,7 +197,7 @@
           enable_feedback = false;
           default_model = {
             provider = "zed.dev";
-            model = "claude-sonnet-4-5";
+            model = "claude-sonnet-4-6";
           };
           play_sound_when_agent_done = true;
         };
