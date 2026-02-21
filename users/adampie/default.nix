@@ -113,7 +113,6 @@
       enable = true;
       package = null; # homebrew
       settings = {
-        model = "claude-sonnet-4-6";
         theme = "dark";
         env = {
           DISABLE_AUTOUPDATER = "1";
