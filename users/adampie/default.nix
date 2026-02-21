@@ -1,17 +1,22 @@
 {
+  inputs,
   lib,
   mkJetBrainsDarwinScript,
   pkgs,
   # stablepkgs,
   ...
-}: {
+}:
+{
+  imports = [
+    inputs.opt-out.homeManagerModules.default
+  ];
   home = {
     username = "adampie";
     homeDirectory = "/Users/adampie";
     stateVersion = "25.11";
 
     activation = {
-      createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      createDirectories = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD mkdir -p $HOME/Code
         $DRY_RUN_CMD mkdir -p $HOME/Screenshots
       '';
@@ -19,7 +24,6 @@
 
     file = {
       ".homebrew/brew.env".text = ''
-        export HOMEBREW_NO_ANALYTICS=1
         export HOMEBREW_CASK_OPTS=--require-sha
         export HOMEBREW_NO_AUTO_UPDATE=1
         export HOMEBREW_NO_ENV_HINTS=1
@@ -104,18 +108,6 @@
       "/opt/homebrew/sbin"
     ];
 
-    sessionVariables = {
-      CDK_DISABLE_CLI_TELEMETRY = "true";
-      CHECKPOINT_DISABLE = "1"; # HashiCorp
-      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
-      DO_NOT_TRACK = "1";
-      GEMINI_TELEMETRY_ENABLED = "false";
-      GOTELEMETRY = "off";
-      HOMEBREW_NO_ANALYTICS = "1";
-      NEXT_TELEMETRY_DISABLED = "1";
-      NO_TELEMETRY = "1";
-      NUXT_TELEMETRY_DISABLED = "1";
-    };
   };
 
   programs = {
