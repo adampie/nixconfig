@@ -109,6 +109,28 @@
   };
 
   programs = {
+    claude-code = {
+      enable = true;
+      package = null; # homebrew
+      settings = {
+        model = "claude-sonnet-4-6";
+        theme = "dark";
+        env = {
+          DISABLE_AUTOUPDATER = "1";
+          DISABLE_BUG_COMMAND = "1";
+          DISABLE_ERROR_REPORTING = "1";
+          DISABLE_TELEMETRY = "1";
+        };
+        attribution = {
+          commit = "";
+          pr = "";
+        };
+        permissions = {
+          defaultMode = "acceptEdits";
+        };
+      };
+    };
+
     ghostty = {
       enable = true;
       package = null; # homebrew
@@ -145,7 +167,9 @@
         settings.experimental = true;
         tools = {
           go = "latest";
+          hk = "latest";
           nodejs = "lts";
+          pkl = "latest";
           python = "latest";
         };
       };
