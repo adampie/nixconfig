@@ -5,8 +5,7 @@
   pkgs,
   # stablepkgs,
   ...
-}:
-{
+}: {
   imports = [
     inputs.opt-out.homeManagerModules.default
   ];
@@ -16,7 +15,7 @@
     stateVersion = "25.11";
 
     activation = {
-      createDirectories = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
         $DRY_RUN_CMD mkdir -p $HOME/Code
         $DRY_RUN_CMD mkdir -p $HOME/Screenshots
       '';
@@ -107,7 +106,6 @@
       "/opt/homebrew/bin"
       "/opt/homebrew/sbin"
     ];
-
   };
 
   programs = {
