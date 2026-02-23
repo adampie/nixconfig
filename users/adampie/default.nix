@@ -78,6 +78,19 @@
         executable = true;
       };
 
+      ".config/qq/config.toml".text = ''
+        worktree_dir = "~/Code"
+        auto_mise = true
+
+        repos = [
+          "adampie/adampie.dev",
+          "adampie/adampietrzycki.com",
+          "adampie/nixconfig",
+          "adampie/opt-out",
+          "adampie/qq"
+        ]
+      '';
+
       ".ssh/config".text = ''
         Include ~/.orbstack/ssh/config
 
