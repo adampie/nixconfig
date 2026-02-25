@@ -75,16 +75,16 @@
         greedy = true;
       })
       [
-        "adampie/tap-private/qq"
         "1password"
         "1password-cli"
+        "adampie/tap-private/qq"
         "beyond-compare"
         "claude"
         "claude-code"
         "cleanshot"
         "codex"
-        "datagrip"
         "daisydisk"
+        "datagrip"
         "discord"
         "ghostty"
         "goland"
