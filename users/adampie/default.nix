@@ -5,7 +5,8 @@
   pkgs,
   # stablepkgs,
   ...
-}: {
+}:
+{
   imports = [
     inputs.opt-out.homeManagerModules.default
   ];
@@ -15,7 +16,7 @@
     stateVersion = "25.11";
 
     activation = {
-      createDirectories = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      createDirectories = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD mkdir -p $HOME/Code
         $DRY_RUN_CMD mkdir -p $HOME/Screenshots
       '';
@@ -81,6 +82,9 @@
       ".config/qq/config.toml".text = ''
         worktree_dir = "~/Code"
         auto_mise = true
+
+        pr_description_tool = "claude -p"
+        pr_prefix = "conventional"
 
         repos = [
           "adampie/adampie.dev",
