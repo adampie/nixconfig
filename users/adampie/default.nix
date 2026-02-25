@@ -81,7 +81,9 @@
 
       ".config/qq/config.toml".text = ''
         worktree_dir = "~/Code"
+
         auto_mise = true
+        auto_hk = true
 
         pr_description_tool = "claude -p"
         pr_prefix = "conventional"
