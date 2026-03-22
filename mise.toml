@@ -1,0 +1,30 @@
+[tasks.build]
+description = "Build configuration"
+run = "darwin-rebuild build --flake .#"
+
+[tasks.switch]
+description = "Apply configuration"
+run = "sudo darwin-rebuild switch --flake .#"
+
+[tasks.plan]
+description = "Build, preview diff"
+run = """
+darwin-rebuild build --flake .#
+nix store diff-closures /run/current-system ./result
+"""
+
+[tasks.update]
+description = "Update flake inputs"
+run = "nix flake update && git add flake.lock"
+
+# [tasks.fmt]
+# description = "Format nix files"
+# run = "nix fmt ."
+
+# [tasks.check]
+# description = "Run flake checks"
+# run = "nix flake check --all-systems"
+
+[tasks.gc]
+description = "Garbage collect nix store"
+run = "nix-collect-garbage -d"

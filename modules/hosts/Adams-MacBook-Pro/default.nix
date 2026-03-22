@@ -13,6 +13,7 @@
     {
       imports = [
         inputs.home-manager.darwinModules.home-manager
+        self.darwinModules.defaults
         self.darwinModules.homebrew
         self.darwinModules.homebrewBrews
         self.darwinModules.homebrewCasks
@@ -20,6 +21,8 @@
         self.darwinModules.homebrewTaps
       ];
 
+      documentation.enable = false;
+      nix.enable = false;
       nixpkgs.hostPlatform = "aarch64-darwin";
       system.primaryUser = username;
       system.stateVersion = 6;
@@ -31,20 +34,30 @@
       };
 
       home-manager = {
+        backupFileExtension = "backup";
+        overwriteBackup = true;
         useGlobalPkgs = true;
         useUserPackages = true;
         users.${username} = {
           imports = [
             self.homeModules.brewEnv
             self.homeModules.claudeCode
+            self.homeModules.directories
             self.homeModules.fonts
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg
+            self.homeModules.jetbrains
             self.homeModules.mise
+            self.homeModules.nixIndex
+            self.homeModules.optOut
             self.homeModules.ssh
             self.homeModules.starship
             self.homeModules.zed
+            self.homeModules.shell
+            self.homeModules.packagesCommon
+            self.homeModules.packagesDevelopment
+            self.homeModules.packagesSecurity
             self.homeModules.zsh
           ];
           home = {
