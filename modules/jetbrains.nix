@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   flake.homeModules.jetbrains =
     { pkgs, lib, ... }:
     let

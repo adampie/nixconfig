@@ -174,22 +174,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1773507054,
-        "narHash": "sha256-Q8U5VXgrcxmCxPtCCJCIZkcAX3FCZwGh1GNVIXxMND0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "e80236013dc8b77aa49ca90e7a12d86f5d8d64c9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "opt-out": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -216,26 +200,7 @@
         "nix-darwin": "nix-darwin",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
-        "opt-out": "opt-out",
-        "wrapper-modules": "wrapper-modules"
-      }
-    },
-    "wrapper-modules": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1774098174,
-        "narHash": "sha256-KTrndetKnmtUcFyDj0UGR3H8aSyeI2ERS8MMvqR90ms=",
-        "owner": "BirdeeHub",
-        "repo": "nix-wrapper-modules",
-        "rev": "7857357e2cd7c3bfd6e1d1fa6b9db2a373cea420",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "nix-wrapper-modules",
-        "type": "github"
+        "opt-out": "opt-out"
       }
     }
   },

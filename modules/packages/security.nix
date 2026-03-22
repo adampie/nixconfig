@@ -1,14 +1,11 @@
 { ... }:
 {
   flake.homeModules.packagesSecurity =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
-      home.packages =
-        with pkgs;
-        [
-          osv-scanner
-        ]
-        ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-        ];
+      home.packages = with pkgs; [
+        osv-scanner
+        zizmor
+      ];
     };
 }

@@ -1,19 +1,15 @@
 { ... }:
 {
   flake.homeModules.packagesCommon =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
-      home.packages =
-        with pkgs;
-        [
-          cosign
-          curl
-          jq
-          ripgrep
-          wget
-          yq
-        ]
-        ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-        ];
+      home.packages = with pkgs; [
+        cosign
+        curl
+        jq
+        ripgrep
+        wget
+        yq
+      ];
     };
 }

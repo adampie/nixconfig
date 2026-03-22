@@ -23,13 +23,37 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
   };
 
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-      inputs.import-tree ./modules
+      { lib, ... }:
+      {
+        imports = [ (inputs.import-tree ./modules) ];
+
+        options.flake = {
+          darwinModules = lib.mkOption {
+            type = lib.types.attrsOf lib.types.raw;
+            default = { };
+          };
+          homeModules = lib.mkOption {
+            type = lib.types.attrsOf lib.types.raw;
+            default = { };
+          };
+        };
+
+        config.systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ];
+
+        config.perSystem =
+          { pkgs, ... }:
+          {
+            formatter = pkgs.nixfmt-tree;
+          };
+      }
     );
 }
