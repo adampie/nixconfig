@@ -3,7 +3,7 @@ amends "package://github.com/jdx/hk/releases/download/v1.38.0/hk@1.38.0#/Config.
 local linters = new Mapping<String, Step> {
   ["nix_fmt"] {
     glob = List("*.nix")
-    check = "nix fmt . -- --check"
+    check = "nix fmt . -- --fail-on-change"
     fix = "nix fmt ."
   }
   ["flake_check"] {
