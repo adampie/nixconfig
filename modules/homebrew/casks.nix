@@ -30,6 +30,7 @@
             "pixelsnap"
             "proxyman"
             "pycharm"
+            "rustrover"
             "slack"
             "spotify"
             "superwhisper"
