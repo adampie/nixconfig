@@ -18,6 +18,7 @@
         ".local/bin/idea" = mkLauncher "idea" "IntelliJ IDEA.app";
         ".local/bin/pycharm" = mkLauncher "pycharm" "PyCharm.app";
         ".local/bin/webstorm" = mkLauncher "webstorm" "WebStorm.app";
+        ".local/bin/rustrover" = mkLauncher "rustrover" "RustRover.app";
       };
     };
 }
