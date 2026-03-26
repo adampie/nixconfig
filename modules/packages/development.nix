@@ -14,8 +14,8 @@
         ++ lib.optionals (!pkgs.stdenv.isDarwin) [
           jetbrains.datagrip
           jetbrains.goland
-          jetbrains.idea-ultimate
-          jetbrains.pycharm-professional
+          jetbrains.idea
+          jetbrains.pycharm
           jetbrains.webstorm
           jetbrains.rust-rover
         ];
