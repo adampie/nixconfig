@@ -42,14 +42,6 @@
         pulse.enable = true;
       };
 
-      # Printing
-      services.printing.enable = true;
-      services.avahi = {
-        enable = true;
-        nssmdns4 = true;
-        openFirewall = true;
-      };
-
       # Services
       services.locate = {
         enable = true;

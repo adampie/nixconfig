@@ -14,6 +14,7 @@
       imports = [
         inputs.home-manager.nixosModules.home-manager
         self.nixosModules.defaults
+        self.nixosModules.fail2ban
         self.nixosModules.fonts
         self.nixosModules.gnome
         self.nixosModules.mullvad
