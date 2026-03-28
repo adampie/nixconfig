@@ -5,6 +5,12 @@
     {
       services.xserver.enable = true;
       services.xserver.xkb.layout = "gb";
+
+      # Ensure GNOME uses GB layout on Wayland
+      services.desktopManager.gnome.extraGSettingsOverrides = ''
+        [org/gnome/desktop/input-sources]
+        sources=[('xkb', 'gb')]
+      '';
       services.displayManager.gdm.enable = true;
       services.displayManager.gdm.wayland = true;
       services.desktopManager.gnome.enable = true;
