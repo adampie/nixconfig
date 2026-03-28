@@ -48,6 +48,7 @@
         users.${username} = {
           imports = [
             self.homeModules.claudeCode
+            self.homeModules.direnv
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg

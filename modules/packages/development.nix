@@ -7,7 +7,6 @@
         with pkgs;
         [
           devenv
-          direnv
           fh
           gh
           nil

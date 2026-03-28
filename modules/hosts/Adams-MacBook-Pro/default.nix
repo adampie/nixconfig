@@ -47,6 +47,7 @@
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg
+            self.homeModules.direnv
             self.homeModules.jetbrains
             self.homeModules.mise
             self.homeModules.nixIndex
