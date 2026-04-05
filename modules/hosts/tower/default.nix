@@ -18,6 +18,7 @@
         self.nixosModules.fonts
         self.nixosModules.gnome
         self.nixosModules.mullvad
+        self.nixosModules.ollama
         self.nixosModules.openssh
         self.nixosModules.podman
         self.nixosModules.towerDisko
