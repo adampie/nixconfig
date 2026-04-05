@@ -1,11 +1,8 @@
 { ... }:
 {
   flake.nixosModules.ollama =
-    { ... }:
+    { pkgs, ... }:
     {
-      services.ollama = {
-        enable = true;
-        acceleration = "cuda";
-      };
+      environment.systemPackages = [ pkgs.ollama-cuda ];
     };
 }
