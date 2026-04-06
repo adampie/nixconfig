@@ -18,7 +18,7 @@
         self.nixosModules.fonts
         self.nixosModules.gnome
         self.nixosModules.mullvad
-        self.nixosModules.ollama
+        # self.nixosModules.ollama
         self.nixosModules.openssh
         self.nixosModules.podman
         self.nixosModules.towerDisko
@@ -48,7 +48,7 @@
         useUserPackages = true;
         users.${username} = {
           imports = [
-            self.homeModules.claudeCode
+            # self.homeModules.claudeCode
             self.homeModules.direnv
             self.homeModules.ghostty
             self.homeModules.git
