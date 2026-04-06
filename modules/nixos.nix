@@ -10,6 +10,14 @@
         "nix-command"
         "flakes"
       ];
+      nix.settings.substituters = [
+        "https://cache.adampie.dev"
+        "https://cache.nixos.org"
+      ];
+      nix.settings.trusted-public-keys = [
+        "cache.adampie.dev-1:njftfmru8p5NnYbVcfE22Tq0Ku+pEEplGs0nVqIGCUE="
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
       nix.settings.auto-optimise-store = true;
       nix.gc = {
         automatic = true;
