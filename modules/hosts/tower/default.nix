@@ -48,7 +48,7 @@
         useUserPackages = true;
         users.${username} = {
           imports = [
-            # self.homeModules.claudeCode
+            self.homeModules.claudeCode
             self.homeModules.direnv
             self.homeModules.ghostty
             self.homeModules.git
