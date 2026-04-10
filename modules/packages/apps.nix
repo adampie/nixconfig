@@ -4,7 +4,8 @@
     { pkgs, lib, ... }:
     {
       home.packages = lib.optionals pkgs.stdenv.isLinux (
-        with pkgs; [
+        with pkgs;
+        [
           discord
           slack
           spotify

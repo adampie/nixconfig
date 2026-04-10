@@ -50,7 +50,6 @@
             self.homeModules.direnv
             self.homeModules.jetbrains
             self.homeModules.mise
-            self.homeModules.nixCache
             self.homeModules.nixIndex
             self.homeModules.optOut
             self.homeModules.ssh

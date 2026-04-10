@@ -1,7 +1,13 @@
 { ... }:
 {
   flake.nixosModules.towerHardware =
-    { config, lib, pkgs, modulesPath, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      modulesPath,
+      ...
+    }:
     {
       imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
