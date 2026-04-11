@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "ai": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775897275,
+        "narHash": "sha256-41OQbBn1KSV2c/DH41A6SfDSN1ZG8LW/KEcD28yKyhQ=",
+        "owner": "adampie",
+        "repo": "ai",
+        "rev": "d9faff3fe5476d95634b5e5ee7d93d41fc2194b1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "adampie",
+        "repo": "ai",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -63,11 +79,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775781825,
-        "narHash": "sha256-L5yKTpR+alrZU2XYYvIxCeCP4LBHU5jhwSj7H1VAavg=",
+        "lastModified": 1775894317,
+        "narHash": "sha256-pMO5JwJ/0n+q3sIivB2YUPFgbzoL+UbAhFlL9fDTMjo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e35c39fca04fee829cecdf839a50eb9b54d8a701",
+        "rev": "f7f6a559c21dfe5e63108ded0d036ae15e6e9d57",
         "type": "github"
       },
       "original": {
@@ -214,6 +230,7 @@
     },
     "root": {
       "inputs": {
+        "ai": "ai",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
