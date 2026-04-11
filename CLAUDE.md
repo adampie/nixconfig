@@ -58,11 +58,24 @@ Every module file follows this pattern:
 
 Modules are imported by hosts via `self.homeModules.moduleName` (or `darwinModules`/`nixosModules`).
 
+## Pre-commit Hooks
+
+`hk` (configured in `hk.pkl`) runs on pre-commit:
+1. `nix fmt . -- --fail-on-change` on `*.nix` files (auto-fixes)
+2. `nix flake check --all-systems`
+
+Always run `mise run fmt` before committing to avoid hook failures.
+
+## CI
+
+Pushes to `main` auto-publish to FlakeHub via GitHub Actions (`adampie/nixconfig` rolling release).
+
 ## Key Conventions
 
 - Module names use **camelCase** (e.g., `packagesCommon`, `nixIndex`)
 - Platform differences use `pkgs.stdenv.isDarwin` conditionals
 - Host configs in `modules/hosts/<hostname>/default.nix` define both `flake.<type>Configurations.<host>` and the host's module
+- **New `.nix` files must be `git add`ed** before building — the flake won't see untracked files
 - Tower hardware/boot/GPU config lives in `hardware-configuration.nix`, disk layout in `disko.nix`
 - Disko manages `fileSystems`/`swapDevices` declaratively — partition labels must match the actual disk (`root`, `swap`, `ESP`)
 - Formatter is `nixfmt-tree` (`nix fmt .`)
