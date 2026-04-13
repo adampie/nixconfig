@@ -6,7 +6,7 @@
       programs.claude-code = {
         enable = true;
         package = if pkgs.stdenv.isDarwin then null else pkgs.claude-code;
-        skillsDir = ./skills;
+        skills = ./skills;
         rulesDir = ./rules;
         settings = {
           effortLevel = "high";
@@ -23,7 +23,7 @@
             pr = "";
           };
           permissions = {
-            defaultMode = "auto";
+            defaultMode = "acceptEdits";
           };
         };
       };
