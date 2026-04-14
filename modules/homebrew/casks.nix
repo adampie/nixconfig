@@ -23,6 +23,7 @@
             "ghostty"
             "goland"
             "intellij-idea"
+            "launchbar"
             "little-snitch"
             "micro-snitch"
             "mullvad-vpn"

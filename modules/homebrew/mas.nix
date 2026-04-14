@@ -7,6 +7,7 @@
         "1Password for Safari" = 1569813296;
         "Flighty" = 1358823008;
         "Kagi for Safari" = 1622835804;
+        "SponsorBlock for Safari" = 1573461917;
         "Wipr 2" = 1662217862;
       };
     };
