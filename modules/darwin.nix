@@ -7,6 +7,7 @@
         NSGlobalDomain = {
           "com.apple.mouse.tapBehavior" = 1;
           "com.apple.swipescrolldirection" = false;
+          AppleInterfaceStyle = "Dark";
           AppleShowAllFiles = true;
           NSAutomaticCapitalizationEnabled = false;
           NSAutomaticDashSubstitutionEnabled = false;
@@ -26,8 +27,24 @@
           "com.apple.AdLib" = {
             allowApplePersonalizedAdvertising = false;
           };
+          "com.apple.loginwindow" = {
+            TALLogoutSavesState = false;
+          };
+          "com.apple.Accessibility" = {
+            ReduceMotionEnabled = 1;
+          };
+          "com.apple.Spotlight" = {
+            EnabledPreferenceRules = [ "Custom.relatedContents" ];
+          };
+          "com.apple.assistant.support" = {
+            "Assistant Enabled" = false;
+            "Search Queries Data Sharing Status" = 2;
+          };
           "com.apple.AppleIntelligenceReport" = {
             reportDuration = 0;
+          };
+          "com.apple.voicetrigger" = {
+            "VoiceTrigger Enabled" = false;
           };
           "com.apple.desktopservices" = {
             DSDontWriteNetworkStores = true;
@@ -104,9 +121,13 @@
 
         trackpad.Clicking = true;
 
+        universalaccess.reduceMotion = true;
+
         WindowManager = {
           EnableStandardClickToShowDesktop = false;
           EnableTiledWindowMargins = false;
+          StageManagerHideWidgets = true;
+          StandardHideWidgets = true;
         };
       };
 
