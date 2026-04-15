@@ -34,6 +34,8 @@ This is a Nix flake using **flake-parts** + **import-tree** to manage two hosts:
 
 **import-tree** auto-imports every `.nix` file under `modules/` as a flake-parts module. New files must be `git add`ed or the flake won't see them.
 
+Key flake inputs: `nixpkgs` (unstable), `nix-darwin`, `home-manager`, `disko` (declarative disk partitioning), `nix-index-database`, and `opt-out` (adampie's own FlakeHub package).
+
 ## Module System
 
 Three module types, each set via `flake.<type>.<name>`:
@@ -74,6 +76,7 @@ Pushes to `main` auto-publish to FlakeHub via GitHub Actions (`adampie/nixconfig
 
 - Module names use **camelCase** (e.g., `packagesCommon`, `nixIndex`)
 - Platform differences use `pkgs.stdenv.isDarwin` conditionals
+- Homebrew config is split across `modules/homebrew/` (base, brews, casks, mas, taps, brew-env) as separate darwinModules and homeModules
 - Host configs in `modules/hosts/<hostname>/default.nix` define both `flake.<type>Configurations.<host>` and the host's module
 - **New `.nix` files must be `git add`ed** before building — the flake won't see untracked files
 - Tower hardware/boot/GPU config lives in `hardware-configuration.nix`, disk layout in `disko.nix`
