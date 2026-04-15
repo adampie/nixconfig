@@ -24,6 +24,9 @@
         SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
         CustomUserPreferences = {
+          "com.apple.controlcenter" = {
+            NumberOfRecents = 0;
+          };
           "com.apple.AdLib" = {
             allowApplePersonalizedAdvertising = false;
           };
@@ -45,6 +48,17 @@
           };
           "com.apple.voicetrigger" = {
             "VoiceTrigger Enabled" = false;
+          };
+          NSGlobalDomain = {
+            AppleLanguages = [ "en-GB" ];
+            AppleLocale = "en_GB";
+          };
+          ".GlobalPreferences_m" = {
+            AppleLanguages = [ "en-GB" ];
+            AppleLocale = "en_GB";
+          };
+          "com.apple.onetimepasscodes" = {
+            DeleteVerificationCodes = true;
           };
           "com.apple.desktopservices" = {
             DSDontWriteNetworkStores = true;
