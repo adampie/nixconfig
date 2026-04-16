@@ -18,7 +18,6 @@
         self.nixosModules.fonts
         self.nixosModules.gnome
         self.nixosModules.mullvad
-        # self.nixosModules.ollama
         self.nixosModules.openssh
         self.nixosModules.podman
         self.nixosModules.towerDisko
@@ -49,15 +48,20 @@
         users.${username} = {
           imports = [
             self.homeModules.claudeCode
+            self.homeModules.directories
             self.homeModules.direnv
+            self.homeModules.fonts
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg
+            self.homeModules.jetbrains
             self.homeModules.mise
+            self.homeModules.nixIndex
             self.homeModules.optOut
             self.homeModules.packagesApps
             self.homeModules.packagesCommon
             self.homeModules.packagesDevelopment
+            self.homeModules.packagesSecurity
             self.homeModules.starship
             self.homeModules.zed
             self.homeModules.zsh
