@@ -8,8 +8,8 @@
         package = if pkgs.stdenv.isDarwin then null else pkgs.claude-code;
         rulesDir = ./rules;
         settings = {
-          effortLevel = "high";
-          model = "claude-opus-4-6[1m]";
+          effortLevel = "xhigh";
+          model = "opus[1m]";
           env = {
             DISABLE_AUTOUPDATER = "1";
             DISABLE_ERROR_REPORTING = "1";
