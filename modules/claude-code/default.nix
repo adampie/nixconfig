@@ -25,8 +25,7 @@
             defaultMode = "acceptEdits";
           };
           enabledPlugins = {
-            "adampie@adampie" = true;
-            "adampie-private@adampie-private" = true;
+            "grill-me@adampie" = true;
           };
           extraKnownMarketplaces = {
             adampie = {
