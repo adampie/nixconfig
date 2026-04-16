@@ -6,7 +6,6 @@
       programs.claude-code = {
         enable = true;
         package = if pkgs.stdenv.isDarwin then null else pkgs.claude-code;
-        skills = ./skills;
         rulesDir = ./rules;
         settings = {
           effortLevel = "high";
@@ -24,6 +23,20 @@
           };
           permissions = {
             defaultMode = "acceptEdits";
+          };
+          extraKnownMarketplaces = {
+            adampie-ai = {
+              source = {
+                source = "github";
+                repo = "adampie/ai";
+              };
+            };
+            adampie-ai-private = {
+              source = {
+                source = "github";
+                repo = "adampie/ai-private";
+              };
+            };
           };
         };
       };
