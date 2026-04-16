@@ -58,6 +58,7 @@
             self.homeModules.shell
             self.homeModules.ssh
             self.homeModules.starship
+            self.homeModules.terraform
             self.homeModules.zed
             self.homeModules.zsh
           ];

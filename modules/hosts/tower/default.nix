@@ -63,6 +63,7 @@
             self.homeModules.packagesDevelopment
             self.homeModules.packagesSecurity
             self.homeModules.starship
+            self.homeModules.terraform
             self.homeModules.zed
             self.homeModules.zsh
           ];
