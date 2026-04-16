@@ -14,6 +14,7 @@
           keybind = [
             "shift+enter=text:\\n"
           ];
+          scrollback-limit = 100000000;
           shell-integration = "zsh";
           theme = "Dracula+";
           window-inherit-working-directory = false;
