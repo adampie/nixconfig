@@ -25,13 +25,13 @@
             defaultMode = "acceptEdits";
           };
           extraKnownMarketplaces = {
-            adampie-ai = {
+            adampie = {
               source = {
                 source = "github";
                 repo = "adampie/ai";
               };
             };
-            adampie-ai-private = {
+            adampie-private = {
               source = {
                 source = "github";
                 repo = "adampie/ai-private";
