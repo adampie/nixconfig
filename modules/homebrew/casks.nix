@@ -14,7 +14,7 @@
             "1password-cli"
             "beyond-compare"
             "claude"
-            "claude-code"
+            "claude-code@latest"
             "cleanshot"
             "codex"
             "daisydisk"
