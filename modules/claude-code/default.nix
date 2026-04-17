@@ -22,7 +22,7 @@
             pr = "";
           };
           permissions = {
-            defaultMode = "acceptEdits";
+            defaultMode = "auto";
           };
           enabledPlugins = {
             "grill-me@adampie" = true;
