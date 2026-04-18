@@ -26,6 +26,9 @@
           };
           enabledPlugins = {
             "grill-me@adampie" = true;
+            "agent-browser@agent-browser" = true;
+            "frontend-design@claude-plugins-official" = true;
+            "skill-creator@claude-plugins-official" = true;
           };
           extraKnownMarketplaces = {
             adampie = {
@@ -38,6 +41,12 @@
               source = {
                 source = "github";
                 repo = "adampie/ai-private";
+              };
+            };
+            agent-browser = {
+              source = {
+                source = "github";
+                repo = "vercel-labs/agent-browser";
               };
             };
           };
