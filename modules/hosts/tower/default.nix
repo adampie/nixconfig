@@ -17,6 +17,7 @@
         self.nixosModules.fail2ban
         self.nixosModules.fonts
         self.nixosModules.gnome
+        self.nixosModules.llamaCpp
         self.nixosModules.mullvad
         self.nixosModules.openssh
         self.nixosModules.podman
