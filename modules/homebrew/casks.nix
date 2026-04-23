@@ -19,6 +19,7 @@
             "codex"
             "daisydisk"
             "datagrip"
+            "dataspell"
             "discord"
             "ghostty"
             "goland"

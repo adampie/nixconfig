@@ -14,6 +14,7 @@
         ]
         ++ lib.optionals (!pkgs.stdenv.isDarwin) [
           jetbrains.datagrip
+          jetbrains.dataspell
           jetbrains.goland
           jetbrains.idea
           jetbrains.pycharm
