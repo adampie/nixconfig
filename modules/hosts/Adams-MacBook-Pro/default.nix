@@ -19,6 +19,7 @@
         self.darwinModules.homebrewCasks
         self.darwinModules.homebrewMas
         self.darwinModules.homebrewTaps
+        self.darwinModules.llmAgents
       ];
 
       documentation.enable = false;

@@ -18,6 +18,7 @@
         self.nixosModules.fonts
         self.nixosModules.gnome
         self.nixosModules.llamaCpp
+        self.nixosModules.llmAgents
         self.nixosModules.mullvad
         self.nixosModules.openssh
         self.nixosModules.podman
@@ -49,6 +50,7 @@
         users.${username} = {
           imports = [
             self.homeModules.claudeCode
+            self.homeModules.codex
             self.homeModules.directories
             self.homeModules.direnv
             self.homeModules.fonts

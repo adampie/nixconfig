@@ -5,7 +5,7 @@
     {
       programs.claude-code = {
         enable = true;
-        package = if pkgs.stdenv.isDarwin then null else pkgs.claude-code;
+        package = if pkgs.stdenv.isDarwin then null else pkgs.llm-agents.claude-code;
         rulesDir = ./rules;
         settings = {
           effortLevel = "xhigh";
