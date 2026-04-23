@@ -34,13 +34,13 @@
             adampie = {
               source = {
                 source = "github";
-                repo = "adampie/ai";
+                repo = "adampie/skills";
               };
             };
             adampie-private = {
               source = {
                 source = "github";
-                repo = "adampie/ai-private";
+                repo = "adampie/skills-private";
               };
             };
             agent-browser = {
