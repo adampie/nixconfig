@@ -19,15 +19,6 @@
         ];
 
         userSettings = {
-          agent = {
-            default_model = {
-              provider = "zed.dev";
-              model = "claude-sonnet-4-6";
-            };
-            enable_feedback = false;
-            play_sound_when_agent_done = true;
-            show_turn_stats = true;
-          };
           auto_update = false;
           autosave = "on_focus_change";
           base_keymap = "VSCode";
@@ -40,10 +31,8 @@
           close_on_file_delete = true;
           collaboration_panel.button = false;
           colorize_brackets = true;
-          edit_predictions = {
-            sweep.privacy_mode = true;
-            provider = "zed";
-          };
+          disable_ai = true;
+          features.edit_prediction_provider = "none";
           indent_guides.coloring = "fixed";
           on_last_window_closed = "quit_app";
           outline_panel.button = false;
