@@ -19,6 +19,17 @@ else
 fi
 """
 
+[tasks.boot]
+description = "Activate configuration on next boot"
+run = """
+if [[ $(uname) == "Darwin" ]]; then
+  echo "boot is not supported on Darwin" >&2
+  exit 1
+else
+  sudo nixos-rebuild boot --flake .#
+fi
+"""
+
 [tasks.update]
 description = "Update flake inputs"
 run = "nix flake update && git add flake.lock"

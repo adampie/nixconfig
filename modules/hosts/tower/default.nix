@@ -65,6 +65,7 @@
             self.homeModules.packagesCommon
             self.homeModules.packagesDevelopment
             self.homeModules.packagesSecurity
+            self.homeModules.shell
             self.homeModules.starship
             self.homeModules.terraform
             self.homeModules.zed

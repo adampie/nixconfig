@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: "actions/checkout@v6"
       - uses: "DeterminateSystems/determinate-nix-action@v3"
+      - run: "nix flake check --all-systems"
       - uses: "DeterminateSystems/flakehub-push@main"
         with:
           name: "adampie/nixconfig"
