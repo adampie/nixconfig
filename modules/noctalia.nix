@@ -1,23 +1,13 @@
 { inputs, ... }:
 {
-  perSystem =
-    { pkgs, lib, ... }:
-    {
-      packages = lib.optionalAttrs pkgs.stdenv.isLinux {
-        myNoctalia = inputs.wrapper-modules.wrappers.noctalia-shell.wrap {
-          inherit pkgs;
-          settings = builtins.fromJSON (builtins.readFile ./noctalia.json);
-        };
-      };
-    };
-
   flake.homeModules.noctalia =
-    { ... }:
+    { pkgs, ... }:
     {
       imports = [ inputs.noctalia.homeModules.default ];
 
       programs.noctalia-shell = {
         enable = true;
+        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         settings = builtins.fromJSON (builtins.readFile ./noctalia.json);
       };
     };

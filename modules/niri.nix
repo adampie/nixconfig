@@ -4,9 +4,12 @@
     {
       pkgs,
       lib,
-      self',
+      system,
       ...
     }:
+    let
+      noctaliaBin = lib.getExe inputs.noctalia.packages.${system}.default;
+    in
     {
       packages = lib.optionalAttrs pkgs.stdenv.isLinux {
         myNiri = inputs.wrapper-modules.wrappers.niri.wrap {
@@ -19,7 +22,7 @@
             xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
             spawn-at-startup = [
-              [ (lib.getExe self'.packages.myNoctalia) ]
+              [ noctaliaBin ]
               [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ]
               [
                 (lib.getExe pkgs.swayidle)
@@ -40,32 +43,22 @@
             binds = {
               # Apps
               "Mod+Return".spawn-sh = lib.getExe pkgs.ghostty;
-              "Mod+Shift+Return".spawn-sh = lib.getExe pkgs.foot;
-              "Mod+Space".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call launcher toggle";
-              "Mod+Comma".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call settings toggle";
-              "Mod+N".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call notifications toggleHistory";
-              "Mod+Escape".spawn-sh = "${lib.getExe self'.packages.myNoctalia} ipc call sessionMenu toggle";
+              "Mod+Space".spawn-sh = "${noctaliaBin} ipc call launcher toggle";
+              "Mod+Comma".spawn-sh = "${noctaliaBin} ipc call settings toggle";
+              "Mod+N".spawn-sh = "${noctaliaBin} ipc call notifications toggleHistory";
+              "Mod+Escape".spawn-sh = "${noctaliaBin} ipc call sessionMenu toggle";
 
               # Session
               "Mod+Q".close-window = _: { };
-              "Mod+Shift+E".quit = _: { };
-              "Mod+Backspace".spawn-sh = lib.getExe pkgs.swaylock;
+              "Mod+L".spawn-sh = lib.getExe pkgs.swaylock;
 
-              # Focus column / row (HJKL + arrows)
-              "Mod+H".focus-column-left = _: { };
-              "Mod+L".focus-column-right = _: { };
-              "Mod+J".focus-window-down = _: { };
-              "Mod+K".focus-window-up = _: { };
+              # Focus column / row
               "Mod+Left".focus-column-left = _: { };
               "Mod+Right".focus-column-right = _: { };
               "Mod+Down".focus-window-down = _: { };
               "Mod+Up".focus-window-up = _: { };
 
               # Move column / row
-              "Mod+Shift+H".move-column-left = _: { };
-              "Mod+Shift+L".move-column-right = _: { };
-              "Mod+Shift+J".move-window-down = _: { };
-              "Mod+Shift+K".move-window-up = _: { };
               "Mod+Shift+Left".move-column-left = _: { };
               "Mod+Shift+Right".move-column-right = _: { };
               "Mod+Shift+Down".move-window-down = _: { };
@@ -126,13 +119,18 @@
       };
     };
 
+  flake.homeModules.niri =
+    { pkgs, ... }:
+    {
+      xdg.configFile."niri/config.kdl".source = "${
+        self.packages.${pkgs.stdenv.hostPlatform.system}.myNiri
+      }/niri-config.kdl";
+    };
+
   flake.nixosModules.niri =
     { pkgs, ... }:
     {
-      programs.niri = {
-        enable = true;
-        package = self.packages.${pkgs.stdenv.hostPlatform.system}.myNiri;
-      };
+      programs.niri.enable = true;
 
       # Noctalia required services
       services.power-profiles-daemon.enable = true;
@@ -161,7 +159,6 @@
         brightnessctl
         pavucontrol
         wl-clipboard
-        foot
       ];
 
       # GB layout at the seat level (login & TTY)

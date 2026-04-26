@@ -65,6 +65,7 @@
             self.homeModules.jetbrains
             self.homeModules.jq
             self.homeModules.mise
+            self.homeModules.niri
             self.homeModules.nixIndex
             self.homeModules.noctalia
             self.homeModules.optOut
