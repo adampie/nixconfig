@@ -18,6 +18,7 @@
           "..." = "cd ../..";
           "...." = "cd ../../..";
           la = "ls -lah";
+          cat = "bat";
           g = "git";
           gs = "git status -sb";
           m = "mise";

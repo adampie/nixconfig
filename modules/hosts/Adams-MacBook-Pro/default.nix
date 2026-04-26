@@ -42,16 +42,20 @@
         useUserPackages = true;
         users.${username} = {
           imports = [
+            self.homeModules.bat
             self.homeModules.brewEnv
+            self.homeModules.btop
             self.homeModules.claudeCode
             self.homeModules.codex
             self.homeModules.directories
             self.homeModules.fonts
             self.homeModules.forge
+            self.homeModules.fzf
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg
             self.homeModules.jetbrains
+            self.homeModules.jq
             self.homeModules.mise
             self.homeModules.nixIndex
             self.homeModules.optOut
@@ -59,10 +63,12 @@
             self.homeModules.packagesDevelopment
             self.homeModules.packagesSecurity
             self.homeModules.pi
+            self.homeModules.ripgrep
             self.homeModules.shell
             self.homeModules.ssh
             self.homeModules.starship
             self.homeModules.terraform
+            self.homeModules.vim
             self.homeModules.zed
             self.homeModules.zsh
           ];
