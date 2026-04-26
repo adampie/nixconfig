@@ -45,7 +45,7 @@
             self.homeModules.claudeCode
             self.homeModules.codex
             self.homeModules.directories
-            self.homeModules.direnv
+#            self.homeModules.direnv
             self.homeModules.fonts
             self.homeModules.ghostty
             self.homeModules.git
