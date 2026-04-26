@@ -13,6 +13,16 @@
         };
         historySubstringSearch.enable = true;
         syntaxHighlighting.enable = true;
+        shellAliases = {
+          ".." = "cd ..";
+          "..." = "cd ../..";
+          "...." = "cd ../../..";
+          la = "ls -lah";
+          g = "git";
+          gs = "git status -sb";
+          m = "mise";
+          mr = "mise run";
+        };
         initContent = ''
           bindkey '^[[1;5C' forward-word      # Ctrl+Right
           bindkey '^[[1;5D' backward-word     # Ctrl+Left
