@@ -20,6 +20,7 @@
         self.darwinModules.homebrewMas
         self.darwinModules.homebrewTaps
         self.darwinModules.llmAgents
+        self.darwinModules.mise
       ];
 
       documentation.enable = false;
@@ -45,8 +46,8 @@
             self.homeModules.claudeCode
             self.homeModules.codex
             self.homeModules.directories
-#            self.homeModules.direnv
             self.homeModules.fonts
+            self.homeModules.forge
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg
@@ -57,6 +58,7 @@
             self.homeModules.packagesCommon
             self.homeModules.packagesDevelopment
             self.homeModules.packagesSecurity
+            self.homeModules.pi
             self.homeModules.shell
             self.homeModules.ssh
             self.homeModules.starship

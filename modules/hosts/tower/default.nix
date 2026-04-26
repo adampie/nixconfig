@@ -17,8 +17,9 @@
         self.nixosModules.fail2ban
         self.nixosModules.fonts
         self.nixosModules.gnome
-#        self.nixosModules.llamaCpp
+        # self.nixosModules.llamaCpp
         self.nixosModules.llmAgents
+        self.nixosModules.mise
         self.nixosModules.mullvad
         self.nixosModules.openssh
         self.nixosModules.podman
@@ -52,8 +53,8 @@
             self.homeModules.claudeCode
             self.homeModules.codex
             self.homeModules.directories
-            self.homeModules.direnv
             self.homeModules.fonts
+            self.homeModules.forge
             self.homeModules.ghostty
             self.homeModules.git
             self.homeModules.gpg
@@ -65,6 +66,7 @@
             self.homeModules.packagesCommon
             self.homeModules.packagesDevelopment
             self.homeModules.packagesSecurity
+            self.homeModules.pi
             self.homeModules.shell
             self.homeModules.starship
             self.homeModules.terraform
