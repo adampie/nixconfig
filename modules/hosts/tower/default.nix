@@ -16,11 +16,12 @@
         self.nixosModules.defaults
         self.nixosModules.fail2ban
         self.nixosModules.fonts
-        self.nixosModules.gnome
+        self.nixosModules.greetd
         # self.nixosModules.llamaCpp
         self.nixosModules.llmAgents
         self.nixosModules.mise
         self.nixosModules.mullvad
+        self.nixosModules.niri
         self.nixosModules.openssh
         self.nixosModules.podman
         self.nixosModules.towerDisko
@@ -65,6 +66,7 @@
             self.homeModules.jq
             self.homeModules.mise
             self.homeModules.nixIndex
+            self.homeModules.noctalia
             self.homeModules.optOut
             self.homeModules.packagesApps
             self.homeModules.packagesCommon

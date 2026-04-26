@@ -7,6 +7,13 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
 
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     opt-out.url = "https://flakehub.com/f/adampie/opt-out/0.1";
 
     nix-darwin = {
