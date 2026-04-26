@@ -18,6 +18,25 @@
       boot.loader.systemd-boot.configurationLimit = 3;
       boot.loader.efi.canTouchEfiVariables = true;
 
+      # Quiet boot: silence ACPI BIOS spam over the LUKS prompt and
+      # systemd unit status messages over the login screen.
+      boot.kernelParams = [
+        "quiet"
+        "loglevel=3"
+        "udev.log_level=3"
+        "rd.udev.log_level=3"
+        "systemd.show_status=false"
+        "rd.systemd.show_status=false"
+        "vt.global_cursor_default=0"
+      ];
+      boot.consoleLogLevel = 0;
+      boot.initrd.verbose = false;
+
+      # Plymouth provides a graphical LUKS password prompt rather than
+      # text over which the kernel can scribble. Requires systemd in initrd.
+      boot.plymouth.enable = true;
+      boot.initrd.systemd.enable = true;
+
       boot.initrd.availableKernelModules = [
         "vmd"
         "xhci_pci"
