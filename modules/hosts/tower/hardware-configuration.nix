@@ -28,6 +28,7 @@
         "systemd.show_status=false"
         "rd.systemd.show_status=false"
         "vt.global_cursor_default=0"
+        "nvidia-drm.fbdev=1"
       ];
       boot.consoleLogLevel = 0;
       boot.initrd.verbose = false;
@@ -79,7 +80,10 @@
       systemd.tmpfiles.rules = [
         "d /var/tmp/nvidia 0700 root root -"
       ];
-      environment.variables.NVIDIA_SLEEP_VRAM_SAVE_PATH = "/var/tmp/nvidia";
+      environment.variables = {
+        NVIDIA_SLEEP_VRAM_SAVE_PATH = "/var/tmp/nvidia";
+        LIBVA_DRIVER_NAME = "nvidia";
+      };
 
       # Bluetooth
       hardware.bluetooth.enable = true;

@@ -21,6 +21,11 @@
 
             xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
+            outputs."DP-1" = {
+              mode = "5120x1440@59.977";
+              scale = 1.0;
+            };
+
             spawn-at-startup = [
               [ noctaliaBin ]
               [ "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent" ]
@@ -146,13 +151,13 @@
               "Mod+Ctrl+8".move-column-to-workspace = 8;
               "Mod+Ctrl+9".move-column-to-workspace = 9;
 
-              # Audio (PipeWire)
+              # Audio (Noctalia IPC: drives shell OSD + state)
               "XF86AudioRaiseVolume" = _: {
                 props = {
                   allow-when-locked = true;
                 };
                 content = {
-                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0";
+                  spawn-sh = "${noctaliaBin} ipc call volume increase";
                 };
               };
               "XF86AudioLowerVolume" = _: {
@@ -160,7 +165,7 @@
                   allow-when-locked = true;
                 };
                 content = {
-                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+                  spawn-sh = "${noctaliaBin} ipc call volume decrease";
                 };
               };
               "XF86AudioMute" = _: {
@@ -168,7 +173,7 @@
                   allow-when-locked = true;
                 };
                 content = {
-                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+                  spawn-sh = "${noctaliaBin} ipc call volume muteOutput";
                 };
               };
               "XF86AudioMicMute" = _: {
@@ -176,22 +181,17 @@
                   allow-when-locked = true;
                 };
                 content = {
-                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+                  spawn-sh = "${noctaliaBin} ipc call volume muteInput";
                 };
               };
 
-              # Brightness
+              # Brightness (Noctalia IPC)
               "XF86MonBrightnessUp" = _: {
                 props = {
                   allow-when-locked = true;
                 };
                 content = {
-                  spawn = [
-                    (lib.getExe pkgs.brightnessctl)
-                    "--class=backlight"
-                    "set"
-                    "+5%"
-                  ];
+                  spawn-sh = "${noctaliaBin} ipc call brightness increase";
                 };
               };
               "XF86MonBrightnessDown" = _: {
@@ -199,12 +199,7 @@
                   allow-when-locked = true;
                 };
                 content = {
-                  spawn = [
-                    (lib.getExe pkgs.brightnessctl)
-                    "--class=backlight"
-                    "set"
-                    "5%-"
-                  ];
+                  spawn-sh = "${noctaliaBin} ipc call brightness decrease";
                 };
               };
 
