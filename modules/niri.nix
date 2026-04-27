@@ -44,11 +44,33 @@
               # Apps
               "Mod+T".spawn-sh = lib.getExe pkgs.ghostty;
               "Mod+Space".spawn-sh = "${noctaliaBin} ipc call launcher toggle";
-              "Mod+Escape".spawn-sh = "${noctaliaBin} ipc call sessionMenu toggle";
+              "Mod+Shift+Escape".spawn-sh = "${noctaliaBin} ipc call sessionMenu toggle";
 
               # Session
-              "Mod+Q".close-window = _: { };
-              "Mod+Alt+L".spawn-sh = lib.getExe pkgs.swaylock;
+              "Mod+Q" = _: {
+                props = {
+                  repeat = false;
+                };
+                content = {
+                  close-window = _: { };
+                };
+              };
+              "Mod+Alt+L" = _: {
+                props = {
+                  allow-inhibiting = false;
+                };
+                content = {
+                  spawn-sh = lib.getExe pkgs.swaylock;
+                };
+              };
+              "Mod+Escape" = _: {
+                props = {
+                  allow-inhibiting = false;
+                };
+                content = {
+                  toggle-keyboard-shortcuts-inhibit = _: { };
+                };
+              };
 
               # Column composition
               "Mod+Comma".consume-window-into-column = _: { };
@@ -100,7 +122,14 @@
               "Mod+V".toggle-window-floating = _: { };
               "Mod+Shift+V".switch-focus-between-floating-and-tiling = _: { };
               "Mod+W".toggle-column-tabbed-display = _: { };
-              "Mod+O".toggle-overview = _: { };
+              "Mod+O" = _: {
+                props = {
+                  repeat = false;
+                };
+                content = {
+                  toggle-overview = _: { };
+                };
+              };
               "Mod+Tab".toggle-overview = _: { };
 
               # Workspaces
@@ -132,21 +161,71 @@
               "Mod+Ctrl+9".move-column-to-workspace = 9;
 
               # Audio (PipeWire)
-              "XF86AudioRaiseVolume".spawn-sh =
-                "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 5%+";
-              "XF86AudioLowerVolume".spawn-sh =
-                "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-              "XF86AudioMute".spawn-sh =
-                "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
-              "XF86AudioMicMute".spawn-sh =
-                "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+              "XF86AudioRaiseVolume" = _: {
+                props = {
+                  allow-when-locked = true;
+                };
+                content = {
+                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1.0";
+                };
+              };
+              "XF86AudioLowerVolume" = _: {
+                props = {
+                  allow-when-locked = true;
+                };
+                content = {
+                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+                };
+              };
+              "XF86AudioMute" = _: {
+                props = {
+                  allow-when-locked = true;
+                };
+                content = {
+                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+                };
+              };
+              "XF86AudioMicMute" = _: {
+                props = {
+                  allow-when-locked = true;
+                };
+                content = {
+                  spawn-sh = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+                };
+              };
 
               # Brightness
-              "XF86MonBrightnessUp".spawn-sh = "${lib.getExe pkgs.brightnessctl} set 5%+";
-              "XF86MonBrightnessDown".spawn-sh = "${lib.getExe pkgs.brightnessctl} set 5%-";
+              "XF86MonBrightnessUp" = _: {
+                props = {
+                  allow-when-locked = true;
+                };
+                content = {
+                  spawn = [
+                    (lib.getExe pkgs.brightnessctl)
+                    "--class=backlight"
+                    "set"
+                    "+5%"
+                  ];
+                };
+              };
+              "XF86MonBrightnessDown" = _: {
+                props = {
+                  allow-when-locked = true;
+                };
+                content = {
+                  spawn = [
+                    (lib.getExe pkgs.brightnessctl)
+                    "--class=backlight"
+                    "set"
+                    "5%-"
+                  ];
+                };
+              };
 
               # Screenshot
               "Print".screenshot = _: { };
+              "Ctrl+Print".screenshot-screen = _: { };
+              "Alt+Print".screenshot-window = _: { };
 
               # Misc
               "Mod+Shift+Slash".show-hotkey-overlay = _: { };
