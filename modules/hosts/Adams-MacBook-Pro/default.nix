@@ -49,7 +49,6 @@
             self.homeModules.codex
             self.homeModules.directories
             self.homeModules.fonts
-            self.homeModules.forge
             self.homeModules.fzf
             self.homeModules.ghostty
             self.homeModules.git

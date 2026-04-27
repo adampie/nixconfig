@@ -17,7 +17,6 @@
         self.nixosModules.fail2ban
         self.nixosModules.fonts
         self.nixosModules.greetd
-        # self.nixosModules.llamaCpp
         self.nixosModules.llmAgents
         self.nixosModules.mise
         self.nixosModules.mullvad
@@ -59,7 +58,6 @@
             self.homeModules.codex
             self.homeModules.directories
             self.homeModules.fonts
-            self.homeModules.forge
             self.homeModules.fzf
             self.homeModules.ghostty
             self.homeModules.git
