@@ -230,6 +230,22 @@
                   focus-workspace-down = _: { };
                 };
               };
+              "Mod+WheelScrollLeft" = _: {
+                props = {
+                  cooldown-ms = 150;
+                };
+                content = {
+                  focus-column-right = _: { };
+                };
+              };
+              "Mod+WheelScrollRight" = _: {
+                props = {
+                  cooldown-ms = 150;
+                };
+                content = {
+                  focus-column-left = _: { };
+                };
+              };
               "Mod+Ctrl+WheelScrollUp" = _: {
                 props = {
                   cooldown-ms = 150;
