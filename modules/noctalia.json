@@ -177,6 +177,9 @@
                     "pinned": []
                 },
                 {
+                    "id": "plugin:privacy-indicator"
+                },
+                {
                     "hideWhenZero": false,
                     "hideWhenZeroUnread": false,
                     "iconColor": "none",
