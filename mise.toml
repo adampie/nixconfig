@@ -42,6 +42,13 @@ run = "nix fmt ."
 description = "Run flake checks"
 run = "nix flake check --all-systems"
 
+[tasks.noctalia]
+description = "Validate Noctalia config"
+run = """
+jq empty modules/noctalia.json
+nix eval .#nixosConfigurations.tower.config.home-manager.users.adampie.programs.noctalia-shell.settings --json > /dev/null
+"""
+
 [tasks.gc]
 description = "Garbage collect nix store"
 run = "nix-collect-garbage -d"

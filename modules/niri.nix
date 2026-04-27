@@ -23,21 +23,7 @@
 
             spawn-at-startup = [
               [ noctaliaBin ]
-              [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ]
-              [
-                (lib.getExe pkgs.swayidle)
-                "-w"
-                "timeout"
-                "300"
-                (lib.getExe pkgs.swaylock)
-                "timeout"
-                "600"
-                "niri msg action power-off-monitors"
-                "resume"
-                "niri msg action power-on-monitors"
-                "before-sleep"
-                (lib.getExe pkgs.swaylock)
-              ]
+              [ "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent" ]
             ];
 
             binds = {
@@ -60,7 +46,7 @@
                   allow-inhibiting = false;
                 };
                 content = {
-                  spawn-sh = lib.getExe pkgs.swaylock;
+                  spawn-sh = "${noctaliaBin} ipc call lockScreen lock";
                 };
               };
               "Mod+Escape" = _: {
@@ -305,9 +291,7 @@
       services.gnome.gnome-keyring.enable = true;
 
       environment.systemPackages = with pkgs; [
-        polkit_gnome
-        swaylock
-        swayidle
+        hyprpolkitagent
         brightnessctl
         pavucontrol
         wl-clipboard
